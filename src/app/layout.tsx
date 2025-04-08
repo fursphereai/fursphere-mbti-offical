@@ -1,11 +1,27 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+
+
+import { Toaster } from 'react-hot-toast';
+
 import "./globals.css";
-import Image from 'next/image';
 import { LogginProvider } from "./context/LogginContext";
 import { ProgressProvider } from "./context/ProgressContext";
+import { Inter, Ubuntu, Poppins } from 'next/font/google'
 
-const inter = Inter({ subsets: ["latin"] });
+const ubuntu = Ubuntu({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-ubuntu',
+})
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+})
+
+const inter = Inter({ subsets: ["latin"] ,variable: '--font-inter',});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,11 +34,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${ubuntu.variable} ${poppins.variable} ${ubuntu.className}`}>
       <body className={inter.className}>
       <LogginProvider>
         <ProgressProvider>
           {children}
+          <Toaster />
         </ProgressProvider>
       </LogginProvider>
       </body>

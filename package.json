@@ -22,16 +22,20 @@
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "axios": "^1.8.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "next": "^15.1.6",
+    "framer-motion": "^12.4.10",
+    "next": "^15.1.7",
     "node-fetch": "^3.3.2",
+    "nodemailer": "^6.10.0",
     "pg": "^8.13.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.19",

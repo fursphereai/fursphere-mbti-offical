@@ -6,6 +6,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 interface LogginContextType {
   loggin: boolean;
   setLoggin: (value: boolean) => void;
+  userEmail: string | null;
+  setUserEmail: (email: string | null) => void;
+  userInfo: any;
+  setUserInfo: (info: any) => void;
 }
 
 // 创建 Context
@@ -19,19 +23,56 @@ interface LogginProviderProps {
 }
 
 export const LogginProvider = ({ children }: LogginProviderProps) => {
-  const [loggin, setLoggin] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("loggin") === "false";
-    }
-    return true; // 默认值
-  });
-
+  
+   // Use a useEffect to handle initial state setting
+   const [loggin, setLoggin] = useState(false); // Set default value
+   const [userEmail, setUserEmail] = useState<string | null>(null);
+   const [userInfo, setUserInfo] = useState<any>(null);
+ 
+   // Move sessionStorage initialization to useEffect
+   useEffect(() => {
+     // Now it's safe to access sessionStorage
+     const savedLoggin = sessionStorage.getItem("loggin");
+     const savedEmail = sessionStorage.getItem("userEmail");
+     const savedInfo = sessionStorage.getItem("userInfo");
+ 
+     if (savedLoggin !== null) {
+       setLoggin(savedLoggin === 'true'); // Convert string to boolean
+     }
+     if (savedEmail !== null) {
+       setUserEmail(savedEmail);
+     }
+     if (savedInfo !== null) {
+       setUserInfo(JSON.parse(savedInfo));
+     }
+   }, []);
+  
+  // Save to sessionStorage whenever values change
   useEffect(() => {
-    localStorage.setItem("loggin", loggin.toString());
+    sessionStorage.setItem("loggin", loggin.toString());
+    console.log("loggin登陆状态" + JSON.stringify(loggin));
   }, [loggin]);
 
+  useEffect(() => {
+    if (userEmail) {
+      sessionStorage.setItem("userEmail", userEmail);
+    } else {
+      sessionStorage.removeItem("userEmail");
+    }
+    console.log("useremail登陆状态" + JSON.stringify(userEmail));
+  }, [userEmail]);
+
+  useEffect(() => {
+    if (userInfo) {
+      sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+    } else {
+      sessionStorage.removeItem("userInfo");
+    }
+    console.log("userinfo登陆状态" + JSON.stringify(userInfo));
+  }, [userInfo]);
+
   return (
-    <LogginContext.Provider value={{ loggin, setLoggin }}>
+    <LogginContext.Provider value={{ loggin, setLoggin, userEmail, setUserEmail, userInfo, setUserInfo }}>
       {children}
     </LogginContext.Provider>
   );

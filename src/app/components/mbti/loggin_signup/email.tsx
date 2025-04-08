@@ -249,6 +249,7 @@ return (
             setLoading={setIsLoading}
             setDownload={setDownload}
             setIsFromUserProfile={setIsFromUserProfile}
+            isFromUserProfile = {isFromUserProfile}
             />
           </div>
 

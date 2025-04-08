@@ -63,6 +63,7 @@ export default function Loading({ step, setStep, setPart1, result1, result2, res
             setLoading={setLoading}
             setDownload={setDownload}
             setIsFromUserProfile={setIsFromUserProfile}
+            isFromUserProfile={isFromUserProfile}
             />
           </div>
     <style>

@@ -1,104 +1,13 @@
 import { supabase } from '@/app/lib/supabase';
 import React, { useState } from 'react';
+import { SurveyData } from '@/app/types/survey';
 
-interface SurveyData {
-  user_info: {
-    name: string,
-    email: string,
-    ip: string;
-    mbti: string
-  };
-  pet_info: {
-    PetSpecies: string;
-    PetBreed: string,
-    PetGender: string,
-    PetSex: string,
-    PetAge: string,
-    PetName: string,
-    PetPhoto: string | File;
-  };
-  personality_and_behavior: {
-      Energy_Socialization: {
-          seek_attention: string,
-          interact_with_toys: string,
-          stranger_enter_territory: string,
-      },
-      Routin_Curiosity: {
-          prefer_routine: string,
-          friend_visit_behaviors: string,
-          fur_care_7days: string,
-      },
-      Decision_Making: {
-          react_when_sad: string,
-          toy_out_of_reach: string,
-          react_new_friend: string, 
-      },
-      Structure_Spontaneity: {
-          react_new_environment:string,
-          respond_to_scold:string,
-          follow_commands:string,
-      };
-  };
-}
 
 interface ImageUploadProps {
   updateAnswer: (category: keyof SurveyData, subCategory: any | null, field: string, value: string | File) => void;
   surveyData: SurveyData;
 }
 
-
-// const compressImage = (file: File): Promise<string> => {
-//   return new Promise((resolve, reject) => {  // Add reject handler
-//     try {
-//       const reader = new FileReader();
-      
-//       reader.onerror = () => {
-//         reject(new Error('FileReader failed'));
-//       };
-
-//       reader.onload = (e) => {
-//         if (!e.target?.result) {
-//           reject(new Error('No result from FileReader'));
-//           return;
-//         }
-
-//         const img = new Image();
-        
-//         img.onerror = () => {
-//           reject(new Error('Image failed to load'));
-//         };
-
-//         img.onload = () => {
-//           try {
-//             const canvas = document.createElement('canvas');
-//             const maxWidth = 400;
-//             const ratio = maxWidth / img.width;
-//             canvas.width = maxWidth;
-//             canvas.height = img.height * ratio;
-
-//             const ctx = canvas.getContext('2d');
-//             if (!ctx) {
-//               reject(new Error('Failed to get canvas context'));
-//               return;
-//             }
-
-//             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-//             const compressedBase64 = canvas.toDataURL('image/jpeg', 0.4);
-//             resolve(compressedBase64);
-//           } catch (err) {
-//             reject(err);
-//           }
-//         };
-
-//         img.src = e.target.result as string;
-//       };
-
-//       reader.readAsDataURL(file);
-//     } catch (err) {
-//       reject(err);
-//     }
-//   });
-// };
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ updateAnswer, surveyData }) => {
   const [image, setImage] = useState<File | null>(null);

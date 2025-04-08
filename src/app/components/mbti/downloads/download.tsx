@@ -255,6 +255,7 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
             setLoading={setLoading}
             setDownload={setDownload}
             setIsFromUserProfile={setIsFromUserProfile}
+            isFromUserProfile={isFromUserProfile}
             />
           </div>  
          

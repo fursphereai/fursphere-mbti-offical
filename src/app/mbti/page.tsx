@@ -234,6 +234,7 @@ return (
       setLoading={setIsLoading}
       setDownload={setDownload}
       setIsFromUserProfile={setIsFromUserProfile}
+      isFromUserProfile={isFromUserProfile}
       />
       )}
  
@@ -286,6 +287,7 @@ return (
               updateAnswer={updateAnswer}
               setPart1={setPart1}
               setPart2={setPart2}
+              part1={part1}
             />
           </motion.div>
         )

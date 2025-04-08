@@ -374,6 +374,7 @@ return (
             setShowSignup={setShowSignup}
             setShowLogin={setShowLogin}
             setIsFromUserProfile={setIsFromUserProfile}
+            isFromUserProfile = {isFromUserProfile}
             
             />
           </div>

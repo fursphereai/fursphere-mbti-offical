@@ -338,6 +338,7 @@ const validateAndSubmit = async () => {
             setLoading={setLoading}
             setDownload={setDownload}
             setIsFromUserProfile={setIsFromUserProfile}
+            isFromUserProfile={isFromUserProfile}
             
             />
           </div>

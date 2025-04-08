@@ -2,48 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import ProgressBar from '../ProgressBar';
 import Image from 'next/image';
-
-interface SurveyData {
-  user_info: {
-    name: string,
-    email: string,
-    ip: string;
-    mbti: string
-  };
-  pet_info: {
-    PetSpecies: string;
-    PetBreed: string,
-    PetBreedCustom: string,
-    PetGender: string,
-    PetAge: string,
-    PetName: string,
-    PetPhoto: string,
-  };
-  personality_and_behavior: {
-      Energy_Socialization: {
-          seek_attention: string,
-          interact_with_toys: string,
-          stranger_enter_territory: string,
-      },
-      Routin_Curiosity: {
-          prefer_routine: string,
-          friend_visit_behaviors: string,
-          fur_care_7days: string,
-      },
-      Decision_Making: {
-          react_when_sad: string,
-          toy_out_of_reach: string,
-          react_new_friend: string, 
-      },
-      Structure_Spontaneity: {
-          react_new_environment:string,
-          respond_to_scold:string,
-          follow_commands:string,
-      };
-  };
-}
-
-
+import { SurveyData } from '@/app/types/survey';
 interface Part1Props {
     handleNext: () => void; 
     handleBack: () => void;
@@ -52,7 +11,7 @@ interface Part1Props {
     setStep: React.Dispatch<React.SetStateAction<number>>;
     updateAnswer: (category: keyof SurveyData, subCategory: any | null, field: string, value: string) => void;
     setPart1: React.Dispatch<React.SetStateAction<boolean>>;
-    
+
 }
 
 

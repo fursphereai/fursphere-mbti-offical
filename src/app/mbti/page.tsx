@@ -107,7 +107,7 @@ const PetMBTIFlow = () => {
       category: T,
       subCategory: K | null,
       field: keyof typeof surveyData[T] | string,
-      value: string
+      value: string | File
     ) => {
       setSurveyData(prev => ({
         ...prev,

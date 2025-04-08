@@ -41,9 +41,10 @@ interface DownloadProps {
   surveyData: SurveyData;
   isFromUserProfile: boolean;
   setIsFromUserProfile: React.Dispatch<React.SetStateAction<boolean>>;
+  setAiResult: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Download({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, aiResult, surveyData, isFromUserProfile, setIsFromUserProfile }: DownloadProps) {
+export default function Download({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, aiResult, surveyData, isFromUserProfile, setIsFromUserProfile, setAiResult }: DownloadProps) {
   console.log('download', download);
   console.log('result1', result1);
   const [currentPage, setCurrentPage] = useState(0);

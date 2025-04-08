@@ -25,7 +25,7 @@ interface MobileHeaderProps {
   isFromUserProfile: boolean;
 }
 
-const MobileHeader: React.FC<MobileHeaderProps> = ({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, setIsFromUserProfile, isFromUserProfile }) => {
+const MobileHeader: React.FC<MobileHeaderProps> = ({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, setIsFromUserProfile, isFromUserProfile  }) => {
     const handleShare = async () => {
         try {
            console.log('copying link');

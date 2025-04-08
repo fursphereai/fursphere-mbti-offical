@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { SurveyData } from '@/app/types/survey';
 
 interface StartScreenProps {
   handleNext: () => void; 
@@ -7,9 +8,11 @@ interface StartScreenProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setPart1: React.Dispatch<React.SetStateAction<boolean>>;
   part1: boolean;
+  surveyData: SurveyData;
+  updateAnswer: (category: keyof SurveyData, subCategory: any | null, field: string, value: string) => void;
 }
 
-const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, setPart1, part1 }) => {
+const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, setPart1, part1, surveyData, updateAnswer }) => {
  
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
 

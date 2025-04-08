@@ -52,6 +52,7 @@ interface Part1Props {
     setStep: React.Dispatch<React.SetStateAction<number>>;
     updateAnswer: (category: keyof SurveyData, subCategory: any | null, field: string, value: string) => void;
     setPart1: React.Dispatch<React.SetStateAction<boolean>>;
+    
 }
 
 

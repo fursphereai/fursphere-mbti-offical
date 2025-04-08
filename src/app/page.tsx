@@ -62,7 +62,7 @@ const Home = () => {
 
   return (
     <div className = "relative aspect-[1440/3742] bg-[#FFFFFF] ">
-      <Header/>
+      <Header showUserProfile={false} setShowUserProfile={() => {}}/>
       <main className = 'bg-[#FFFFFF]'> 
       <Section1/>
       <Section2/>

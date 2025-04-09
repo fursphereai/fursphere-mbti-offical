@@ -160,7 +160,7 @@ const [downloadPage5, setDownloadPage5] = useState(false);
 
 // const [isLoading, setIsLoading] = useState(false);
 const [aiResult, setAiResult] = useState('');
-const [showBanner2, setShowBanner2] = useState(false);
+const [showBanner2, setShowBanner2] = useState(true);
 
 const [showEmail, setShowEmail] = useState(false);
 const [showSignup, setShowSignup] = useState(false);

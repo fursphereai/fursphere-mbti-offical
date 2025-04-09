@@ -209,7 +209,7 @@ useEffect(() => {
 }, [isLoading]);
   
 return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full min-h-screen flex bg-white flex-col">
     {/* mobile header */}
     <div className="md:hidden">
       {(showUserProfile === false) && (

@@ -9,6 +9,7 @@ import Section4 from './components/Section4';
 import Section5 from './components/Section5';
 import Section6 from './components/Section6';
 import {useLoggin} from './context/LogginContext'
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
 
@@ -58,6 +59,13 @@ const Home = () => {
   //     });
   //   };
   // }, []);
+
+
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/mbti');
+  }, []);
 
 
   return (

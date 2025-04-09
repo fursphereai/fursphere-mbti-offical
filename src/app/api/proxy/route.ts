@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-const API_BASE_URL = 'http://localhost:5001';
+const API_BASE_URL = 'https://main-server-production-bcfe.up.railway.app';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -13,6 +13,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     console.log('API route received body:', body); // Debug log
+
+    console.log('submission_id in body:', body.submission_id);
 
     if (body.type === 'send_verification') {
       return await handleVerificationCode(body);

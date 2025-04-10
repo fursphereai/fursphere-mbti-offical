@@ -164,8 +164,9 @@ export async function GET(request: Request) {
     const submissionId = searchParams.get('submissionId');
     const email = searchParams.get('email');
     const check_signup = searchParams.get('check_signup');
-    
-   let response;
+    const check_test_times = searchParams.get('check_test_times');
+   
+    let response;
 
    console.log("responqwqwe" + submissionId);
    console.log("responqwqwe" + email);
@@ -176,7 +177,11 @@ export async function GET(request: Request) {
     response = await fetch(`${API_BASE_URL}/get_result/${submissionId}`);
   } else if (check_signup) { 
     console.log(`${API_BASE_URL}/check_signup?email=${check_signup}`);
-    response = await fetch(`${API_BASE_URL}/check_signup?email=${check_signup}`);  // Fix query parameter format
+    response = await fetch(`${API_BASE_URL}/check_signup?email=${check_signup}`); 
+
+  } else if (check_test_times) {
+    console.log(`${API_BASE_URL}/check_test_times?email=${check_test_times}`);
+    response = await fetch(`${API_BASE_URL}/check_test_times?email=${check_test_times}`);
   } else {
     throw new Error('No valid query parameters provided');
   }

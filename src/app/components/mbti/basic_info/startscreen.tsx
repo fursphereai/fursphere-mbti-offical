@@ -57,12 +57,12 @@ const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, se
           <div className=" w-full flex flex-row items-center h-[406px]">
             <div className=" w-[507px] flex flex-col items-start justify-between h-full">
 
-              <div className="w-full w-[432px] text-[32px] font-[400] text-[#27355D] leading-[1.2]">
+              <div className=" w-[432px] text-[32px] font-[400] text-[#27355D] leading-[1.2]">
                 Did you know that your pet has a unique "
                 <span className="font-[600] text-[#5777D0]">Petsonality</span>", just like humans?
               </div>
 
-              <div className=" w-full text-[14px] text-[Inter] font-[400] text-[#27355D] leading-[1.2]">
+              <div className=" w-full text-[16px] text-[Inter] font-[400] text-[#27355D] leading-[1.2]">
                 <p>Some pets are naturally outgoing, love socializing, and always stay by your side, while others are more independent and prefer their own space.</p>
                 <p className="mt-4">The <span className="font-[600] text-[#5777D0]">FurSphere</span> Team—a group of young pet lovers driven by curiosity and deep affection for their furry family members—has developed a series of AI-powered, engaging tests to help pet owners bridge the language gap, gain deeper insights into their pets' unique traits, and strengthen the bond between them and their furry companions, making this cherished relationship even more meaningful.</p>
               </div>
@@ -106,7 +106,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, se
             </div>
 
            {/* Pawfect Match Card */}
-            <div className="w-full ml-[40px] max-w-[500px] relative rounded-[22px] border border-[#717680] h-[285px] flex flex-col items-center">
+            <div className="w-full ml-[40px] bg-[#F5F5F5] max-w-[500px] relative rounded-[22px] border border-[#717680] h-[285px] flex flex-col items-center">
 
             <div className="absolute top-[32px] flex flex-col items-center gap-[20px]">
 
@@ -130,7 +130,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, se
 
             <button 
               className="absolute bottom-[32px] rounded-[22px] bg-[#5777D0] h-[44px] w-[183px]  text-white flex items-center justify-center"
-              onClick={handleNext}
+              // onClick={handleNext}
             >
              Login to unlock
             </button>
@@ -197,7 +197,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, se
 
 
       {/* mobile */}
-      <div className="md:hidden w-full overflow-visible py-[40px]"
+      <div className="mt-[56px] md:hidden w-full overflow-visible py-[40px]"
       style={{
         height: `${1600 + (expandedIndexes.length * 166)}px`
       }}>
@@ -251,7 +251,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, se
             </div>
 
            {/* Pawfect Match Card */}
-            <div className="w-full mt-[20px] max-w-[320px] relative rounded-[22px] border border-[#717680] h-[285px] flex flex-col items-center">
+            <div className="w-full mt-[20px] bg-[#F5F5F5] max-w-[320px] relative rounded-[22px] border border-[#717680] h-[285px] flex flex-col items-center">
 
             <div className="absolute top-[30px] flex flex-col items-center gap-[20px]">
 
@@ -275,7 +275,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ handleNext, step, setStep, se
 
             <button 
               className="absolute bottom-[32px] rounded-[22px] bg-[#5777D0] h-[44px] w-[183px]  text-[16px] font-[600] text-white flex items-center justify-center"
-              onClick={handleNext}
+              // onClick={handleNext}
             >
              Login to unlock
             </button>

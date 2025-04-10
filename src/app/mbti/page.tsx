@@ -211,7 +211,7 @@ useEffect(() => {
 return (
     <div className="w-full h-[100svh] flex bg-white flex-col">
     {/* mobile header */}
-    <div className="md:hidden">
+    <div className={`${(step === 0 && part1 === false) ? 'hidden' : 'block md:hidden'}`}>
       {(showUserProfile === false) && (
       <MobileHeader 
       step={step} 

@@ -9,6 +9,8 @@ import { SurveyData } from '@/app/types/survey';
 import Loading from '../loading/loading';
 import download from '../downloads/download';
 import { getUserInfo } from '../get_user_info';
+import { checkingTestTimes } from '../checking_test_times';
+import { checkingSignup } from '../checking_signup';
 
 
 
@@ -100,25 +102,24 @@ interface EmailProps {
 
       const checkEmailAvailability = async (email: string) => {
         try {
-          if (email === 'likey6688@gmail.co') {
+            const response = await checkingTestTimes(email);
+            const response2 = await checkingSignup(email);
+            console.log("airai" + JSON.stringify(response));
+            console.log("checkingTestTimes" + JSON.stringify(response));
+
+          if (JSON.stringify(response).includes('1') ) {
       
             setChecking(true);
-            setEmailAvailable(true);
-            console.log("surveyData" + JSON.stringify(surveyData));
-          } else if(email === 'likey6688@gmail.com' || email === '1173830105@qq.com') {
-            setChecking(true);
             setShowEmailUsed(true);
-            // const response = await fetch('/api/check-email', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ email })
-            // });
-            // const data = await response.json();
-            // setIsEmailAvailable(data.available);
-            setEmailAvailable(false);
-          } else if(email === 'likey6688@gmail.comm') {
+            console.log("surveyData" + JSON.stringify(surveyData));
+          } else if (JSON.stringify(response2).includes('true')) {
             setChecking(true);
             setShowEmailRegistered(true);
+         
+     
+          } else  {
+            setChecking(true);
+            
             setEmailAvailable(false);
           }
         } catch (error) {
@@ -302,21 +303,7 @@ return (
             required
           />
 
-          {/* {checking && (
-                  <div className="mt-2 text-gray-500 text-sm font-[Inter] flex items-center">
-                      <svg className="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Checking email availability...
-                  </div>
-          )} */}
-
-          {/* {!isEmailAvailable && hasChecked && !isChecking && (
-                  <div className="mt-2 text-yellow-600 text-sm font-[Inter]">
-                      *Used email. Please try a new one or Sign up.
-                  </div>
-          )} */}
+     
 
          {showEmailUsed && (
                 <div className="absolute top-[92px] md:top-[72px] flex flex-row items-center justify-center gap-1 w-full text-[#E35C5C] text-[14px] font-[Inter]">

@@ -211,6 +211,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
           className= {`
             mt-[40px] md:mt-[85px]
             text-[16px] md:text-[18px]
+            text-grey-900
             font-[Inter]
             font-[400]
             ml-[10px]`}
@@ -221,11 +222,12 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
           type="text"
           placeholder="Tell us more about your pet"
           className="
+            
             w-[100%] 
             md:w-[540px] 
             md:h-[44px]
             mt-[20px]
-            py-[12px] pl-[12px] pr-[130px]
+            py-[12px] pl-[12px] pr-[12px]
             border border-[1px] border-[#717680]
             rounded-[22px]
             bg-white

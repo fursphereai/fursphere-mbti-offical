@@ -160,7 +160,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
           
           {surveyData.pet_info.PetPhoto ? (
           <div className="md:hidden  w-[100px] h-[100px] border-[2px] border-[#4B367B] rounded-[20px] flex items-center justify-center mr-[10px]">
-            <img src={surveyData.pet_info.PetPhoto} alt="Mingming" className="w-full h-full rounded-[20px] object-cover" />
+            <img src={surveyData.pet_info.PetPhoto} alt="Mingming" className="w-full h-full rounded-[18px] object-cover" />
           </div>
           ) : (
             <div className="md:hidden  w-[100px] h-[100px]  flex items-center justify-center mr-[10px]">

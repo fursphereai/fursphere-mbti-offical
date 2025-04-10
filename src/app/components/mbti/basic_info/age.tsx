@@ -18,6 +18,7 @@ interface AgeProps {
     step: number;
     setStep: React.Dispatch<React.SetStateAction<number>>;
     updateAnswer: (category: keyof SurveyData, subCategory: any | null, field: string, value: string) => void;
+
 }
 
 
@@ -135,8 +136,11 @@ const Age: React.FC<AgeProps> = ({ handleNext, handleBack, step, setStep, survey
               {/* 移动端显示原生选择器 */}
               <div className=" md:hidden mt-[20px] ">
                 <div 
-                  className="w-[180px] h-[44px] rounded-[22px] border border-[#717680] px-4 py-[11px] flex items-center justify-between cursor-pointer"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className={` ${isDropdownOpen ? 'border-[#FFC542]' : 'border-[#717680]'}
+                    w-[180px] h-[44px] rounded-[22px] border border-[#717680] px-4 py-[11px] flex items-center justify-between cursor-pointer `}
+                  onClick={() => 
+                    {setIsDropdownOpen(!isDropdownOpen)}
+                  }
                 >
                   <span className={`text-[16px] font-inter ${surveyData.pet_info.PetAge ? 'text-[#151B38]' : 'text-[#C3C3C3]'}`}>
                     {surveyData.pet_info.PetAge || 'Age'}
@@ -258,7 +262,9 @@ const Age: React.FC<AgeProps> = ({ handleNext, handleBack, step, setStep, survey
 
                 {isDropdownOpen && (
                   
-                    <div className="absolute top-[186px] left-0 w-[180px] h-[150px] bg-white border-[1px] border-[#717680] rounded-[22px] shadow-[0_20px_40px_rgba(0,0,0,0.1)] p-[6px] z-10">
+                    <div className="absolute top-[186px]  left-0 w-[180px] h-[150px] bg-white 
+                    border border-[1px] border-[#F8F8F8]
+                    rounded-[22px] shadow-lg p-[6px] z-10">
                       <div className="relative h-full">
                         <div 
                           ref={scrollContainerRef}

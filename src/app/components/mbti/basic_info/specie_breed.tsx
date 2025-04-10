@@ -667,7 +667,7 @@ const SpecieBreed: React.FC<SpecieBreedProps> = ({ handleNext, handleBack, step,
               bg-white
               font-[Inter]
               text-[#27355D]
-              focus:outline-none
+              focus:outline-none focus:border-[#FFC542]
               placeholder:[#C3C3C3]
               text-[16px]"
               value={customBreed}

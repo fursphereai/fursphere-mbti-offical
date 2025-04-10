@@ -358,11 +358,12 @@ return (
             <h2>A copy of test result will be sent to your email</h2>
           </div>
           
-
-          <button className="absolute md:static bottom-[48px] md:bottom-none mt-[48px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
+          <div className=" absolute  bottom-[48px] w-[145px] h-[44px] "
           onClick={validateAndSubmit}>
-            <h2 className="text-[16px] font-[Inter] font-[600] text-white">Get Result</h2>
-          </button>
+            <button className="md:bottom-none w-full h-full rounded-[22px] bg-[#5777D0] flex items-center justify-center">
+              <h2 className="text-[16px] font-[Inter] font-[600] text-white">Get Result</h2>
+            </button>
+          </div>
           
           {/* destop version */}
           <div className="hidden md:flex text-center mt-[20px] max-w-[468px] w-full text-[14px] font-[Inter] font-[400] text-[#717680] leading-[16px] line-height-[22.4px] flex flex-col items-center">

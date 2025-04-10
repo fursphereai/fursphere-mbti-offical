@@ -212,7 +212,7 @@ return (
 
    
     <motion.div 
-    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20"
+    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[50]"
     >
      
 
@@ -358,7 +358,7 @@ return (
             <h2>A copy of test result will be sent to your email</h2>
           </div>
           
-          <div className=" absolute  bottom-[48px] w-[145px] h-[44px] "
+          <div className=" absolute bg-red-500 bottom-[48px] w-[145px] h-[44px] z-[5] "
           onClick={validateAndSubmit}>
             <button className="md:bottom-none w-full h-full rounded-[22px] bg-[#5777D0] flex items-center justify-center">
               <h2 className="text-[16px] font-[Inter] font-[600] text-white">Get Result</h2>

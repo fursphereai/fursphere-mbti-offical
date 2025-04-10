@@ -12,46 +12,16 @@ interface ImageUploadProps {
 const ImageUpload: React.FC<ImageUploadProps> = ({ updateAnswer, surveyData }) => {
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>('');
-  const [showCropper, setShowCropper] = useState<boolean>(false);
-  const [crop, setCrop] = useState<Crop>({
-    unit: '%',
-    width: 90,
-    height: 90,
-    x: 5,
-    y: 5
-  });
-  const imgRef = useRef<HTMLImageElement | null>(null);
 
-  function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
-    return centerCrop(
-      makeAspectCrop(
-        {
-          unit: '%',
-          width: 90,
-        },
-        aspect,
-        mediaWidth,
-        mediaHeight
-      ),
-      mediaWidth,
-      mediaHeight
-    );
-  }
-
+ 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       try {
         const file = e.target.files[0];
     
-        const reader = new FileReader();
-        reader.onload = () => {
-         setImage(file);
-         setImageUrl(URL.createObjectURL(file));
-         setShowCropper(true);
-        };
-        reader.readAsDataURL(file);
-        // setImage(file);
-        // setImageUrl(URL.createObjectURL(file));
+      
+        setImage(file);
+        setImageUrl(URL.createObjectURL(file));
         // Create a safe filename
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
@@ -101,142 +71,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ updateAnswer, surveyData }) =
     }
   };
 
-  const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { width, height } = e.currentTarget;
-    imgRef.current = e.currentTarget;
-    setCrop(centerAspectCrop(width, height, 1));
-  };
-
-
-  const getCroppedImg = async () => {
-    if (!imgRef.current || !crop.width || !crop.height) return;
-
-    const canvas = document.createElement('canvas');
-    const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
-    const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = crop.width * scaleX;
-    canvas.height = crop.height * scaleY;
-
-    ctx.drawImage(
-      imgRef.current,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width * scaleX,
-      crop.height * scaleY
-    );
-
-    return new Promise<File>((resolve) => {
-      canvas.toBlob((blob) => {
-        if (!blob || !image) return;
-        const croppedFile = new File([blob], image.name, { 
-          type: image.type,
-          lastModified: Date.now() 
-        });
-        resolve(croppedFile);
-      }, image?.type);
-    });
-  };
-
-
-  const handleCropComplete = async () => {
-    try {
-      const croppedFile = await getCroppedImg();
-      if (!croppedFile) return;
-      
-      setImage(croppedFile);
-      setImageUrl(URL.createObjectURL(croppedFile));
-      setShowCropper(false);
-      
-      // Create a safe filename
-      const fileExt = croppedFile.name.split('.').pop();
-      const fileName = `${Date.now()}.${fileExt}`;
-      
-      // Upload to Supabase storage
-      const { data, error: uploadError } = await supabase.storage
-        .from('pet-photos')
-        .upload(fileName, croppedFile, {
-          cacheControl: '3600',
-          upsert: false
-        });
-
-      if (uploadError) {
-        throw uploadError;
-      }
-
-      if (!data?.path) {
-        throw new Error('Upload failed - no path returned');
-      }
-
-      // Get public URL
-      const {data: { publicUrl } } = supabase.storage
-        .from('pet-photos')
-        .getPublicUrl(fileName);
-
-      if (!publicUrl) {
-        throw new Error('Failed to get public URL');
-      }
-
-      // Update state with the public URL
-      updateAnswer('pet_info', null, 'PetPhoto', URL.createObjectURL(croppedFile));
-      updateAnswer('pet_info', null, 'PetPublicUrl', publicUrl);
-    } catch (error) {
-      console.error('Error uploading image:', error);
-    }
-  };
-
-  const cancelCrop = () => {
-    setShowCropper(false);
-    setImage(null);
-    setImageUrl('');
-  };
 
 
   return (
     <div className="flex flex-col">
-     {showCropper ? (
-        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-4 max-w-md w-full">
-            <h3 className="text-lg font-medium mb-2">Crop Image</h3>
-            <div className="mb-4">
-              <ReactCrop
-                crop={crop}
-                onChange={(c) => setCrop(c)}
-                aspect={1}
-                circularCrop
-              >
-                <img 
-                  src={imageUrl} 
-                  alt="Crop preview" 
-                  onLoad={onImageLoad}
-                  className="max-h-[300px] mx-auto"
-                />
-              </ReactCrop>
-            </div>
-            <div className="flex justify-end space-x-2">
-              <button 
-                onClick={cancelCrop}
-                className="px-4 py-2 bg-gray-200 rounded-md"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={handleCropComplete}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md"
-              >
-                Apply
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : (
       <label
         className=" relative w-[200px] h-[200px] md:w-[250px] md:h-[250px] flex items-center justify-center cursor-pointer
         border border-[1px] border-[#717680] rounded-[20px] bg-white
@@ -271,7 +109,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ updateAnswer, surveyData }) =
        </div>
        )}
       </label>
-      )}
+      
     </div>
   );
 };

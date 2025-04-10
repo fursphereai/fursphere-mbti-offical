@@ -532,11 +532,11 @@ return (
 
         
         
-        <button className="absolute md:static bottom-[48px] md:bottom-auto mt-[80px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
+        <button className="absolute md:static bottom-[48px] z-[5] md:bottom-auto mt-[80px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
         onClick={validateAndSubmit}
         // disabled={logginIsValidating || !logginEmail || !logginEmailValid || !isCodeSent || !logginInputCode}
         >
-        <h2 className="text-[16px] font-[Inter] font-[600] text-white">
+        <h2 className="text-[16px] font-[Inter] font-[600]  text-white">
          Get Result
         </h2>
         </button>

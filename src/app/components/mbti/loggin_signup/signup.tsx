@@ -544,7 +544,7 @@ const validateAndSubmit = async () => {
 
           </div>
          
-          <button className="absolute md:static bottom-[48px] md:bottom-auto mt-[40px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
+          <button className="absolute md:static bottom-[48px] z-[5] md:bottom-auto mt-[40px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
           onClick={validateAndSubmit}
         //   disabled={signupIsValidating || !signupEmail || !signupEmailValid || !signupCodeSent || !signupInputCode}
           >

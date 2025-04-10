@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLoggin } from '@/app/context/LogginContext';
+import { usePathname } from 'next/navigation';
 
 interface HeaderProps {
   showUserProfile: boolean;
@@ -24,6 +25,7 @@ const Header: React.FC<HeaderProps> = ({  showUserProfile, setShowUserProfile })
   };
 
   const closeMenu = () => setMenuOpen(false);
+  const pathname = usePathname();
 
   return (
     <header className="flex justify-center fixed top-0 bg-white border-b border-[#E8EBF6] z-10 w-full overflow-x-auto border-t-0">
@@ -58,10 +60,22 @@ const Header: React.FC<HeaderProps> = ({  showUserProfile, setShowUserProfile })
             w-[382.67px] 
             gap-y-[20px]
             mr-[54px]">
-            <Link href="#home" className="text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors">Home</Link>
-            <Link href="#product" className="text-[16px] text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors">Product</Link>
-            <Link href="/mbti" className="text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors">Quiz</Link>
-            <Link href="#about" className="text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors">About</Link>
+            <Link href="/" 
+                  className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/' ? 'text-[#5676CF]' : ''}`}>
+              Home
+            </Link>
+            <Link href="/product" 
+                  className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/product' ? 'text-[#5676CF]' : ''}`}>
+              Product
+            </Link>
+            <Link href="/mbti" 
+                  className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/mbti' ? 'text-[#5676CF]' : ''}`}>
+              Quiz
+            </Link>
+            <Link href="/about" 
+                  className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/about' ? 'text-[#5676CF]' : ''}`}>
+              About
+            </Link>
           </nav>
           {!loggin ? (
             <button className="relative 

@@ -86,6 +86,7 @@ const VideoSection = ({ videoRef }: { videoRef: React.RefObject<HTMLVideoElement
            "
           ref={videoRef}
           autoPlay
+          playsInline
           loop={false}
           muted
           select-none="true" 

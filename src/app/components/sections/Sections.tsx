@@ -115,7 +115,7 @@ const Section2: React.FC = () => {
         </div>
       
         {/* Right Content - Video */}
-        <div className=" w-1/2">
+        <div className=" w-full md:w-1/2">
           <div className=" w-full h-full">
           <video
             ref={videoRef}
@@ -178,7 +178,7 @@ const Section3: React.FC = () => {
         </div>
       
         {/* Right Content - Video */}
-        <div className="  w-1/2">
+        <div className="  w-full md:w-1/2">
           <div className=" w-full h-full">
           <video
             ref={videoRef}
@@ -239,11 +239,11 @@ const Section4: React.FC = () => {
         </div>
       
         {/* Right Content - Video */}
-        <div className=" w-1/2">
+        <div className=" w-full md:w-1/2">
           <div className=" w-full h-full">
           <video
             ref={videoRef}
-            className=" w-full h-full object-cover"
+            className=" mt-[15px] md:mt-[0] w-full h-full object-cover"
             autoPlay
             loop
             muted

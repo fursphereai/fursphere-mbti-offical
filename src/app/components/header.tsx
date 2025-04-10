@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useLoggin } from '@/app/context/LogginContext';
 import { usePathname } from 'next/navigation';
 
+
 interface HeaderProps {
   showUserProfile: boolean;
   setShowUserProfile: (show: boolean) => void;

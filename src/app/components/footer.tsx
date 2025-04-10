@@ -10,15 +10,16 @@ const Footer = () => {
   };
 
   return (
-    <div className="flex justify-center  mt-0 max-w-[1440px] w-full  bg-[#5777D0] h-[414px] md:h-[364px] overflow-hidden flex-shrink-0 text-center font-Inter text-[#D1D7EF]">
+    <div className="flex  justify-center  mx-auto max-w-[1440px] w-full  bg-[#5777D0] min-h-[414px] md:h-[364px] overflow-hidden flex-shrink-0 text-center font-Inter text-[#D1D7EF]">
       <div className="my-[40px] md:my-[52px]  frame-group w-full max-w-[1240px]  flex flex-col items-start justify-start gap-y-[40px] md:gap-[90px]">
         {/* Upper Section */}
         
         <div className=" w-full frame-container  flex flex-col md:flex-row items-center md:items-start justify-between px-[40px] gap-y-[40px]">
           {/* Left Side - Social Links */}
-          <div className="button-parent   flex flex-row items-center justify-start gap-[12px]">
+          <div className="  flex min-[450px]:flex-row flex-col items-center justify-start gap-[12px]">
             <SubscribeButton onClick={handleSubscribe} darkMode={true} />
             <div className="or-join relative text-[14px] text-[#F5F5F5] text-left">or join</div>
+            <div className="flex flex-row items-center justify-center gap-[12px]">
             <SocialButton 
               href="https://discord.gg/fursphere"
               icon="/discord-icon.svg"
@@ -39,12 +40,13 @@ const Footer = () => {
               isWhiteBg={true}
               variant="dark"
             />
+            </div>
           </div>
 
           {/* Right Side - Links */}
-          <div className=" frame-div flex flex-row items-start  gap-[60px]  text-white ">
-            <FooterLinkGroup title="Company" links={['Terms of Use', 'Support', 'Privacy Policy']} />
-            <FooterLinkGroup title="Contact" links={['Linkedin', 'Youtube']} />
+          <div className="  flex flex-row items-start  gap-[60px]  text-white ">
+            <FooterLinkGroup links={['Company', 'Terms of Use', 'Support', 'Privacy Policy']} />
+            <FooterLinkGroup links={['Contact', 'Linkedin', 'Youtube']} />
           </div>
         </div>
 
@@ -56,15 +58,15 @@ const Footer = () => {
 };
 
 // 新增的子组件
-const FooterLinkGroup = ({ title, links }: { title: string, links: string[] }) => (
-  <div className={`${title.toLowerCase()}-parent   w-auto flex flex-col items-center justify-center gap-y-[20px]`}>
-    <div className="company  relative tracking-[-0.64px] leading-[16px] text-[14px] md:text-[16px] font-[700]">{title}</div>
-    <div className="terms-of-use-parent flex flex-col gap-[12px] text-[14px] md:text-[16px] font-[400]">
+const FooterLinkGroup = ({ links }: {  links: string[] }) => (
+ 
+
+    <div className="flex flex-col  flex-col  items-start justify-start gap-[12px] text-[14px] md:text-[16px] font-[400]">
       {links.map((link, index) => (
         <div key={index}>{link}</div>
       ))}
     </div>
-  </div>
+
 );
 
 const FooterBottom = () => (

@@ -33,7 +33,7 @@ const Home = () => {
 
 
   return (
-    <motion.div className="flex min-h-screen flex-col items-center justify-between"
+    <motion.div className="w-full flex bg-white flex-col "
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -10 }}
@@ -42,7 +42,7 @@ const Home = () => {
         showUserProfile={showUserProfile}
         setShowUserProfile={setShowUserProfile}
       />
-      <div className="flex flex-col w-full  ">
+      <div className="mt-[56px] md:mt-[100px] flex flex-col w-full  ">
         <Section1 />
         <Section1_2 />
         <Section2 />

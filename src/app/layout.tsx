@@ -7,6 +7,7 @@ import "./globals.css";
 import { LogginProvider } from "./context/LogginContext";
 import { ProgressProvider } from "./context/ProgressContext";
 import { Inter, Ubuntu, Poppins } from 'next/font/google'
+import Header from "./components/header";
 
 const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],

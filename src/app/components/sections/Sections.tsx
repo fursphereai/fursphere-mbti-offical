@@ -97,13 +97,15 @@ const Section2: React.FC = () => {
           </h1>
           
           <div className="
-          w-[74.5px] md:w-full 
-          h-[30px] md:h-full
-          text-[8px] md:text-[16px] ">
+          w-full 
+          h-full
+          text-[16px]
+          flex flex-row items-center justify-center
+           ">
           <SignupButton 
             className="
-            w-[74.5px] md:w-[123px]
-            h-[30px] md:h-[44px]"
+            w-[123px]
+            h-[44px]"
             onClick={() => {
             // Add your click handler logic here
             console.log('Signup clicked');
@@ -117,7 +119,7 @@ const Section2: React.FC = () => {
           <div className=" w-full h-full">
           <video
             ref={videoRef}
-            className=" w-full h-full object-cover"
+            className=" mt-[15px] md:mt-[0] w-full h-full object-cover"
             autoPlay
             loop
             muted
@@ -158,14 +160,15 @@ const Section3: React.FC = () => {
           </h1>
           
           <div className="
-          w-[74.5px] md:w-full 
-          h-[30px] md:h-full
-          text-[8px] md:text-[16px]
+          w-full 
+          h-full
+          text-[16px]
+          flex flex-row items-center justify-center
            ">
           <SignupButton 
             className="
-            w-[74.5px] md:w-[123px]
-            h-[30px] md:h-[44px]"
+            w-[123px]
+            h-[44px]"
             onClick={() => {
             // Add your click handler logic here
             console.log('Signup clicked');
@@ -179,7 +182,7 @@ const Section3: React.FC = () => {
           <div className=" w-full h-full">
           <video
             ref={videoRef}
-            className=" w-full h-full object-cover"
+            className=" mt-[15px] md:mt-[0] w-full h-full object-cover"
             autoPlay
             loop
             muted
@@ -218,13 +221,15 @@ const Section4: React.FC = () => {
           </h1>
           
           <div className="
-          w-[74.5px] md:w-full 
-          h-[30px] md:h-full
-          text-[8px] md:text-[16px] ">
+          w-full 
+          h-full
+          text-[16px]
+          flex flex-row items-center justify-center
+           ">
           <SignupButton 
             className="
-            w-[74.5px] md:w-[123px]
-            h-[30px] md:h-[44px]"
+            w-[123px]
+            h-[44px]"
             onClick={() => {
             // Add your click handler logic here
             console.log('Signup clicked');

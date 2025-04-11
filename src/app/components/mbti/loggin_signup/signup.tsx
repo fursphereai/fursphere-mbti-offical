@@ -40,9 +40,10 @@ interface SignupProps {
     field: string, 
     value: string | File
   ) => void;
+  setPart2: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Signup({ handleNext, setStep, setShowSignup, setShowLogin, setShowEmail, step, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setLoading, setDownload, setAiResult, aiResult, surveyData, setSurveyData, updateAnswer, setIsFromUserProfile, isFromUserProfile }: SignupProps): JSX.Element {
+export default function Signup({ handleNext, setStep, setShowSignup, setShowLogin, setShowEmail, step, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setLoading, setDownload, setAiResult, aiResult, surveyData, setSurveyData, updateAnswer, setIsFromUserProfile, isFromUserProfile, setPart2 }: SignupProps): JSX.Element {
   const [signupEmail, setSignupEmail] = useState('');
   const [signupEmailValid, setSignupEmailValid] = useState(false);
   const [showInvalidEmail, setShowInvalidEmail] = useState(false);
@@ -339,6 +340,7 @@ const validateAndSubmit = async () => {
             setDownload={setDownload}
             setIsFromUserProfile={setIsFromUserProfile}
             isFromUserProfile={isFromUserProfile}
+            setPart2={setPart2}
             
             />
           </div>

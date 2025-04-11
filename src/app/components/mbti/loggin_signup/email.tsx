@@ -42,10 +42,11 @@ interface EmailProps {
   setUserInfo: React.Dispatch<React.SetStateAction<any>>;
   setIsFromUserProfile: React.Dispatch<React.SetStateAction<boolean>>;
   isFromUserProfile: boolean;
+  setPart2: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
- export default function Email({ handleNext, setStep, setShowSignup, setShowLogin, setShowEmail, surveyData, aiResult, setAiResult, setResult1, setResult2, setResult3, step, setPart1, result1, result2, result3, showEmail, showSignup, showLogin, setIsLoading, isLoading, download, setDownload, updateAnswer, setUserInfo, setIsFromUserProfile, isFromUserProfile }: EmailProps) {
+ export default function Email({ handleNext, setStep, setShowSignup, setShowLogin, setShowEmail, surveyData, aiResult, setAiResult, setResult1, setResult2, setResult3, step, setPart1, result1, result2, result3, showEmail, showSignup, showLogin, setIsLoading, isLoading, download, setDownload, updateAnswer, setUserInfo, setIsFromUserProfile, isFromUserProfile, setPart2  }: EmailProps) {
 
     const [email, setEmail] = useState('');
     const [emailValid, setEmailValid] = useState(false);
@@ -251,6 +252,7 @@ return (
             setDownload={setDownload}
             setIsFromUserProfile={setIsFromUserProfile}
             isFromUserProfile = {isFromUserProfile}
+            setPart2={setPart2}
             />
           </div>
 

@@ -39,12 +39,12 @@ interface Question13Props {
     setSurveyData: React.Dispatch<React.SetStateAction<SurveyData>>;
     setIsFromUserProfile: React.Dispatch<React.SetStateAction<boolean>>;
     isFromUserProfile: boolean;
-  
+    setPart2: React.Dispatch<React.SetStateAction<boolean>>;
   
     
 }
 
-const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, setStep, surveyData, aiResult, setAiResult, setResult1, setResult2, setResult3, setPart1, result1, result2, result3, showEmail, showSignup, showLogin, setShowEmail, setShowSignup, setShowLogin, isLoading, setIsLoading, download, setDownload, updateAnswer, setSurveyData, setIsFromUserProfile, isFromUserProfile}) => {
+const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, setStep, surveyData, aiResult, setAiResult, setResult1, setResult2, setResult3, setPart1, result1, result2, result3, showEmail, showSignup, showLogin, setShowEmail, setShowSignup, setShowLogin, isLoading, setIsLoading, download, setDownload, updateAnswer, setSurveyData, setIsFromUserProfile, isFromUserProfile, setPart2}) => {
   
   const [email, setEmail] = useState('');
   const [comment, setComment] = useState('');
@@ -106,6 +106,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
         setDownload={setDownload}
         setIsFromUserProfile={setIsFromUserProfile}
         isFromUserProfile={isFromUserProfile}
+        setPart2={setPart2}
         />
     )} 
    
@@ -138,6 +139,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
         updateAnswer={updateAnswer}
         setIsFromUserProfile={setIsFromUserProfile}
         isFromUserProfile={isFromUserProfile}
+        setPart2={setPart2}
       />
      
     )}
@@ -172,6 +174,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
         setIsFromUserProfile={setIsFromUserProfile}
         isFromUserProfile={isFromUserProfile}
         updateAnswer={updateAnswer}
+        setPart2={setPart2}
       />
     )}
 
@@ -203,6 +206,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
         updateAnswer={updateAnswer}
         setIsFromUserProfile={setIsFromUserProfile}
         isFromUserProfile={isFromUserProfile}
+        setPart2={setPart2}
       />
     )}
        

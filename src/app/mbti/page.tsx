@@ -478,6 +478,7 @@ return (
           surveyData={surveyData}
           isFromUserProfile={isFromUserProfile}
           setIsFromUserProfile={setIsFromUserProfile}
+          setPart2={setPart2}
         />
       )}
       </AnimatePresence>

@@ -23,10 +23,10 @@ interface LoadingProps {
     setDownload: React.Dispatch<React.SetStateAction<boolean>>;
     setIsFromUserProfile: React.Dispatch<React.SetStateAction<boolean>>;
     isFromUserProfile: boolean;
- 
+    setPart2: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Loading({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, setIsFromUserProfile, isFromUserProfile }: LoadingProps) {
+export default function Loading({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, setIsFromUserProfile, isFromUserProfile, setPart2 }: LoadingProps) {
   return (
     <motion.div 
       className="fixed inset-0 bg-black bg-opacity-50 flex flex-col z-50 justify-center items-center"
@@ -64,6 +64,7 @@ export default function Loading({ step, setStep, setPart1, result1, result2, res
             setDownload={setDownload}
             setIsFromUserProfile={setIsFromUserProfile}
             isFromUserProfile={isFromUserProfile}
+            setPart2={setPart2}
             />
           </div>
     <style>

@@ -41,11 +41,12 @@ interface LogginProps {
     field: string, 
     value: string | File
   ) => void;
+  setPart2: React.Dispatch<React.SetStateAction<boolean>>;
 
 }
 
 
-export default function Loggin({ handleNext, setStep, setShowSignup, setShowLogin, setShowEmail, step, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setLoading, setDownload, setAiResult, aiResult, surveyData, setIsFromUserProfile, isFromUserProfile, updateAnswer }: LogginProps) {
+export default function Loggin({ handleNext, setStep, setShowSignup, setShowLogin, setShowEmail, step, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setLoading, setDownload, setAiResult, aiResult, surveyData, setIsFromUserProfile, isFromUserProfile, updateAnswer, setPart2 }: LogginProps) {
 
     const { loggin, setLoggin } = useLoggin();
     const { userEmail, setUserEmail } = useLoggin();
@@ -375,6 +376,7 @@ return (
             setShowLogin={setShowLogin}
             setIsFromUserProfile={setIsFromUserProfile}
             isFromUserProfile = {isFromUserProfile}
+            setPart2={setPart2}
             
             />
           </div>

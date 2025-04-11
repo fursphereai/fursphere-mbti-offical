@@ -140,9 +140,9 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
 
           {surveyData.pet_info.PetPhoto ? (
             surveyData.pet_info.PetSpecies === "Dog" ? (
-              <img src={`/mbti-dog/${mbti}.svg`} alt="mbti-result" className="w-full h-full object-cover"/> 
+              <img src={`/mbti-dog/${mbti}.svg`} alt="mbti-result" loading="eager" className="w-full h-full object-contain"/> 
             ) : (
-              <img src={`/mbti-cat/${mbti}.svg`} alt="mbti-result" className="w-full h-full object-cover"/>
+              <img src={`/mbti-cat/${mbti}.svg`} alt="mbti-result" loading="eager" className="w-full h-full object-contain"/>
             )
           ) : (
             <div className="md:hidden"> 

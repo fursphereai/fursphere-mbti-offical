@@ -65,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({  showUserProfile, setShowUserProfile })
                   className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/' ? 'text-[#5676CF]' : ''}`}>
               Home
             </Link>
-            <Link href="/product" 
+            <Link href="/" 
                   className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/product' ? 'text-[#5676CF]' : ''}`}>
               Product
             </Link>
@@ -73,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({  showUserProfile, setShowUserProfile })
                   className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/mbti' ? 'text-[#5676CF]' : ''}`}>
               Quiz
             </Link>
-            <Link href="/about" 
+            <Link href="/" 
                   className={` text-[16px]  text-[#1A1D1F] font-[Inter] hover:text-[#5676CF] transition-colors ${pathname === '/about' ? 'text-[#5676CF]' : ''}`}>
               About
             </Link>
@@ -128,10 +128,10 @@ const Header: React.FC<HeaderProps> = ({  showUserProfile, setShowUserProfile })
         <button className="mb-[40px]" onClick={toggleMenu}>
           <img src="/close.png" alt="Close Menu" className="w-[24px] h-[24px] top-[8px]" />
         </button>
-        <Link href="#home" className="text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors" onClick={closeMenu}>Home</Link>
-        <Link href="#product" className="text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors" onClick={closeMenu}>Product</Link>
-        <Link href="#quiz" className="text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors" onClick={closeMenu}>Quiz</Link>
-        <Link href="#about" className="text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors" onClick={closeMenu}>About</Link>
+        <Link href="/" className={`text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors ${pathname === '/' ? 'text-[#C3C3C3]' : ''}`} onClick={closeMenu}>Home</Link>
+        <Link href="/" className={`text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors ${pathname === '/product' ? 'text-[#C3C3C3]' : ''}`} onClick={closeMenu}>Product</Link>
+        <Link href="/mbti" className={`text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors ${pathname === '/mbti' ? 'text-[#C3C3C3]' : ''}`} onClick={closeMenu}>Quiz</Link>
+        <Link href="/" className={`text-[16px] py-[8px] text-white hover:text-opacity-75 transition-colors ${pathname === '/about' ? 'text-[#C3C3C3]' : ''}`} onClick={closeMenu}>About</Link>
       </nav>
     </header>
   );

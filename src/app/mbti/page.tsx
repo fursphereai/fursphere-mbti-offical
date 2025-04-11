@@ -235,6 +235,7 @@ return (
       setDownload={setDownload}
       setIsFromUserProfile={setIsFromUserProfile}
       isFromUserProfile={isFromUserProfile}
+      setPart2={setPart2}
       />
       )}
  

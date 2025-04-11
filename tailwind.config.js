@@ -27,6 +27,7 @@ module.exports = {
         Inter: ['"Inter"', "sans-serif"],
         Ubuntu: ['"Ubuntu"', "sans-serif"],
         UbuntuLight: ['"Ubuntu Light"', "sans-serif"],
+        baloo2: ['var(--font-baloo2)'],
       },
     },
   },

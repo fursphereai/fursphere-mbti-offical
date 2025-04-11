@@ -10,8 +10,9 @@ const Footer = () => {
   };
 
   return (
-    <div className="flex  justify-center  mx-auto max-w-[1440px] w-full  bg-[#5777D0] min-h-[414px] md:h-[364px] overflow-hidden flex-shrink-0 text-center font-Inter text-[#D1D7EF]">
-      <div className="my-[40px] md:my-[52px]  frame-group w-full max-w-[1240px]  flex flex-col items-start justify-start gap-y-[40px] md:gap-[90px]">
+    <div className="flex flex-col items-center justify-center w-full bg-[#5777D0]">
+      <div className="flex   justify-center  mx-auto max-w-[1440px] w-full  bg-[#5777D0] min-h-[414px] md:h-[364px] overflow-hidden flex-shrink-0 text-center font-Inter text-[#D1D7EF]">
+        <div className="my-[40px] md:my-[52px]  frame-group w-full max-w-[1240px]  flex flex-col items-start justify-start gap-y-[40px] md:gap-[90px]">
         {/* Upper Section */}
         
         <div className=" w-full frame-container  flex flex-col md:flex-row items-center md:items-start justify-between px-[40px] gap-y-[40px]">
@@ -44,7 +45,7 @@ const Footer = () => {
           </div>
 
           {/* Right Side - Links */}
-          <div className="  flex flex-row items-start  gap-[60px]  text-white ">
+          <div className="  flex flex-row items-start gap-[100px] md:gap-[60px]  text-white ">
             <FooterLinkGroup links={['Company', 'Terms of Use', 'Support', 'Privacy Policy']} />
             <FooterLinkGroup links={['Contact', 'Linkedin', 'Youtube']} />
           </div>
@@ -53,6 +54,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <FooterBottom />
       </div>
+    </div>
     </div>
   );
 };
@@ -77,7 +79,7 @@ const FooterBottom = () => (
 
     <div className=" copyright-2025-fursphere-al-parent flex flex-row  md:flex-col items-center md:items-start justify-between w-[307px] h-[30px] md:h-[61.8px]">
       
-      <div className="flex flex-row ml-0 md:ml-[8.6px] items-center justify-left fursphere-parent  max-w-[109px] w-full   text-white font-['Baloo_2']">
+      <div className="flex flex-row ml-0 md:ml-[8.6px] items-center justify-left fursphere-parent  max-w-[109px] w-full   text-white font-baloo2">
           <div className="w-[27px] h-[27px]">
             <Image
               src="/footer-logo.svg"
@@ -87,7 +89,7 @@ const FooterBottom = () => (
               className="frame-child w-full h-full"
           />
         </div>
-        <div className="fursphere text-[14px] md:text-[16px] font-[800] ml-[5.7px]">
+        <div className=" text-[14px] md:text-[16px] font-[800] ml-[5.7px]">
           Fursphere
         </div>
       </div>
@@ -99,7 +101,7 @@ const FooterBottom = () => (
 
     <div className=" 
     text-[36px] md:text-[40px] font-[700] 
-    tracking-[-0.04em] leading-[100%] font-['Baloo_2'] bg-gradient-to-b from-white to-white bg-clip-text text-transparent">
+    tracking-[-0.04em] leading-[100%] font-baloo2 bg-gradient-to-b from-white to-white bg-clip-text text-transparent">
       Start caring more
     </div>
   </div>

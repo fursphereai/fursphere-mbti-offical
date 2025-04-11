@@ -163,13 +163,13 @@ const Age: React.FC<AgeProps> = ({ handleNext, handleBack, step, setStep, survey
                     <div className="fixed bg- bottom-0 bg-[#FFFFFFCC] h-[327px] left-0 right-0  z-50 animate-slide-up">
                       <div className="flex  justify-between items-center px-[20px] pt-[30px] pb-[11px]">
                         <button 
-                          className="text-[#61616180] text-[Ubuntu] font-[400] text-[14px]" 
+                          className="text-[#61616180] text-[Ubuntu] font-[400] text-[14px] z-[5]" 
                           onClick={() => setIsDropdownOpen(false)}
                         >
                           Cancel
                         </button>
                         <button 
-                          className="text-[#27355D] text-[Ubuntu] font-[400] text-[14px]" 
+                          className="text-[#27355D] text-[Ubuntu] font-[400] text-[14px] z-[5]" 
                           onClick={() => {
                             if (currentOptionRef.current) {
                               setSelectedAge(currentOptionRef.current);

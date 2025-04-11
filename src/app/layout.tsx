@@ -6,7 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import "./globals.css";
 import { LogginProvider } from "./context/LogginContext";
 import { ProgressProvider } from "./context/ProgressContext";
-import { Inter, Ubuntu, Poppins } from 'next/font/google'
+import { Inter, Ubuntu, Poppins, Baloo_2 } from 'next/font/google'
 import Header from "./components/header";
 
 const ubuntu = Ubuntu({
@@ -20,6 +20,13 @@ const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-poppins',
+})
+
+const baloo2 = Baloo_2({
+  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-baloo2',
 })
 
 const inter = Inter({ subsets: ["latin"] ,variable: '--font-inter',});
@@ -41,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ubuntu.variable} ${poppins.variable} ${ubuntu.className}`}>
+    <html lang="en" className={`${ubuntu.variable} ${poppins.variable} ${baloo2.variable} ${ubuntu.className}`}>
       <body className={inter.className}>
       <LogginProvider>
         <ProgressProvider>

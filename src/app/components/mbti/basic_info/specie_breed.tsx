@@ -385,13 +385,13 @@ const SpecieBreed: React.FC<SpecieBreedProps> = ({ handleNext, handleBack, step,
                     <div className="md:hidden fixed bg- bottom-0 bg-[#FFFFFFCC] h-[327px] left-0 right-0  z-50  animate-slide-up">
                       <div className="flex  justify-between items-center px-[20px] pt-[30px] pb-[11px]">
                         <button 
-                          className="text-[#61616180] text-[Ubuntu] font-[400] text-[14px]" 
+                          className="text-[#61616180]  text-[Ubuntu] font-[400] text-[14px] z-[5]" 
                           onClick={() => setIsOpen(false)}
                         >
                           Cancel
                         </button>
                         <button 
-                          className="text-[#27355D] text-[Ubuntu] font-[400] text-[14px]" 
+                          className="text-[#27355D]  text-[Ubuntu] font-[400] text-[14px] z-[5]" 
                           onClick={() => {
                             console.log(currentOptionRef.current);
                             if (currentOptionRef.current) {
@@ -559,13 +559,13 @@ const SpecieBreed: React.FC<SpecieBreedProps> = ({ handleNext, handleBack, step,
                     <div className="md:hidden fixed bg- bottom-0 bg-[#FFFFFFCC] h-[327px] left-0 right-0  z-50  animate-slide-up">
                       <div className="flex  justify-between items-center px-[20px] pt-[30px] pb-[11px]">
                         <button 
-                          className="text-[#61616180] text-[Ubuntu] font-[400] text-[14px]" 
+                          className="text-[#61616180] w-[50px]  text-[Ubuntu] font-[400] text-[14px] z-[5]" 
                           onClick={() => setIsOpen2(false)}
                         >
                           Cancel
                         </button>
                         <button 
-                          className="text-[#27355D] text-[Ubuntu] font-[400] text-[14px]" 
+                          className="text-[#27355D]  w-[50px] text-[Ubuntu] font-[400] text-[14px] z-[5]" 
                           onClick={() => {
                             console.log(currentOptionRef.current);
                             if (currentOptionRef.current) {

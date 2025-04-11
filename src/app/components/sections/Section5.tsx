@@ -2,6 +2,7 @@ import React from 'react';
 
 const Section5: React.FC = () => {
     return (
+      <div className="flex flex-col items-center justify-center w-full bg-[#E8EBF6]">
       <section className="w-full max-w-[1440px] mx-auto 
       h-[224px] md:h-[383px]
       bg-[#E8EBF6] 
@@ -38,6 +39,7 @@ const Section5: React.FC = () => {
           {/* </div> */}
        
       </section>
+      </div>
     );
   };
 

@@ -33,6 +33,58 @@ export const handleDownload3 = async (surveyData: SurveyData, mbti: string, isFr
       cacheBust: true
     });
 
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // For iOS devices, we can use the share API if available
+      if (navigator.share) {
+        // Convert data URL to Blob
+        const response = await fetch(dataUrl);
+        const blob = await response.blob();
+        
+        // Create a File from the Blob
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        
+        try {
+          await navigator.share({
+            files: [file],
+            title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+            text: 'Check out my pet\'s personality type!'
+          });
+          return; // Exit after sharing
+        } catch (error) {
+          console.log('Sharing failed', error);
+          // Fall back to regular download if sharing fails
+        }
+      }
+      
+      // For iOS Safari, we can try to open the image in a new tab
+      // The user can then long-press to save it
+      const newTab = window.open();
+      if (newTab) {
+        newTab.document.write(`
+          <html>
+            <head>
+              <title>${surveyData.pet_info.PetName}'s MBTI Result</title>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
+                img { max-width: 100%; max-height: 100%; }
+                p { position: fixed; bottom: 20px; width: 100%; text-align: center; font-family: Arial; }
+              </style>
+            </head>
+            <body>
+              <img src="${dataUrl}" alt="${surveyData.pet_info.PetName}'s MBTI Result">
+              <p>Press and hold the image to save to your photos</p>
+            </body>
+          </html>
+        `);
+        newTab.document.close();
+        return;
+      }
+    }
+
     const link = document.createElement('a');
     link.download = `${surveyData.pet_info.PetName}-page3.png`;
     link.href = dataUrl;

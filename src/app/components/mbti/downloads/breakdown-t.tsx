@@ -40,7 +40,7 @@ export const handleDownload4 = async (surveyData: SurveyData, mbti: string, isFr
         const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page4.png`, { type: 'image/png' });
         
         try {
           await navigator.share({

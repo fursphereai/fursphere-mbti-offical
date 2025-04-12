@@ -82,11 +82,11 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
   const handleDownload = () => {
     
       handleDownload1(surveyData, mbti, isFromUserProfile);
-      handleDownload2(surveyData, mbti, isFromUserProfile);
-      handleDownload3(surveyData, mbti, isFromUserProfile);
-      handleDownload4(surveyData, mbti, isFromUserProfile);
-      handleDownload5(surveyData, mbti, isFromUserProfile);
-      handleDownload6(surveyData, mbti, isFromUserProfile);
+      // handleDownload2(surveyData, mbti, isFromUserProfile);
+      // handleDownload3(surveyData, mbti, isFromUserProfile);
+      // handleDownload4(surveyData, mbti, isFromUserProfile);
+      // handleDownload5(surveyData, mbti, isFromUserProfile);
+      // handleDownload6(surveyData, mbti, isFromUserProfile);
   };
 
   return (

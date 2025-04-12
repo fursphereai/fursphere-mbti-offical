@@ -53,12 +53,14 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
   const handleSwipe = (direction: number) => {
    
 
-    setCurrentPage((prev) => {
+  setCurrentPage((prev) => {
       const next = prev + direction;
       if (next < 0) return totalPages - 1;
       if (next >= totalPages) return 0;
       return next;
     });
+
+   console.log('currentPage', currentPage);
   };
 
   const { userInfo, setUserInfo } = useLoggin();
@@ -80,13 +82,19 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
 
 
   const handleDownload = () => {
-    
+     if (currentPage === 0) {
       handleDownload1(surveyData, mbti, isFromUserProfile);
-      // handleDownload2(surveyData, mbti, isFromUserProfile);
-      // handleDownload3(surveyData, mbti, isFromUserProfile);
-      // handleDownload4(surveyData, mbti, isFromUserProfile);
-      // handleDownload5(surveyData, mbti, isFromUserProfile);
-      // handleDownload6(surveyData, mbti, isFromUserProfile);
+     } else if (currentPage === 1) {
+      handleDownload2(surveyData, mbti, isFromUserProfile);
+     } else if (currentPage === 2) {
+      handleDownload3(surveyData, mbti, isFromUserProfile);
+     } else if (currentPage === 3) {
+      handleDownload4(surveyData, mbti, isFromUserProfile);
+     } else if (currentPage === 4) {
+      handleDownload5(surveyData, mbti, isFromUserProfile);
+     } else if (currentPage === 5) {
+      handleDownload6(surveyData, mbti, isFromUserProfile);
+     }
   };
 
   return (

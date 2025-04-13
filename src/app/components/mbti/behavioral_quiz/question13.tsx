@@ -80,31 +80,6 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
 
 
 
-  useEffect(() => {
-    if (showEmail || showSignup || showLogin) {
-      // Lock the body scroll
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-      document.body.style.top = `-${window.scrollY}px`;
-    } else {
-      // Unlock the body scroll
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    }
-    
-    return () => {
-      // Cleanup function to ensure body scroll is restored
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-    };
-  }, [showEmail, showSignup, showLogin]);
 
 
   return (
@@ -143,7 +118,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
       />
   
      )} */}
-    {!showEmail && (
+   
     <div className=" bg-red-300 relative w-full mx-auto  h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] max-h-[1440px]">
     
     {isLoading && (
@@ -335,7 +310,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
 
             </div>
       </div>
-    )}
+ 
       </>
   );
 };

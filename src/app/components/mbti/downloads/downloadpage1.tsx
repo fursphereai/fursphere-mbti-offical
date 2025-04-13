@@ -62,8 +62,12 @@ export const getDownloadImageUrl1 = async (surveyData: SurveyData, mbti: string,
     return null;
   }
 };
-
+const { userInfo, setUserInfo } = useLoggin();
+const [petPhotoLoaded, setPetPhotoLoaded] = useState(false);
 export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
+
+
+
   const elementToCapture = document.getElementById('download-1');
   if (!elementToCapture) {
     console.error('Element not found');
@@ -82,21 +86,25 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         'text-rendering': 'optimizeLegibility'
       },
       cacheBust: true,
-      filter: (node: HTMLElement) => {
-        // Skip external images that might cause CORS issues
-        if (node.tagName === 'IMG') {
-          const imgElement = node as HTMLImageElement;
-          const src = imgElement.getAttribute('src') || '';
-          console.log("src testing life time",src);
+      // filter: (node: HTMLElement) => {
+      //   // Skip external images that might cause CORS issues
+      //   if (node.tagName === 'IMG') {
+      //     const imgElement = node as HTMLImageElement;
+      //     const src = imgElement.getAttribute('src') || '';
+      //     console.log("src testing life time",src);
             
-          // Only include images from your own domain or data URLs
-          if (src.startsWith('blob:')) {
-            return true;
-          } 
-          if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-            return true;
-          }
-        }
+      //     // Only include images from your own domain or data URLs
+      //     if (src.startsWith('blob:')) {
+      //       return true;
+      //     } 
+      //     if (src.startsWith('http') && !src.includes(window.location.hostname)) {
+      //       return true;
+      //     }
+      //   }
+      //   return true;
+      // }
+      filter: (node: HTMLElement) => {
+        console.log("Filtering:", node.tagName, (node as HTMLImageElement)?.src);
         return true;
       }
     });
@@ -239,6 +247,11 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
                 src={surveyData.pet_info.PetPublicUrl} 
                 alt="download" 
                 className="w-full h-full  object-cover rounded-[36px] "
+                onLoad={() => setPetPhotoLoaded(true)}
+                onError={() => {
+                  console.error('加载宠物照片失败');
+                  setPetPhotoLoaded(true); // 即使加载失败也允许继续，或者你可以有其他的错误处理逻辑
+                }}
              
               />
               </div>

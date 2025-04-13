@@ -8,6 +8,60 @@ import { SurveyData } from '@/app/types/survey';
 import domtoimage from 'dom-to-image';
 import { useLoggin } from '@/app/context/LogginContext';
 import Image from 'next/image';
+import * as htmlToImage from 'html-to-image';
+
+
+
+
+
+export const getDownloadImageUrl1 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
+  const elementToCapture = document.getElementById('download-1');
+  if (!elementToCapture) {
+    console.error('Element not found');
+    return;
+  }
+
+  try {
+
+   
+    
+    const dataUrl = await domtoimage.toPng(elementToCapture, {
+      width: 1200,      
+      height: 1500,     
+      quality: 0.95,    
+      style: {
+        transform: 'scale(1.5)',
+        transformOrigin: 'top left',
+        '-webkit-font-smoothing': 'antialiased',
+        'text-rendering': 'optimizeLegibility'
+      },
+
+   
+      filter: (node: HTMLElement) => {
+        // Skip external images that might cause CORS issues
+        if (node.tagName === 'IMG') {
+          const imgElement = node as HTMLImageElement;
+          const src = imgElement.getAttribute('src') || '';
+            
+          // Only include images from your own domain or data URLs
+          if (src.startsWith('blob:')) {
+            return true;
+          }
+          if (src.startsWith('http') && !src.includes(window.location.hostname)) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+    });
+
+    return dataUrl;
+  } catch (error) {
+    console.error('dom-to-image error:', error);
+    return null;
+  }
+};
 
 export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
   const elementToCapture = document.getElementById('download-1');
@@ -39,11 +93,15 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
           const src = imgElement.getAttribute('src') || '';
             
           // Only include images from your own domain or data URLs
-          if (src.startsWith('blob:') || 
-              (src.startsWith('http') && !src.includes(window.location.hostname))) {
-            // Replace with a placeholder or skip
+
+          if (src.startsWith('blob:')) {
+            return true;
+          }
+
+          if (src.startsWith('http') && !src.includes(window.location.hostname)) {
             return false;
           }
+          
         }
         return true;
       }
@@ -59,7 +117,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({
@@ -74,35 +132,13 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         }
       }
       
-      // For iOS Safari, we can try to open the image in a new tab
-      // The user can then long-press to save it
-      const newTab = window.open();
-      if (newTab) {
-        newTab.document.write(`
-          <html>
-            <head>
-              <title>${surveyData.pet_info.PetName}'s MBTI Result</title>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <style>
-                body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
-                img { max-width: 100%; max-height: 100%; }
-                p { position: fixed; bottom: 20px; width: 100%; text-align: center; font-family: Arial; }
-              </style>
-            </head>
-            <body>
-              <img src="${dataUrl}" alt="${surveyData.pet_info.PetName}'s MBTI Result">
-              <p>Press and hold the image to save to your photos</p>
-            </body>
-          </html>
-        `);
-        newTab.document.close();
-        return;
-      }
+      
+     
     }
 
    
     const link = document.createElement('a');
-    link.download = `${surveyData.pet_info.PetName}-page1.png`;
+    link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
     link.href = dataUrl;
     link.click();
   } catch (error) {
@@ -126,7 +162,10 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
   (result.ai_output.text.b_label === "Sensing" ? result.ai_output.text.b_label.charAt(0).toUpperCase() : result.ai_output.text.b_label.charAt(1).toUpperCase()) + 
   result.ai_output.text.t_label.charAt(0).toUpperCase() + 
   result.ai_output.text.i_label.charAt(0).toUpperCase();
+  
 
+  console.log("surveyData.pet_info.PetPhoto",surveyData.pet_info.PetPhoto);
+  console.log("surveyData.pet_info.PetPublicUrl",surveyData.pet_info.PetPublicUrl);
   return (
       <motion.div id="download-1"  className="relative bg-white w-[800px] h-[1000px] flex flex-col  z-0"
       initial={{ scale: 0.5, opacity: 0 }}
@@ -202,14 +241,14 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
               : '#4B367B'
             }}
             >
-              
+              <div className=" w-full h-full  rounded-[36px] z-10">
               <img
                 src={surveyData.pet_info.PetPhoto} 
                 alt="download" 
-                className="w-full h-full object-cover rounded-[36px]"
+                className="w-full h-full  object-cover rounded-[36px] "
              
-               
               />
+              </div>
             </div>
             ) : (
               <div className="w-[346px] h-[346px]">

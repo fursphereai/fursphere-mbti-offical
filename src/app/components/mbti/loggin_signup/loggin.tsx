@@ -185,7 +185,7 @@ const validateAndSubmit = async () => {
                     email: logginEmail,
                     email_signup_time: new Date().toISOString(),
                     signup: true,
-                    test_times: (surveyData.user_info.test_times || 0) + 1
+                    test_times: 1
                 }
             };
             
@@ -199,14 +199,14 @@ const validateAndSubmit = async () => {
             await UserInfo(logginEmail);
             setUserEmail(logginEmail);
             await GetAiResult(updatedSurveyData);
-            updateAnswer('user_info', null, 'test_times', String((surveyData.user_info.test_times || 0) + 1));
-    
+            updateAnswer('user_info', null, 'test_times', '1');
+            updateAnswer('user_info', null, 'test_date', String(new Date().toLocaleString()));
 
+        
+      
           
             setLoggin(true);
           
-         
-        
             setLoading(false); 
            
             console.log('Validation successful');
@@ -268,7 +268,7 @@ const handleSendCode = async () => {
     
         setCanResend(false);
         sendVerificationCode();
-        setCountdown(5);
+        setCountdown(60);
         
         console.log("3. Resetting send state");
         setLogginSendingCode(false);

@@ -1,9 +1,16 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { SurveyData } from '@/app/types/survey';
 import { useLoggin } from '@/app/context/LogginContext';
-import DownloadPage1 from '../downloads/downloadpage1';
+import DownloadPage1, { getDownloadImageUrl1, handleDownload1 } from '../downloads/downloadpage1';
+import { jsPDF } from 'jspdf';
+import domtoimage from 'dom-to-image';
+import BreakdownM, { getDownloadImageUrl2 } from '../downloads/breakdown-m';
+import BreakdownB, { getDownloadImageUrl3 } from '../downloads/breakdown-b';
+import BreakdownT, { getDownloadImageUrl4 } from '../downloads/breakdown-t';
+import BreakdownI, { getDownloadImageUrl5 } from '../downloads/breakdown-i';
+import DoNotDo, { getDownloadImageUrl6 } from '../downloads/do_not_do';
 
 
 
@@ -32,6 +39,10 @@ interface AiResult {
     status: string;
   }
 }
+
+
+
+
 
 
 const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep, surveyData, updateAnswer, setResult1, setResult2, setResult3,  aiResult, setDownload, setDownloadPage1, isFromUserProfile, setIsFromUserProfile}) => {
@@ -68,8 +79,106 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
 
   console.log('surveyDataPGOTO', surveyData);
 
+  const emailSentRef = useRef(false);
+
+  useEffect(() => {
+    // Only run if it hasn't been executed before
+    if (!emailSentRef.current) {
+      mbtiEmail();
+      // Mark as executed
+      emailSentRef.current = true;
+    }
+  }, []);
+  
+
+
+
+  const mbtiEmail = async () => {
+    try {
+      
+      
+    const email = surveyData.user_info.email;
+    console.log('Waiting for content to render...');
+
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    const imageDataUrl1 = await getDownloadImageUrl1(surveyData, mbti, isFromUserProfile);
+    const imageDataUrl2 = await getDownloadImageUrl2(surveyData, mbti, isFromUserProfile);
+    const imageDataUrl3 = await getDownloadImageUrl3(surveyData, mbti, isFromUserProfile);
+    const imageDataUrl4 = await getDownloadImageUrl4(surveyData, mbti, isFromUserProfile);
+    const imageDataUrl5 = await getDownloadImageUrl5(surveyData, mbti, isFromUserProfile);
+    const imageDataUrl6 = await getDownloadImageUrl6(surveyData, mbti, isFromUserProfile);
+  
+    if (!imageDataUrl1 || !imageDataUrl2 || !imageDataUrl3 || !imageDataUrl4 || !imageDataUrl5 || !imageDataUrl6) {
+      throw new Error('Failed to generate image');
+    }
+
+   
+    const blob1 = imageDataUrl1.split(',')[1];
+    const blob2 = imageDataUrl2.split(',')[1];
+    const blob3 = imageDataUrl3.split(',')[1];
+    const blob4 = imageDataUrl4.split(',')[1];
+    const blob5 = imageDataUrl5.split(',')[1];
+    const blob6 = imageDataUrl6.split(',')[1];
+
+
+    const response = await fetch('/api/proxy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              type: 'send_mbti_email',
+              attachment1: blob1,
+              attachment2: blob2,
+              attachment3: blob3,
+              attachment4: blob4,
+              attachment5: blob5,
+              attachment6: blob6,
+              surveyData: surveyData,
+              contentType: 'image/jpeg', // Explicitly set content type
+              filename: `${surveyData.pet_info.PetName}-MBTI-Result.jpeg`, // Use .png extension
+              email: email,
+              isTestImage: true
+            }),
+    });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            switch (response.status) {
+                case 400:
+                    throw new Error('Invalid email address');
+                case 429:
+                    throw new Error('Too many attempts. Please try again later');
+                case 500:
+                    throw new Error('Server error. Please try again later');
+                default:
+                    throw new Error(data.message || 'Failed to send code');
+            }
+        }
+
+  
+    } catch (error: any) {
+        console.error('Error:', error);
+    
+      
+    } finally {
+        
+    }
+};
+
 
   return (
+    <>
+    <div className="hidden">  
+      <DownloadPage1 aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
+      <BreakdownM aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
+      <BreakdownB aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
+      <BreakdownT aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
+      <BreakdownI aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
+      <DoNotDo aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
+    </div>
     <div className="relative w-full mx-auto  h-[724px] md:h-[993px] bg-[#FFFFFF] flex flex-col items-center bg-white">
       {/* 🔹 进度条部分（顶部 80px 间距） */}
 
@@ -234,7 +343,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
         <DownloadPage1 />
       </div> */}
     </div>
-
+    </>
   );
 };
 

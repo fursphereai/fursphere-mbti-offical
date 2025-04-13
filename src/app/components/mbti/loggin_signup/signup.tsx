@@ -132,12 +132,12 @@ const handleSendCode = async () => {
    
         setSignupCanResend(false);
         sendVerificationCode();
-        setSignupCountdown(5);
+        setSignupCountdown(60);
          
     } catch (error) {
         console.error('Error:', error);
         setSignupCanResend(true);
-        setSignupCountdown(0);
+        setSignupCountdown(60);
         setSignupSendingCode(false);
     }
 };
@@ -192,7 +192,7 @@ const handleSendCode = async () => {
 
 
         //count down 60s
-        const [signupCountdown, setSignupCountdown] = useState(5);
+        const [signupCountdown, setSignupCountdown] = useState(60);
         const [signupCanResend, setSignupCanResend] = useState(true);
 
         // Handle countdown
@@ -269,7 +269,7 @@ const validateAndSubmit = async () => {
               email: signupEmail,
               email_signup_time: new Date().toISOString(),
               signup: true,
-              test_times: (surveyData.user_info.test_times || 0) + 1
+              test_times: 1
           }
       };
       
@@ -278,7 +278,8 @@ const validateAndSubmit = async () => {
       setLoading(true);
       setShowSignup(false);
       await GetAiResult(updatedSurveyData);
-      updateAnswer('user_info', null, 'test_times', String((surveyData.user_info.test_times || 0) + 1));
+      updateAnswer('user_info', null, 'test_times', '1');
+      updateAnswer('user_info', null, 'test_date', String(new Date().toLocaleString()));
       setLoading(false); 
       console.log("surveyData" + JSON.stringify(surveyData));
       console.log('Validation successful');

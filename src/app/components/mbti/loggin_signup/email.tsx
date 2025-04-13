@@ -12,6 +12,14 @@ import { getUserInfo } from '../get_user_info';
 import { checkingTestTimes } from '../checking_test_times';
 import { checkingSignup } from '../checking_signup';
 
+import downloadpage1 from '../downloads/downloadpage1';
+import { jsPDF } from 'jspdf';
+import domtoimage from 'dom-to-image';
+import BreakdownM from '../downloads/breakdown-m';
+import BreakdownI from '../downloads/breakdown-i';
+import BreakdownB from '../downloads/breakdown-b';
+import DownloadPage1 from '../downloads/downloadpage1';
+import BreakdownT from '../downloads/breakdown-t';
 
 
 interface EmailProps {
@@ -107,17 +115,18 @@ interface EmailProps {
             const response2 = await checkingSignup(email);
             console.log("airai" + JSON.stringify(response));
             console.log("checkingTestTimes" + JSON.stringify(response));
+            console.log("checkingTestTimes" + response.test_times);
 
-          if (JSON.stringify(response).includes('1') ) {
+
+
+          if (JSON.stringify(response2).includes('true')) {
+              setChecking(true);
+              setShowEmailRegistered(true);
+          } else if (response.test_times !== 0  ) {
       
             setChecking(true);
             setShowEmailUsed(true);
             console.log("surveyData" + JSON.stringify(surveyData));
-          } else if (JSON.stringify(response2).includes('true')) {
-            setChecking(true);
-            setShowEmailRegistered(true);
-         
-     
           } else  {
             setChecking(true);
             
@@ -177,10 +186,10 @@ const GetAiResult = async (surveyData: SurveyData) => {
                 user_info: {
                     ...surveyData.user_info,
                     email: email,
-                    test_times: (surveyData.user_info.test_times || 0) + 1
+                    test_times:  1
                 }
             };
-
+   
             updateAnswer('user_info', null, 'email', email);
             console.log('email', email);
             setIsLoading(true);
@@ -188,10 +197,11 @@ const GetAiResult = async (surveyData: SurveyData) => {
             await GetAiResult(updatedSurveyData);
             setResult1(true);
             setIsLoading(false); 
-            updateAnswer('user_info', null, 'test_times', String((surveyData.user_info.test_times || 0) + 1));
-            console.log('surveyData 12121211', surveyData);
-            console.log("surveyData" + JSON.stringify(surveyData));
-            console.log('Validation successful');
+
+
+            updateAnswer('user_info', null, 'test_times',  '1');
+            updateAnswer('user_info', null, 'test_date', String(new Date().toLocaleString()));
+        
         } catch (error) {
             setError('Failed to validate. Please try again.');
         } finally {
@@ -204,13 +214,10 @@ const GetAiResult = async (surveyData: SurveyData) => {
 
 
 
-
   
 
 return (
 <>   
-  
-
    
     <motion.div 
     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[50]"
@@ -362,7 +369,9 @@ return (
           
           <div className=" absolute bottom-[48px] w-[145px] h-[44px] z-[5] "
           onClick={validateAndSubmit}>
-            <button className="md:bottom-none w-full h-full rounded-[22px] bg-[#5777D0] flex items-center justify-center">
+            <button className="md:bottom-none w-full h-full rounded-[22px] bg-[#5777D0] flex items-center justify-center"
+            disabled={showEmailUsed || showEmailRegistered || !emailValid || !email}
+            >
               <h2 className="text-[16px] font-[Inter] font-[600] text-white">Get Result</h2>
             </button>
           </div>

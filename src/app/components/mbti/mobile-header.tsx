@@ -24,6 +24,7 @@ interface MobileHeaderProps {
   setIsFromUserProfile: (isFromUserProfile: boolean) => void;
   isFromUserProfile: boolean;
   setPart2: (part2: boolean) => void;
+  
 }
 
 const MobileHeader: React.FC<MobileHeaderProps> = ({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, setIsFromUserProfile, isFromUserProfile, setPart2 }) => {

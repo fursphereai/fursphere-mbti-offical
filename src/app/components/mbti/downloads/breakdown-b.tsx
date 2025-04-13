@@ -9,6 +9,59 @@ import { SurveyData } from '@/app/types/survey';
 import domtoimage from 'dom-to-image';
 import { useLoggin } from '@/app/context/LogginContext';
 
+export const getDownloadImageUrl3 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
+  const elementToCapture = document.getElementById('download-3');
+  if (!elementToCapture) {
+    console.error('Element not found');
+    return;
+  }
+
+  try {
+
+   
+    
+    const dataUrl = await domtoimage.toPng(elementToCapture, {
+      width: 1200,      
+      height: 1500,     
+      quality: 0.95,    
+      style: {
+        transform: 'scale(1.5)',
+        transformOrigin: 'top left',
+        '-webkit-font-smoothing': 'antialiased',
+        'text-rendering': 'optimizeLegibility'
+      },
+
+   
+      filter: (node: HTMLElement) => {
+        // Skip external images that might cause CORS issues
+        if (node.tagName === 'IMG') {
+          const imgElement = node as HTMLImageElement;
+          const src = imgElement.getAttribute('src') || '';
+            
+          // Only include images from your own domain or data URLs
+          if (src.startsWith('blob:') || 
+              (src.startsWith('http') && !src.includes(window.location.hostname))) {
+            // Replace with a placeholder or skip
+            return false;
+          }
+        }
+        return true;
+      }
+
+    });
+
+
+    
+
+
+    console.log('length of dataUrl:', dataUrl.length);
+    return dataUrl;
+  } catch (error) {
+    console.error('dom-to-image error:', error);
+    return null;
+  }
+};
+
 
 
 
@@ -44,7 +97,7 @@ export const handleDownload3 = async (surveyData: SurveyData, mbti: string, isFr
         const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page3.png`, { type: 'image/png' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page3.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({
@@ -59,34 +112,12 @@ export const handleDownload3 = async (surveyData: SurveyData, mbti: string, isFr
         }
       }
       
-      // For iOS Safari, we can try to open the image in a new tab
-      // The user can then long-press to save it
-      const newTab = window.open();
-      if (newTab) {
-        newTab.document.write(`
-          <html>
-            <head>
-              <title>${surveyData.pet_info.PetName}'s MBTI Result</title>
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <style>
-                body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
-                img { max-width: 100%; max-height: 100%; }
-                p { position: fixed; bottom: 20px; width: 100%; text-align: center; font-family: Arial; }
-              </style>
-            </head>
-            <body>
-              <img src="${dataUrl}" alt="${surveyData.pet_info.PetName}'s MBTI Result">
-              <p>Press and hold the image to save to your photos</p>
-            </body>
-          </html>
-        `);
-        newTab.document.close();
-        return;
-      }
+
+      
     }
 
     const link = document.createElement('a');
-    link.download = `${surveyData.pet_info.PetName}-page3.png`;
+    link.download = `${surveyData.pet_info.PetName}-page3.jpeg`;
     link.href = dataUrl;
     link.click();
   } catch (error) {

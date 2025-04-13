@@ -27,7 +27,7 @@ import UserProfile from '../components/user-profile';
 const PetMBTIFlow = () => {
 
   const { loggin, setLoggin } = useLoggin();
-  const initialStep = 0; 
+  const initialStep = 17; 
   const [step, setStep] = useState(initialStep);
 
   useEffect(() => {
@@ -209,7 +209,9 @@ useEffect(() => {
 }, [isLoading]);
   
 return (
+
     <div className="w-full h-[100svh] flex bg-white flex-col">
+      {/* <EmailTest /> */}
     {/* mobile header */}
     <div className={`${(step === 0 && part1 === false) ? 'hidden' : 'block md:hidden'}`}>
       {(showUserProfile === false) && (

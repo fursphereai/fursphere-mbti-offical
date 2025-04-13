@@ -112,7 +112,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
       if (navigator.share) {
         // Convert data URL to Blob
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+        console.log("dataUrl testing life time",dataUrl);
         const response = await fetch(dataUrl);
         console.log("response testing life time",response);
         const blob = await response.blob();

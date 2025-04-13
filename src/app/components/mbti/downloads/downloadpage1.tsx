@@ -89,10 +89,11 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
           const src = imgElement.getAttribute('src') || '';
             
           // Only include images from your own domain or data URLs
-          if (src.startsWith('blob:') || 
-              (src.startsWith('http') && !src.includes(window.location.hostname))) {
-            // Replace with a placeholder or skip
-            return false;
+          if (src.startsWith('blob:')) {
+            return true;
+          } 
+          if (src.startsWith('http') && !src.includes(window.location.hostname)) {
+            return true;
           }
         }
         return true;

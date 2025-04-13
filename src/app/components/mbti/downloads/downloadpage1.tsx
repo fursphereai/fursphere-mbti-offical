@@ -62,8 +62,7 @@ export const getDownloadImageUrl1 = async (surveyData: SurveyData, mbti: string,
     return null;
   }
 };
-const { userInfo, setUserInfo } = useLoggin();
-const [petPhotoLoaded, setPetPhotoLoaded] = useState(false);
+
 export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
 
 
@@ -247,11 +246,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
                 src={surveyData.pet_info.PetPublicUrl} 
                 alt="download" 
                 className="w-full h-full  object-cover rounded-[36px] "
-                onLoad={() => setPetPhotoLoaded(true)}
-                onError={() => {
-                  console.error('加载宠物照片失败');
-                  setPetPhotoLoaded(true); // 即使加载失败也允许继续，或者你可以有其他的错误处理逻辑
-                }}
+               
              
               />
               </div>

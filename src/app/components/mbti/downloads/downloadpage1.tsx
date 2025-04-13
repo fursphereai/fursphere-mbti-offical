@@ -111,15 +111,16 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
         // Convert data URL to Blob
+
+        await new Promise(resolve => setTimeout(resolve, 500));
         const response = await fetch(dataUrl);
         console.log("response testing life time",response);
         const blob = await response.blob();
         console.log("blob testing life time",blob);
-        const simpleBlob = new Blob(['iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='], { type: 'image/png' });
-        const simpleFile = new File([simpleBlob], 'test.png', { type: 'image/png' });
+
         
         // Create a File from the Blob
-        const file = new File([simpleBlob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
         
         try {
           await navigator.share({

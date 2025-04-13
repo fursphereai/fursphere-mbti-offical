@@ -170,7 +170,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
 
   
   return (
-      <motion.div id="download-1"  className="relative bg-white w-[800px] h-[1000px] flex flex-col  z-0"
+      <motion.div  className="relative bg-white w-[800px] h-[1000px] flex flex-col  z-0"
       initial={{ scale: 0.5, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.5, opacity: 0 }}
@@ -244,7 +244,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
               : '#4B367B'
             }}
             >
-              <div className=" w-full h-full  rounded-[36px] z-10">
+              <div id="download-1" className=" w-full h-full  rounded-[36px] z-10">
               <img
                 src={surveyData.pet_info.PetPublicUrl} 
                 alt="download" 

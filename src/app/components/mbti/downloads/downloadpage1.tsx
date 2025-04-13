@@ -114,6 +114,8 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
         // Convert data URL to Blob
+
+        console.log("dataUrl testing",dataUrl);
         const response = await fetch(dataUrl);
         const blob = await response.blob();
         

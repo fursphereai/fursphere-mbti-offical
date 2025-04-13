@@ -272,6 +272,7 @@ return (
 
 
 <div className="
+      relative
       md:hidden
       h-[56px]
       bg-white

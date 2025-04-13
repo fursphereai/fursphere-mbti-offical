@@ -48,7 +48,7 @@ export const getDownloadImageUrl1 = async (surveyData: SurveyData, mbti: string,
             return true;
           }
           if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-            return false;
+            return true;
           }
         }
         return true;
@@ -99,13 +99,12 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
           }
 
           if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-            return true;
+            return false;
           }
           
         }
         return true;
       }
-      
 
     });
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -114,11 +113,14 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
         // Convert data URL to Blob
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
+
+        const blob = dataUrl.split(',')[1];
+        const attachment1 = Buffer.from(blob, 'base64');
+        // const response = await fetch(dataUrl);
+        // const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+        const file = new File([attachment1], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({

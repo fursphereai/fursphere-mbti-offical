@@ -222,7 +222,7 @@ return (
     <div className="w-full h-[100svh] flex bg-white flex-col">
       {/* <EmailTest /> */}
     {/* mobile header */}
-    <div className={`${(step === 0 && part1 === false) ? 'hidden' : 'block md:hidden'}`}>
+    <div className={`${(step === 0 && part1 === false) || (showEmail === true) ? 'hidden' : 'block md:hidden'}`}>
       {(showUserProfile === false) && (
       <MobileHeader 
       step={step} 
@@ -279,7 +279,7 @@ return (
     </motion.div>
     }
     {/* progress bar */}
-    {(part1 === false && part2 === false && step !== 0 && result1 === false && result2 === false && result3 === false && showUserProfile === false) && <ProgressBar step={step}/>}
+    {(part1 === false && part2 === false && step !== 0 && result1 === false && result2 === false && result3 === false && showUserProfile === false && showEmail === false) && <ProgressBar step={step}/>}
 
       {basicInfoPages.map(({ step: pageStep, key, Component }) => (
         (part1 === false && part2 === false && step === pageStep && result1 === false && result2 === false && result3 === false && (

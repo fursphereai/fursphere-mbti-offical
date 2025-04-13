@@ -108,37 +108,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
 
 
   return (
-
-    
-    <div className=" relative w-full mx-auto  h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] max-h-[1440px]">
-    
-    {isLoading && (
-        <Loading 
-        step={step}
-        setStep={setStep}
-        setPart1={setPart1}
-        result1={result1}
-        result2={result2}
-        result3={result3}
-        setResult1={setResult1}
-        setResult2={setResult2}
-        setResult3={setResult3}
-        showEmail={showEmail}
-        showSignup={showSignup}
-        showLogin={showLogin}
-        loading={isLoading}
-        download={download}
-        setShowEmail={setShowEmail}
-        setShowSignup={setShowSignup}
-        setShowLogin={setShowLogin}
-        setLoading={setIsLoading}
-        setDownload={setDownload}
-        setIsFromUserProfile={setIsFromUserProfile}
-        isFromUserProfile={isFromUserProfile}
-        setPart2={setPart2}
-        />
-    )} 
-   
+ <>
     {showEmail && (
   
       <Email 
@@ -171,8 +141,72 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
         isFromUserProfile={isFromUserProfile}
         setPart2={setPart2}
       />
+  
+     )}
+    {!showEmail && (
+    <div className=" bg-red-300 relative w-full mx-auto  h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] max-h-[1440px]">
+    
+    {isLoading && (
+        <Loading 
+        step={step}
+        setStep={setStep}
+        setPart1={setPart1}
+        result1={result1}
+        result2={result2}
+        result3={result3}
+        setResult1={setResult1}
+        setResult2={setResult2}
+        setResult3={setResult3}
+        showEmail={showEmail}
+        showSignup={showSignup}
+        showLogin={showLogin}
+        loading={isLoading}
+        download={download}
+        setShowEmail={setShowEmail}
+        setShowSignup={setShowSignup}
+        setShowLogin={setShowLogin}
+        setLoading={setIsLoading}
+        setDownload={setDownload}
+        setIsFromUserProfile={setIsFromUserProfile}
+        isFromUserProfile={isFromUserProfile}
+        setPart2={setPart2}
+        />
+    )} 
+   
+    {/* {showEmail && (
+  
+      <Email 
+        showEmail={showEmail}
+        showSignup={showSignup}
+        showLogin={showLogin}
+        setPart1={setPart1}
+        result1={result1}
+        result2={result2}
+        result3={result3}
+        setResult1={setResult1}
+        setResult2={setResult2}
+        setResult3={setResult3}
+        step={step}
+        setStep={setStep} 
+        handleNext={handleNext} 
+        setShowSignup={setShowSignup}
+        setShowLogin={setShowLogin}
+        setShowEmail={setShowEmail}
+        surveyData={surveyData}
+        aiResult={aiResult}
+        setAiResult={setAiResult}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
+        download={download}
+        setDownload={setDownload}
+        setUserInfo={setUserInfo}
+        updateAnswer={updateAnswer}
+        setIsFromUserProfile={setIsFromUserProfile}
+        isFromUserProfile={isFromUserProfile}
+        setPart2={setPart2}
+      />
       
-    )}
+    )} */}
 
 
     {showSignup && (
@@ -301,6 +335,8 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
 
             </div>
       </div>
+    )}
+      </>
   );
 };
 

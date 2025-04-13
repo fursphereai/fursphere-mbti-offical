@@ -380,7 +380,7 @@ return (
           <div className=" absolute bottom-[48px] w-[145px] h-[44px] z-[5] "
           onClick={validateAndSubmit}>
             <button className="md:bottom-none w-full h-full rounded-[22px] bg-[#5777D0] flex items-center justify-center"
-            disabled={showEmailUsed || showEmailRegistered || !emailValid || !email}
+            disabled={showEmailUsed || showEmailRegistered}
             >
               <h2 className="text-[16px] font-[Inter] font-[600] text-white">Get Result</h2>
             </button>

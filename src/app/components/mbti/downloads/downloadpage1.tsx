@@ -99,7 +99,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
           }
 
           if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-            return false;
+            return true;
           }
           
         }

@@ -221,11 +221,21 @@ return (
    
     <motion.div 
     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[50]"
+    onTouchStart={(e) => e.stopPropagation()}
+    onTouchMove={(e) => e.stopPropagation()}
+    onClick={(e) => {
+      // Only close if clicking the overlay, not the modal content
+      if (e.target === e.currentTarget) {
+        setShowEmail(false);
+      }
+    }}
     >
      
 
 
       <motion.div  className="relative bg-white w-full md:w-[768px] h-full md:h-[563px] rounded-[0px] md:rounded-[22px] flex flex-col"
+            onClick={(e) => e.stopPropagation()} // Prevent clicks from bubbling up
+            onTouchStart={(e) => e.stopPropagation()} 
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}

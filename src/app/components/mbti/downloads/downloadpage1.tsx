@@ -87,6 +87,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         if (node.tagName === 'IMG') {
           const imgElement = node as HTMLImageElement;
           const src = imgElement.getAttribute('src') || '';
+          console.log("src testing life time",src);
             
           // Only include images from your own domain or data URLs
           if (src.startsWith('blob:')) {
@@ -107,7 +108,9 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
       if (navigator.share) {
         // Convert data URL to Blob
         const response = await fetch(dataUrl);
+        console.log("response testing life time",response);
         const blob = await response.blob();
+        console.log("blob testing life time",blob);
         
         // Create a File from the Blob
         const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });

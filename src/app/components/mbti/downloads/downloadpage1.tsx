@@ -105,37 +105,37 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
 
     });
 
-    // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    // if (isMobile) {
-    //   // For iOS devices, we can use the share API if available
-    //   if (navigator.share) {
-    //     // Convert data URL to Blob
+    if (isMobile) {
+      // For iOS devices, we can use the share API if available
+      if (navigator.share) {
+        // Convert data URL to Blob
 
-    //     await new Promise(resolve => setTimeout(resolve, 500));
-    //     const response = await fetch(dataUrl);
-    //     console.log("response testing life time",response);
-    //     const blob = await response.blob();
-    //     console.log("blob testing life time",blob);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const response = await fetch(dataUrl);
+        console.log("response testing life time",response);
+        const blob = await response.blob();
+        console.log("blob testing life time",blob);
 
         
-    //     // Create a File from the Blob
-    //     const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        // Create a File from the Blob
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
         
-    //     try {
-    //       await navigator.share({
-    //         files: [file],
-    //         title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-    //         text: 'Check out my pet\'s personality type!'
-    //       });
-    //       return; // Exit after sharing
-    //     } catch (error) {
-    //       console.log('Sharing failed', error);
-    //       // Fall back to regular download if sharing fails
-    //     }
-    //   }
+        try {
+          await navigator.share({
+            files: [file],
+            title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+            text: 'Check out my pet\'s personality type!'
+          });
+          return; // Exit after sharing
+        } catch (error) {
+          console.log('Sharing failed', error);
+          // Fall back to regular download if sharing fails
+        }
+      }
       
-    // }
+    }
 
     
 
@@ -172,7 +172,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
 
   
   return (
-      <motion.div  className="relative bg-white w-[800px] h-[1000px] flex flex-col  z-0"
+      <motion.div  id="download-1" className="relative bg-white w-[800px] h-[1000px] flex flex-col  z-0"
       initial={{ scale: 0.5, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.5, opacity: 0 }}
@@ -246,7 +246,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
               : '#4B367B'
             }}
             >
-              <div id="download-1" className=" w-full h-full  rounded-[36px] z-10">
+              <div  className=" w-full h-full  rounded-[36px] z-10">
               <img
                 src={surveyData.pet_info.PetPublicUrl} 
                 alt="download" 

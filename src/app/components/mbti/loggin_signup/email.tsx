@@ -237,7 +237,7 @@ return (
                     duration: 0.3
           }}>
 
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <MobileHeader
             step={step}
             setStep={setStep}
@@ -262,7 +262,7 @@ return (
             isFromUserProfile = {isFromUserProfile}
             setPart2={setPart2}
             />
-          </div>
+          </div> */}
 
           <div className="absolute hidden md:flex top-[40px] right-[40px]">
             <img 

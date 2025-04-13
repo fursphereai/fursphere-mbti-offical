@@ -226,7 +226,7 @@ return (
      
 
 
-      <motion.div  className="relative bg-white w-full md:w-[768px] h-full md:h-[563px] rounded-[0px] md:rounded-[22px] flex flex-col z-[50]"
+      <motion.div  className="relative bg-white w-full md:w-[768px] h-full md:h-[563px] rounded-[0px] md:rounded-[22px] flex flex-col "
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}
@@ -291,6 +291,7 @@ return (
             type="email"
             placeholder="Enter your email"
             className= {`
+              bg-red-300
               w-[320px] md:w-[306px] 
               h-[44px]
               mt-[40px] md:mt-[20px]
@@ -368,8 +369,8 @@ return (
             <h2>A copy of test result will be sent to your email</h2>
           </div>
           
-          <div className=" absolute bottom-[48px] w-[145px] h-[44px] "
-          onClick={validateAndSubmit}>
+          <div className=" absolute bottom-[48px] w-[145px] h-[44px] bg-red-300 "
+            onClick={validateAndSubmit}>
             <button className="md:bottom-none w-full h-full rounded-[22px] bg-[#5777D0] flex items-center justify-center"
             disabled={showEmailUsed || showEmailRegistered}
             >

@@ -259,7 +259,7 @@ return (
      
 
 
-      <motion.div  className="relative bg-white w-full md:w-[768px] h-full md:h-[563px] rounded-[0px] md:rounded-[22px] flex flex-col "
+      <motion.div  className="relative bg-white bg-yellow-300 w-full md:w-[768px] h-full md:h-[563px] rounded-[0px] md:rounded-[22px] flex flex-col "
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}
@@ -271,22 +271,23 @@ return (
           }}>
 
 
-<div className="
-      relative
+     <div className="
+      
+      
       md:hidden
       h-[56px]
-      bg-white
+  
       border-b-[0.8px] border-[#C9C9C9]
       flex items-center justify-between
       px-[20px]
-    "> 
-    <button className="w-[24px] h-[24px]"
-    onClick={() => {
-     
-        setShowEmail(false);
-      
-    }}
-    >
+      "> 
+        <button className="w-[24px] h-[24px]"
+        onClick={() => {
+        
+            setShowEmail(false);
+          
+        }}
+         >
        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <g opacity="0.7">
         <path d="M20 4L4 20M4 4L20 20" stroke="#27355D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>

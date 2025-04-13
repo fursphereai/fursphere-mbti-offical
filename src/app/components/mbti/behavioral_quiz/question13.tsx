@@ -119,9 +119,9 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
   
      )} */}
    
-    <div className=" bg-red-300 relative w-full mx-auto  h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] max-h-[1440px]">
+    <div className="  relative w-full mx-auto  h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] max-h-[1440px]">
     
-    {isLoading && (
+    {/* {isLoading && (
         <Loading 
         step={step}
         setStep={setStep}
@@ -146,108 +146,9 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
         isFromUserProfile={isFromUserProfile}
         setPart2={setPart2}
         />
-    )} 
+    )}  */}
    
-    {/* {showEmail && (
   
-      <Email 
-        showEmail={showEmail}
-        showSignup={showSignup}
-        showLogin={showLogin}
-        setPart1={setPart1}
-        result1={result1}
-        result2={result2}
-        result3={result3}
-        setResult1={setResult1}
-        setResult2={setResult2}
-        setResult3={setResult3}
-        step={step}
-        setStep={setStep} 
-        handleNext={handleNext} 
-        setShowSignup={setShowSignup}
-        setShowLogin={setShowLogin}
-        setShowEmail={setShowEmail}
-        surveyData={surveyData}
-        aiResult={aiResult}
-        setAiResult={setAiResult}
-        setIsLoading={setIsLoading}
-        isLoading={isLoading}
-        download={download}
-        setDownload={setDownload}
-        setUserInfo={setUserInfo}
-        updateAnswer={updateAnswer}
-        setIsFromUserProfile={setIsFromUserProfile}
-        isFromUserProfile={isFromUserProfile}
-        setPart2={setPart2}
-      />
-      
-    )} */}
-
-
-    {showSignup && (
-      <Signup 
-        showEmail={showEmail}
-        showSignup={showSignup}
-        showLogin={showLogin}
-        setPart1={setPart1}
-        result1={result1}
-        result2={result2}
-        result3={result3}
-        setResult1={setResult1}
-        setResult2={setResult2}
-        setResult3={setResult3}
-        step={step}
-        setStep={setStep} 
-        handleNext={handleNext} 
-        setShowSignup={setShowSignup}
-        setShowLogin={setShowLogin}
-        setShowEmail={setShowEmail}
-        loading={isLoading}
-        download={download}
-        setLoading={setIsLoading}
-        setDownload={setDownload}
-        setAiResult={setAiResult}
-        aiResult={aiResult}
-        surveyData={surveyData}
-        setSurveyData={setSurveyData}
-        setIsFromUserProfile={setIsFromUserProfile}
-        isFromUserProfile={isFromUserProfile}
-        updateAnswer={updateAnswer}
-        setPart2={setPart2}
-      />
-    )}
-
-    {showLogin && (
-      <Loggin
-        showEmail={showEmail}
-        showSignup={showSignup}
-        showLogin={showLogin}
-        setPart1={setPart1}
-        result1={result1}
-        result2={result2}
-        result3={result3}
-        setResult1={setResult1}
-        setResult2={setResult2}
-        setResult3={setResult3}
-        step={step}
-        setStep={setStep} 
-        handleNext={handleNext} 
-        setShowSignup={setShowSignup}
-        setShowLogin={setShowLogin}
-        setShowEmail={setShowEmail}
-        loading={isLoading}
-        download={download}
-        setLoading={setIsLoading}
-        setDownload={setDownload}
-        setAiResult={setAiResult}
-        aiResult={aiResult}
-        surveyData={surveyData}
-        updateAnswer={updateAnswer}
-        setIsFromUserProfile={setIsFromUserProfile}
-        isFromUserProfile={isFromUserProfile}
-        setPart2={setPart2}
-      />
-    )}
        
       <div className=" flex flex-col w-[320px] md:w-[540px] mx-auto mt-0 ">
         <div

@@ -23,13 +23,15 @@ import MobileHeader from '../components/mbti/mobile-header';
 import Download from '../components/mbti/downloads/download';
 import UserProfile from '../components/user-profile';
 import Email from '../components/mbti/loggin_signup/email';
+import Signup from '../components/mbti/loggin_signup/signup';
+import Loggin from '../components/mbti/loggin_signup/loggin';
 
 
 const PetMBTIFlow = () => {
 
 
   const { loggin, setLoggin } = useLoggin();
-  const initialStep = 17; 
+  const initialStep = 0; 
   const [step, setStep] = useState(initialStep);
 
   useEffect(() => {
@@ -255,7 +257,101 @@ return (
     />
 
    )}
-   {!showEmail && (
+
+ {showSignup && (
+      <Signup 
+        showEmail={showEmail}
+        showSignup={showSignup}
+        showLogin={showLogin}
+        setPart1={setPart1}
+        result1={result1}
+        result2={result2}
+        result3={result3}
+        setResult1={setResult1}
+        setResult2={setResult2}
+        setResult3={setResult3}
+        step={step}
+        setStep={setStep} 
+        handleNext={handleNext} 
+        setShowSignup={setShowSignup}
+        setShowLogin={setShowLogin}
+        setShowEmail={setShowEmail}
+        loading={isLoading}
+        download={download}
+        setLoading={setIsLoading}
+        setDownload={setDownload}
+        setAiResult={setAiResult}
+        aiResult={aiResult}
+        surveyData={surveyData}
+        setSurveyData={setSurveyData}
+        setIsFromUserProfile={setIsFromUserProfile}
+        isFromUserProfile={isFromUserProfile}
+        updateAnswer={updateAnswer}
+        setPart2={setPart2}
+      />
+    )}
+
+    {showLogin && (
+      <Loggin
+        showEmail={showEmail}
+        showSignup={showSignup}
+        showLogin={showLogin}
+        setPart1={setPart1}
+        result1={result1}
+        result2={result2}
+        result3={result3}
+        setResult1={setResult1}
+        setResult2={setResult2}
+        setResult3={setResult3}
+        step={step}
+        setStep={setStep} 
+        handleNext={handleNext} 
+        setShowSignup={setShowSignup}
+        setShowLogin={setShowLogin}
+        setShowEmail={setShowEmail}
+        loading={isLoading}
+        download={download}
+        setLoading={setIsLoading}
+        setDownload={setDownload}
+        setAiResult={setAiResult}
+        aiResult={aiResult}
+        surveyData={surveyData}
+        updateAnswer={updateAnswer}
+        setIsFromUserProfile={setIsFromUserProfile}
+        isFromUserProfile={isFromUserProfile}
+        setPart2={setPart2}
+      />
+    )}
+
+   {isLoading && (
+        <Loading 
+        step={step}
+        setStep={setStep}
+        setPart1={setPart1}
+        result1={result1}
+        result2={result2}
+        result3={result3}
+        setResult1={setResult1}
+        setResult2={setResult2}
+        setResult3={setResult3}
+        showEmail={showEmail}
+        showSignup={showSignup}
+        showLogin={showLogin}
+        loading={isLoading}
+        download={download}
+        setShowEmail={setShowEmail}
+        setShowSignup={setShowSignup}
+        setShowLogin={setShowLogin}
+        setLoading={setIsLoading}
+        setDownload={setDownload}
+        setIsFromUserProfile={setIsFromUserProfile}
+        isFromUserProfile={isFromUserProfile}
+        setPart2={setPart2}
+        />
+    )} 
+
+
+   {!showEmail && !showSignup && !showLogin && !isLoading && (
     <div className="w-full h-[100svh] flex bg-white flex-col">
       {/* <EmailTest /> */}
     {/* mobile header */}

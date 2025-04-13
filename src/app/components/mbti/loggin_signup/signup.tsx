@@ -298,7 +298,7 @@ const validateAndSubmit = async () => {
   };
 
   return (
-    <motion.div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <motion.div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       
       <motion.div className= {`relative bg-white rounded-[0px] md:rounded-[22px] w-full md:w-[768px] h-full  transition-[height] duration-300 ease-in-out ${
         ((showInvalidEmail || showBlankEmail || showEmailAssociated) && showIncorrectCode)
@@ -318,7 +318,7 @@ const validateAndSubmit = async () => {
               duration: 0.3
           }}>
 
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <MobileHeader
             step={step}
             setStep={setStep}
@@ -344,7 +344,7 @@ const validateAndSubmit = async () => {
             setPart2={setPart2}
             
             />
-          </div>
+          </div> */}
 
            <div className="absolute hidden md:flex top-[40px] right-[40px]">
             <img 
@@ -547,7 +547,7 @@ const validateAndSubmit = async () => {
 
           </div>
          
-          <button className="absolute md:static bottom-[48px] z-[5] md:bottom-auto mt-[40px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
+          <button className="absolute md:static bottom-[48px] md:bottom-auto mt-[40px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
           onClick={validateAndSubmit}
         //   disabled={signupIsValidating || !signupEmail || !signupEmailValid || !signupCodeSent || !signupInputCode}
           >

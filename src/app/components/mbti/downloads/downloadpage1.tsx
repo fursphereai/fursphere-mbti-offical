@@ -99,12 +99,13 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
           }
 
           if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-            return false;
+            return true;
           }
           
         }
         return true;
       }
+      
 
     });
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -112,7 +113,6 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     if (isMobile) {
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
-        try {
         // Convert data URL to Blob
         const response = await fetch(dataUrl);
         const blob = await response.blob();
@@ -120,24 +120,12 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         // Create a File from the Blob
         const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
-        const shareData: { files?: File[], title: string, text: string, url?: string } = {
-          title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-          text: 'Check out my pet\'s personality type!'
-        };
-        
-        // Try to share with files first
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          shareData.files = [file];
-        } else {
-          // If file sharing is not supported, create a temporary URL
-          const tempUrl = URL.createObjectURL(blob);
-          shareData.url = tempUrl;
-          
-          // Clean up the temporary URL after sharing
-          setTimeout(() => URL.revokeObjectURL(tempUrl), 5000);
-        }
-        
-          await navigator.share(shareData);
+        try {
+          await navigator.share({
+            files: [file],
+            title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+            text: 'Check out my pet\'s personality type!'
+          });
           return; // Exit after sharing
         } catch (error) {
           console.log('Sharing failed', error);

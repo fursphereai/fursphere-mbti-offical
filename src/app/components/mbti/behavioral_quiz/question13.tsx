@@ -210,7 +210,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
       />
     )}
        
-      <div className=" flex flex-col w-[320px] md:w-[540px] mx-auto ">
+      <div className=" flex flex-col w-[320px] md:w-[540px] mx-auto mt-0 ">
         <div
           className= {`
             mt-[40px] md:mt-[85px]

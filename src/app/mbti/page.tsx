@@ -27,7 +27,7 @@ import UserProfile from '../components/user-profile';
 const PetMBTIFlow = () => {
 
   const { loggin, setLoggin } = useLoggin();
-  const initialStep = 17; 
+  const initialStep = 0; 
   const [step, setStep] = useState(initialStep);
 
   useEffect(() => {

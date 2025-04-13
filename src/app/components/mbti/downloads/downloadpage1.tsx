@@ -85,27 +85,24 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         'text-rendering': 'optimizeLegibility'
       },
       cacheBust: true,
-      // filter: (node: HTMLElement) => {
-      //   // Skip external images that might cause CORS issues
-      //   if (node.tagName === 'IMG') {
-      //     const imgElement = node as HTMLImageElement;
-      //     const src = imgElement.getAttribute('src') || '';
-      //     console.log("src testing life time",src);
-            
-      //     // Only include images from your own domain or data URLs
-      //     if (src.startsWith('blob:')) {
-      //       return true;
-      //     } 
-      //     if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-      //       return true;
-      //     }
-      //   }
-      //   return true;
-      // }
       filter: (node: HTMLElement) => {
-        console.log("Filtering:", node.tagName, (node as HTMLImageElement)?.src);
+        // Skip external images that might cause CORS issues
+        if (node.tagName === 'IMG') {
+          const imgElement = node as HTMLImageElement;
+          const src = imgElement.getAttribute('src') || '';
+          console.log("src testing life time",src);
+            
+          // Only include images from your own domain or data URLs
+          if (src.startsWith('blob:')) {
+            return true;
+          } 
+          if (src.startsWith('http') && !src.includes(window.location.hostname)) {
+            return true;
+          }
+        }
         return true;
       }
+
     });
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -120,7 +117,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         console.log("blob testing life time",blob);
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
         
         try {
           await navigator.share({
@@ -166,6 +163,9 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
 
   console.log("surveyData.pet_info.PetPhoto",surveyData.pet_info.PetPhoto);
   console.log("surveyData.pet_info.PetPublicUrl",surveyData.pet_info.PetPublicUrl);
+
+
+  
   return (
       <motion.div id="download-1"  className="relative bg-white w-[800px] h-[1000px] flex flex-col  z-0"
       initial={{ scale: 0.5, opacity: 0 }}

@@ -369,7 +369,7 @@ const validateAndSubmit = async () => {
             <h2>Register in just 60 seconds and unlock all following benefits! 🥰</h2>
           </div>
 
-          <div className=" max-w-[467px] w-full flex flex-row items-center justify-center gap-[12px]">
+          <div className="relative max-w-[467px] w-full flex flex-row items-center justify-center gap-[12px]">
             <input
               type="email"
               placeholder="Enter your email"

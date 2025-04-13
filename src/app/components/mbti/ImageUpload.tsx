@@ -25,6 +25,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ updateAnswer, surveyData }) =
         // Create a safe filename
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
+        updateAnswer('pet_info', null, 'PetPhoto', URL.createObjectURL(file));
         
         // Upload to Supabase storage
         const { data, error: uploadError } = await supabase.storage
@@ -59,7 +60,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ updateAnswer, surveyData }) =
         }
 
         // Update state with the public URL
-        updateAnswer('pet_info', null, 'PetPhoto', URL.createObjectURL(file));
+     
         updateAnswer('pet_info', null, 'PetPublicUrl', publicUrl);
         console.log('publicUrl', publicUrl);
 

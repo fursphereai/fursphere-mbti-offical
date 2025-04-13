@@ -236,7 +236,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
             >
               <div className=" w-full h-full  rounded-[36px] z-10">
               <img
-                src={surveyData.pet_info.PetPhoto} 
+                src={surveyData.pet_info.PetPublicUrl} 
                 alt="download" 
                 className="w-full h-full  object-cover rounded-[36px] "
              

@@ -112,15 +112,16 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
 
     if (isMobile) {
       // For iOS devices, we can use the share API if available
+      const petpublicImageUrl = surveyData.pet_info.PetPublicUrl;
       if (navigator.share) {
         // Convert data URL to Blob
 
-        console.log("dataUrl testing",dataUrl);
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
+        console.log(" petpublicImageUrl",petpublicImageUrl);
+        // const response = await fetch(dataUrl);
+        // const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+        const file = new File([petpublicImageUrl], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({

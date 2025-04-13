@@ -109,7 +109,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
 
   return (
  <>
-    {showEmail && (
+    {/* {showEmail && (
   
       <Email 
         showEmail={showEmail}
@@ -142,7 +142,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
         setPart2={setPart2}
       />
   
-     )}
+     )} */}
     {!showEmail && (
     <div className=" bg-red-300 relative w-full mx-auto  h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] max-h-[1440px]">
     

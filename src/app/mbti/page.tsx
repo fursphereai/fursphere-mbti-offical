@@ -22,6 +22,7 @@ import Loading from '../components/mbti/loading/loading';
 import MobileHeader from '../components/mbti/mobile-header';
 import Download from '../components/mbti/downloads/download';
 import UserProfile from '../components/user-profile';
+import Email from '../components/mbti/loggin_signup/email';
 
 
 const PetMBTIFlow = () => {
@@ -219,10 +220,46 @@ useEffect(() => {
   
 return (
 
+<>
+  {showEmail && (
+  
+    <Email 
+      showEmail={showEmail}
+      showSignup={showSignup}
+      showLogin={showLogin}
+      setPart1={setPart1}
+      result1={result1}
+      result2={result2}
+      result3={result3}
+      setResult1={setResult1}
+      setResult2={setResult2}
+      setResult3={setResult3}
+      step={step}
+      setStep={setStep} 
+      handleNext={handleNext} 
+      setShowSignup={setShowSignup}
+      setShowLogin={setShowLogin}
+      setShowEmail={setShowEmail}
+      surveyData={surveyData}
+      aiResult={aiResult}
+      setAiResult={setAiResult}
+      setIsLoading={setIsLoading}
+      isLoading={isLoading}
+      download={download}
+      setDownload={setDownload}
+      setUserInfo={setUserInfo}
+      updateAnswer={updateAnswer}
+      setIsFromUserProfile={setIsFromUserProfile}
+      isFromUserProfile={isFromUserProfile}
+      setPart2={setPart2}
+    />
+
+   )}
+   {!showEmail && (
     <div className="w-full h-[100svh] flex bg-white flex-col">
       {/* <EmailTest /> */}
     {/* mobile header */}
-    <div className={`${(step === 0 && part1 === false) || (showEmail === true) ? 'hidden' : 'block md:hidden'}`}>
+    <div className={`${(step === 0 && part1 === false) ? 'hidden' : 'block md:hidden'}`}>
       {(showUserProfile === false) && (
       <MobileHeader 
       step={step} 
@@ -499,7 +536,10 @@ return (
 
 
       
-    </div>
+    </div> 
+    )}
+
+</>
 
   );
 };

@@ -401,7 +401,7 @@ return (
         <div className="mt-[20px] text-[16px] font-[Inter] font-[400] text-[#101828] leading-[16px]">
             <h2>Welcome back! 🥰</h2>
         </div>
-        <div className="relative  w-full flex flex-row items-center justify-center gap-[12px]">
+        <div className=" w-full flex flex-row items-center justify-center gap-[12px]">
         <input
         type="email"
         placeholder="Enter your email"

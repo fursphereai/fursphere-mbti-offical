@@ -211,7 +211,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
     )}
        
       <div className=" flex flex-col w-[320px] md:w-[540px] mx-auto ">
-        <label
+        <div
           className= {`
             mt-[40px] md:mt-[85px]
             text-[16px] md:text-[18px]
@@ -221,7 +221,7 @@ const Question13: React.FC<Question13Props>  = ({ handleNext, handleBack, step, 
             ml-[10px]`}
         >
           Anything else you want to tell us?
-        </label>
+        </div>
         <input
           type="text"
           placeholder="Tell us more about your pet"

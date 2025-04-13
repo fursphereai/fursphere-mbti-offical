@@ -71,21 +71,45 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   }
 
   try {
+    const dataUrl = await domtoimage.toPng(elementToCapture, {
+      width: 1200,      
+      height: 1500,     
+      quality: 0.95,    
+      style: {
+        transform: 'scale(1.5)',
+        transformOrigin: 'top left',
+        '-webkit-font-smoothing': 'antialiased',
+        'text-rendering': 'optimizeLegibility'
+      },
+      cacheBust: true,
+      filter: (node: HTMLElement) => {
+        // Skip external images that might cause CORS issues
+        if (node.tagName === 'IMG') {
+          const imgElement = node as HTMLImageElement;
+          const src = imgElement.getAttribute('src') || '';
+            
+          // Only include images from your own domain or data URLs
+          if (src.startsWith('blob:') || 
+              (src.startsWith('http') && !src.includes(window.location.hostname))) {
+            // Replace with a placeholder or skip
+            return false;
+          }
+        }
+        return true;
+      }
+    });
 
-
-   
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const petpublicImageUrl = surveyData.pet_info.PetPublicUrl;
 
     if (isMobile) {
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
         // Convert data URL to Blob
-        // const response = await fetch(dataUrl);
-        // const blob = await response.blob();
+        const response = await fetch(dataUrl);
+        const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([petpublicImageUrl], `${surveyData.pet_info.PetName}-page4.jpeg`, { type: 'image/jpeg' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({
@@ -100,51 +124,16 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         }
       }
       
-    } else {
-      const dataUrl = await domtoimage.toPng(elementToCapture, {
-        width: 1200,      
-        height: 1500,     
-        quality: 0.95,    
-        style: {
-          transform: 'scale(1.5)',
-          transformOrigin: 'top left',
-          '-webkit-font-smoothing': 'antialiased',
-          'text-rendering': 'optimizeLegibility'
-        },
-        cacheBust: true,
-
-        filter: (node: HTMLElement) => {
-          // Skip external images that might cause CORS issues
-          if (node.tagName === 'IMG') {
-            const imgElement = node as HTMLImageElement;
-            const src = imgElement.getAttribute('src') || '';
-              
-            // Only include images from your own domain or data URLs
-            if (src.startsWith('blob:') || 
-                (src.startsWith('http') && !src.includes(window.location.hostname))) {
-              // Replace with a placeholder or skip
-              return false;
-            }
-          }
-          return true;
-        }
-      });
-      const link = document.createElement('a');
-      link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
-      link.href = dataUrl;
-      link.click();
     }
 
-    // const link = document.createElement('a');
-    // link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
-    // link.href = petpublicImageUrl;
-    // link.click();
-
-
+    const link = document.createElement('a');
+    link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
+    link.href = dataUrl;
+    link.click();
   } catch (error) {
     console.error('dom-to-image error:', error);
-  } 
-};
+  }
+  };
 
 
 
@@ -243,7 +232,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
             >
               <div className=" w-full h-full  rounded-[36px] z-10">
               <img
-                src={surveyData.pet_info.PetPhoto} 
+                src={surveyData.pet_info.PetPublicUrl} 
                 alt="download" 
                 className="w-full h-full  object-cover rounded-[36px] "
              

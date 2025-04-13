@@ -26,8 +26,9 @@ import UserProfile from '../components/user-profile';
 
 const PetMBTIFlow = () => {
 
+
   const { loggin, setLoggin } = useLoggin();
-  const initialStep = 0; 
+  const initialStep = 17; 
   const [step, setStep] = useState(initialStep);
 
   useEffect(() => {
@@ -174,6 +175,14 @@ const [showUserProfile, setShowUserProfile] = useState(false);
 const { userInfo, setUserInfo } = useLoggin();
 
 const [isFromUserProfile, setIsFromUserProfile] = useState(false);
+
+console.log('showUserProfile',showUserProfile);
+console.log('step',step);
+console.log('part1',part1);
+console.log('part2',part2);
+console.log('result1',result1);
+console.log('result2',result2);
+console.log('result3',result3);
 
 const basicInfoPages = [
   {

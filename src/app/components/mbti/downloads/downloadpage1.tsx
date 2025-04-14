@@ -74,7 +74,17 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     // Add a delay to ensure everything is rendered
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    const dataUrl = await domtoimage.toPng(elementToCapture, {
+    const images = elementToCapture.querySelectorAll('img');
+    for (const img of images) {
+      if (!img.complete) {
+        await new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      }
+    }
+
+    const dataUrl = await domtoimage.toJpeg(elementToCapture, {
       width: 1200,      
       height: 1500,     
       quality: 0.95,    
@@ -95,7 +105,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({

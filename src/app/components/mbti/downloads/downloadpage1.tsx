@@ -74,6 +74,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     // Add a delay to ensure everything is rendered
     await new Promise(resolve => setTimeout(resolve, 2000));
     
+    // Make sure all images have loaded
     const images = elementToCapture.querySelectorAll('img');
     for (const img of images) {
       if (!img.complete) {
@@ -83,8 +84,9 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         });
       }
     }
-
-    const dataUrl = await domtoimage.toJpeg(elementToCapture, {
+    
+    // Use toPng for better quality, even though background is jpg
+    const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      
       height: 1500,     
       quality: 0.95,    
@@ -105,7 +107,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({
@@ -122,7 +124,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     }
 
     const link = document.createElement('a');
-    link.download = `${surveyData.pet_info.PetName}-page1.png`;
+    link.download = `${surveyData.pet_info.PetName}-page1.jpg`;
     link.href = dataUrl;
     link.click();
       

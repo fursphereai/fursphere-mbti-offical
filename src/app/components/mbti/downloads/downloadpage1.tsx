@@ -72,6 +72,17 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
 
   try {
 
+
+    if (surveyData.pet_info.PetPublicUrl) {
+      await new Promise<void>((resolve) => {
+        const img = new (window.Image as any)();
+        img.onload = () => resolve();
+        img.onerror = () => resolve();
+        img.crossOrigin = 'anonymous';
+        img.src = surveyData.pet_info.PetPublicUrl;
+      });
+    }
+
     
     // Add a delay to ensure everything is rendered
     console.log('All images loaded, waiting for final rendering...');

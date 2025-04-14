@@ -8,7 +8,6 @@ import { SurveyData } from '@/app/types/survey';
 import domtoimage from 'dom-to-image';
 import { useLoggin } from '@/app/context/LogginContext';
 import Image from 'next/image';
-import * as htmlToImage from 'html-to-image';
 
 
 

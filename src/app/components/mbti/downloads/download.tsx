@@ -9,13 +9,13 @@ import BreakdownM from './breakdown-m';
 import BreakdownB from './breakdown-b';
 import BreakdownI from './breakdown-i';
 import BreakdownT from './breakdown-t';
-import { handleDownload1 } from './downloadpage1';
 import { handleDownload2 } from './breakdown-m';
 import { handleDownload3 } from './breakdown-b';
 import { handleDownload4 } from './breakdown-t';
 import { handleDownload5 } from './breakdown-i';
 import { handleDownload6 } from './do_not_do';
 import { useLoggin } from '@/app/context/LogginContext';
+import domtoimage from 'dom-to-image';
 
 interface DownloadProps {
   step: number;
@@ -48,21 +48,33 @@ interface DownloadProps {
 const compressImage = async (file: File): Promise<File> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
+    let uploadTimeout: NodeJS.Timeout | null = null;
+    
+    // 设置上传超时（30秒）
+    uploadTimeout = setTimeout(() => {
+      if (uploadTimeout) {
+        clearTimeout(uploadTimeout);
+      }
+      reject(new Error('Upload timeout: Image upload took too long'));
+    }, 30000);
+
     reader.readAsDataURL(file);
+    
     reader.onload = (event) => {
+      if (uploadTimeout) {
+        clearTimeout(uploadTimeout);
+      }
       const img = new Image();
       img.src = event.target?.result as string;
+      
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         
-        // 设置最大尺寸为400x400
         const MAX_SIZE = 400;
-        
         let width = img.width;
         let height = img.height;
         
-        // 保持宽高比进行缩放
         if (width > height) {
           if (width > MAX_SIZE) {
             height *= MAX_SIZE / width;
@@ -80,7 +92,6 @@ const compressImage = async (file: File): Promise<File> => {
         
         ctx?.drawImage(img, 0, 0, width, height);
         
-        // 转换为文件，使用0.8的质量来平衡清晰度和文件大小
         canvas.toBlob((blob) => {
           if (blob) {
             const compressedFile = new File([blob], file.name, {
@@ -89,13 +100,25 @@ const compressImage = async (file: File): Promise<File> => {
             });
             resolve(compressedFile);
           } else {
-            reject(new Error('压缩失败'));
+            reject(new Error('Compression failed: Could not create blob'));
           }
-        }, file.type, 0.8); // 使用0.8的质量
+        }, file.type, 0.8);
       };
-      img.onerror = reject;
+      
+      img.onerror = () => {
+        if (uploadTimeout) {
+          clearTimeout(uploadTimeout);
+        }
+        reject(new Error('Image loading failed: Could not load image data'));
+      };
     };
-    reader.onerror = reject;
+    
+    reader.onerror = () => {
+      if (uploadTimeout) {
+        clearTimeout(uploadTimeout);
+      }
+      reject(new Error('File reading failed: Could not read file data'));
+    };
   });
 };
 
@@ -109,10 +132,25 @@ const waitForImages = (element: HTMLElement): Promise<void> => {
 
     let loadedCount = 0;
     const totalImages = images.length;
+    let hasError = false;
+    let loadTimeout: NodeJS.Timeout | null = null;
+
+    // 设置加载超时（60秒）
+    loadTimeout = setTimeout(() => {
+      if (!hasError) {
+        if (loadTimeout) {
+          clearTimeout(loadTimeout);
+        }
+        reject(new Error('Image loading timeout: Some images took too long to load'));
+      }
+    }, 60000);
 
     const checkAllLoaded = () => {
       loadedCount++;
       if (loadedCount === totalImages) {
+        if (loadTimeout) {
+          clearTimeout(loadTimeout);
+        }
         resolve();
       }
     };
@@ -121,14 +159,99 @@ const waitForImages = (element: HTMLElement): Promise<void> => {
       if (img.complete) {
         checkAllLoaded();
       } else {
-        img.onload = checkAllLoaded;
+        img.onload = () => {
+          checkAllLoaded();
+        };
         img.onerror = (error) => {
-          console.error('图片加载失败:', img.src, error);
-          reject(new Error(`图片加载失败: ${img.src}`));
+          hasError = true;
+          if (loadTimeout) {
+            clearTimeout(loadTimeout);
+          }
+          console.error('Image loading failed:', {
+            src: img.src,
+            error: error,
+            currentLoaded: loadedCount,
+            totalImages: totalImages
+          });
+          reject(new Error(`Image loading failed: ${img.src}`));
         };
       }
     });
   });
+};
+
+export const handleDownload1 = async (
+  surveyData: SurveyData, 
+  mbti: string, 
+  isFromUserProfile: boolean,
+  setCurrentPage: (page: number) => void
+) => {
+  const elementToCapture = document.getElementById('download-1');
+  if (!elementToCapture) {
+    console.error('Element not found');
+    return;
+  }
+
+  let retryCount = 0;
+  const maxRetries = 3;
+
+  while (retryCount < maxRetries) {
+    try {
+      // Set 60 seconds timeout for image loading
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Image loading timeout')), 60000);
+      });
+
+      // Wait for images to load
+      const loadPromise = waitForImages(elementToCapture);
+
+      // Use Promise.race to wait for either image loading or timeout
+      await Promise.race([loadPromise, timeoutPromise]);
+      
+      // Add a small delay to ensure everything is rendered
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const dataUrl = await domtoimage.toPng(elementToCapture, {
+        width: 400,
+        height: 400,
+        quality: 0.8,
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left',
+          '-webkit-font-smoothing': 'antialiased',
+          'text-rendering': 'optimizeLegibility'
+        },
+        filter: (node: HTMLElement) => {
+          if (node.tagName === 'IMG') {
+            const img = node as HTMLImageElement;
+            if (!img.complete) {
+              console.error('Image not loaded:', img.src);
+              return false;
+            }
+          }
+          return true;
+        }
+      });
+
+      const link = document.createElement('a');
+      link.download = `${surveyData.pet_info.PetName}-page1.png`;
+      link.href = dataUrl;
+      link.click();
+      return;
+    } catch (error) {
+      console.error(`Attempt ${retryCount + 1} failed:`, error);
+      retryCount++;
+      
+      if (retryCount === maxRetries) {
+        console.error('All download attempts failed');
+        alert('Download failed after multiple attempts. Please try again later.');
+        return;
+      }
+      
+      // Wait before retrying (increased to 5 seconds)
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  }
 };
 
 export default function Download({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, aiResult, surveyData, isFromUserProfile, setIsFromUserProfile, setAiResult, setPart2 }: DownloadProps) {
@@ -169,7 +292,7 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
 
   const handleDownload = () => {
      if (currentPage === 0) {
-      handleDownload1(surveyData, mbti, isFromUserProfile);
+      handleDownload1(surveyData, mbti, isFromUserProfile, setCurrentPage);
      } else if (currentPage === 1) {
       handleDownload2(surveyData, mbti, isFromUserProfile);
      } else if (currentPage === 2) {

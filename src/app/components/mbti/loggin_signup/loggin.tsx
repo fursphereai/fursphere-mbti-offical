@@ -107,11 +107,11 @@ export default function Loggin({ handleNext, setStep, setShowSignup, setShowLogi
             if (JSON.stringify(response).includes('false')) {
                 setShowEmailAvailable(true);
         
-                setLogginEmailAvailable(true);
+               
             } else {
                
                 setShowEmailAvailable(false);
-                setLogginEmailAvailable(false);
+                
              
             }
         } catch (error) {

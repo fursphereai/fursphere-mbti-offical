@@ -92,18 +92,7 @@ export default function Signup({ handleNext, setStep, setShowSignup, setShowLogi
         };
 
 
-        // const waitcheck = async (email: string) => {
-        //   const response = await checkingSignup(email);
-        //   if (JSON.stringify(response).includes('true')) {
-        //     setShowEmailAssociated(true);
-          
-        //     setSignupEmailAvailable(true);
-        //    } else {
-      
-        //     setSignupEmailAvailable(false);
-   
-        //    }
-        // };
+    
 
         const checkEmailAvailability = async (email: string) => {
             try {
@@ -113,11 +102,10 @@ export default function Signup({ handleNext, setStep, setShowSignup, setShowLogi
               console.log("airai" + JSON.stringify(response));
             if (JSON.stringify(response).includes('true')) {
                 setShowEmailAssociated(true);
-           
-                setSignupEmailAvailable(true);
+              
             } else {
                 setShowEmailAssociated(false);
-                setSignupEmailAvailable(false);
+               
        
             }
             } catch (error) {

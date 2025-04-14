@@ -116,6 +116,7 @@ export default function Signup({ handleNext, setStep, setShowSignup, setShowLogi
            
                 setSignupEmailAvailable(true);
             } else {
+                setShowEmailAssociated(false);
                 setSignupEmailAvailable(false);
        
             }
@@ -242,7 +243,6 @@ const handleSendCode = async () => {
         const resultData = await getResult(response.submission_id);
         setAiResult(JSON.stringify(resultData));
         console.log("resultData" + JSON.stringify(resultData));
-        setResult1(true);
         
       } else {
         console.error('Submission failed');
@@ -293,8 +293,9 @@ const validateAndSubmit = async () => {
       updateAnswer('user_info', null, 'test_times', '1');
       updateAnswer('user_info', null, 'test_date', String(new Date().toLocaleString()));
       setLoading(false); 
-      console.log("surveyData" + JSON.stringify(surveyData));
-      console.log('Validation successful');
+      setResult1(true);
+     
+      console.log('sign up access successful');
 
       } else {
         setShowIncorrectCode(true);

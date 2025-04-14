@@ -141,7 +141,6 @@ export default function Loggin({ handleNext, setStep, setShowSignup, setShowLogi
             const resultData = await getResult(response.submission_id);
             setAiResult(JSON.stringify(resultData));
             console.log("resultData" + JSON.stringify(resultData));
-            setResult1(true);
             
           } else {
             console.error('Submission failed');
@@ -200,13 +199,9 @@ const validateAndSubmit = async () => {
             await GetAiResult(updatedSurveyData);
             updateAnswer('user_info', null, 'test_times', '1');
             updateAnswer('user_info', null, 'test_date', String(new Date().toLocaleString()));
-
-        
-      
-          
             setLoggin(true);
-          
             setLoading(false); 
+            setResult1(true);
            
             console.log('Validation successful');
 

@@ -74,45 +74,103 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   }
 
   try {
-
-    const images = elementToCapture.querySelectorAll('img');
-    console.log(`Found ${images.length} images to load`);
-    
-    // Wait for all images to load
-    await Promise.all(Array.from(images).map((img, index) => {
-      if (img.complete && img.naturalHeight !== 0) {
-        console.log(`Image ${index} already loaded: ${img.src}`);
-        return Promise.resolve();
+    const bgImagePath = 
+    mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.jpg'
+    : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.jpg'
+    : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.jpg'
+    : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.jpg'
+    : '/bg-NT.jpg';
+  
+  // Preload background image
+  await new Promise((resolve) => {
+    const bgImg = new Image();
+    bgImg.onload = resolve;
+    bgImg.onerror = resolve;
+    bgImg.src = bgImagePath;
+  });
+  
+  // Preload pet image if it exists
+  if (surveyData.pet_info.PetPublicUrl) {
+    await new Promise((resolve) => {
+      const petImg = new Image();
+      petImg.onload = resolve;
+      petImg.onerror = resolve;
+      petImg.crossOrigin = "anonymous";
+      petImg.src = surveyData.pet_info.PetPublicUrl;
+    });
+  }
+  
+  // Find all images in the element
+  const images = elementToCapture.querySelectorAll('img');
+  console.log(`Found ${images.length} images to load`);
+  
+  // Force reload all images to ensure they're fresh
+  const timestamp = new Date().getTime();
+    // Wait a bit more to ensure rendering is complete
+    for (const img of images) {
+      // Store original src
+      const originalSrc = img.src;
+      
+      // Force reload by setting a blank src then the original with cache buster
+      img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+      
+      // Wait a tiny bit before setting back the original src
+      await new Promise(r => setTimeout(r, 10));
+      
+      // Add cache buster to URL
+      if (originalSrc.includes('?')) {
+        img.src = `${originalSrc}&_t=${timestamp}`;
+      } else {
+        img.src = `${originalSrc}?_t=${timestamp}`;
       }
       
+      // Add crossOrigin for external images
+      if (originalSrc.includes('http') && !originalSrc.includes(window.location.hostname)) {
+        img.crossOrigin = "anonymous";
+      }
+    }
+
+    // Wait for all images to load
+    await Promise.all(Array.from(images).map((img) => {
       return new Promise((resolve) => {
-        console.log(`Waiting for image ${index} to load: ${img.src}`);
-        img.onload = () => {
-          console.log(`Image ${index} loaded: ${img.src}`);
+        if (img.complete && img.naturalHeight !== 0) {
           resolve(null);
-        };
-        img.onerror = () => {
-          console.error(`Error loading image ${index}: ${img.src}`);
-          resolve(null);
-        };
+          return;
+        }
+        
+        img.onload = () => resolve(null);
+        img.onerror = () => resolve(null);
       });
     }));
     
     // Wait a bit more to ensure rendering is complete
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    const dataUrl = await domtoimage.toPng(elementToCapture, {
-      width: 1200,      
-      height: 1500,     
-      quality: 0.95,    
-      style: {
-        transform: 'scale(1.5)',
-        transformOrigin: 'top left',
-        '-webkit-font-smoothing': 'antialiased',
-        'text-rendering': 'optimizeLegibility'
-      },
-      cacheBust: true
-    });
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Use html2canvas as a more reliable alternative
+    try {
+      const canvas = await html2canvas(elementToCapture, {
+        width: 1200,
+        height: 1500,
+        scale: 1.5,
+        useCORS: true,
+        allowTaint: true,
+        logging: true,
+        backgroundColor: null
+      });
+    
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+    // const dataUrl = await domtoimage.toPng(elementToCapture, {
+    //   width: 1200,      
+    //   height: 1500,     
+    //   quality: 0.95,    
+    //   style: {
+    //     transform: 'scale(1.5)',
+    //     transformOrigin: 'top left',
+    //     '-webkit-font-smoothing': 'antialiased',
+    //     'text-rendering': 'optimizeLegibility'
+    //   },
+    //   cacheBust: true
+    // });
 
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -124,40 +182,39 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
        try {
           // Better way to convert data URL to Blob
           const byteString = atob(dataUrl.split(',')[1]);
-          const mimeType = dataUrl.split(',')[0].split(':')[1].split(';')[0];
-          const ab = new ArrayBuffer(byteString.length);
-          const ia = new Uint8Array(ab);
-          
-          for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-          }
-          
-          const blob = new Blob([ab], { type: mimeType });
-          
-          // Create a File from the Blob
-          const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
-          
-          // Check if file sharing is supported
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-              text: 'Check out my pet\'s personality type!'
-            });
-          } else {
-            // Fall back to URL sharing
-            const tempUrl = URL.createObjectURL(blob);
-            await navigator.share({
-              url: tempUrl,
-              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-              text: 'Check out my pet\'s personality type!'
-            });
-            setTimeout(() => URL.revokeObjectURL(tempUrl), 5000);
-          }
-          return; 
+            const mimeType = 'image/jpeg';
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+            
+            const blob = new Blob([ab], { type: mimeType });
+            const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+            
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+                text: 'Check out my pet\'s personality type!'
+              });
+            } else {
+              const tempUrl = URL.createObjectURL(blob);
+              await navigator.share({
+                url: tempUrl,
+                title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+                text: 'Check out my pet\'s personality type!'
+              });
+              setTimeout(() => URL.revokeObjectURL(tempUrl), 5000);
+            }
+            return;
         } catch (error) {
+          if (error instanceof Error && error.name === 'AbortError') {
+            console.log('User cancelled sharing');
+            return;
+          }
           console.log('Sharing failed', error);
-          // Fall back to regular download if sharing fails
         }
       }
       
@@ -169,8 +226,8 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     link.href = dataUrl;
     link.click();
       
-  } catch (error) {
-    console.error('dom-to-image error:', error);
+  } catch (html2canvasError) {
+    console.error('html2canvas error:', html2canvasError);
   }
   };
 

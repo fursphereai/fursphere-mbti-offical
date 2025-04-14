@@ -71,28 +71,15 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   }
 
   try {
-    // Add a delay to ensure everything is rendered
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Make sure all images have loaded
-    const images = elementToCapture.querySelectorAll('img');
-    for (const img of images) {
-      if (!img.complete) {
-        await new Promise(resolve => {
-          img.onload = resolve;
-          img.onerror = resolve;
-        });
-      }
-    }
-    
-    // Use toPng for better quality, even though background is jpg
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      
       height: 1500,     
       quality: 0.95,    
       style: {
         transform: 'scale(1.5)',
-        transformOrigin: 'top left'
+        transformOrigin: 'top left',
+        '-webkit-font-smoothing': 'antialiased',
+        'text-rendering': 'optimizeLegibility'
       },
       cacheBust: true
     });
@@ -107,7 +94,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         const blob = await response.blob();
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpg`, { type: 'image/jpeg' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({
@@ -121,17 +108,18 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
           // Fall back to regular download if sharing fails
         }
       }
+      
     }
 
     const link = document.createElement('a');
-    link.download = `${surveyData.pet_info.PetName}-page1.jpg`;
+    link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
     link.href = dataUrl;
     link.click();
-      
   } catch (error) {
     console.error('dom-to-image error:', error);
   }
-};
+  };
+
 
 export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile }: { aiResult: string, surveyData: SurveyData, isFromUserProfile: boolean }) {
   const { userInfo, setUserInfo } = useLoggin();
@@ -170,11 +158,11 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
 
 
           <img src={
-            mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.jpg'
-            : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.jpg'
-            : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.jpg'
-            : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.jpg'
-            : '/bg-NT.jpg'
+            mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.svg'
+            : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.svg'
+            : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.svg'
+            : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.svg'
+            : '/bg-NT.svg'
           }
           alt="NT" className="absolute top-[0] left-[0] w-[800px] h-[1000px] -z-10"/>
           <div className="flex flex-row absolute top-[20px] left-[528px] w-[232px] h-[48px]">

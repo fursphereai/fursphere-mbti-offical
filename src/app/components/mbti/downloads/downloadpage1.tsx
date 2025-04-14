@@ -74,107 +74,25 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   }
 
   try {
-    const bgImagePath = 
-    mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.jpg'
-    : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.jpg'
-    : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.jpg'
-    : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.jpg'
-    : '/bg-NT.jpg';
-  
-  // Preload background image
-  await new Promise((resolve) => {
-    const bgImg = new Image();
-    bgImg.onload = resolve;
-    bgImg.onerror = resolve;
-    bgImg.src = bgImagePath;
-  });
-  
-  // Preload pet image if it exists
-  if (surveyData.pet_info.PetPublicUrl) {
-    await new Promise((resolve) => {
-      const petImg = new Image();
-      petImg.onload = resolve;
-      petImg.onerror = resolve;
-      petImg.crossOrigin = "anonymous";
-      petImg.src = surveyData.pet_info.PetPublicUrl;
+    // Simple preload of images
+    await new Promise<void>(resolve => {
+      // Wait a bit to ensure all images are loaded
+      setTimeout(() => {
+        resolve();
+      }, 1000);
     });
-  }
-  
-  // Find all images in the element
-  const images = elementToCapture.querySelectorAll('img');
-  console.log(`Found ${images.length} images to load`);
-  
-  // Force reload all images to ensure they're fresh
-  const timestamp = new Date().getTime();
-    // Wait a bit more to ensure rendering is complete
-    for (const img of images) {
-      // Store original src
-      const originalSrc = img.src;
-      
-      // Force reload by setting a blank src then the original with cache buster
-      img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-      
-      // Wait a tiny bit before setting back the original src
-      await new Promise(r => setTimeout(r, 10));
-      
-      // Add cache buster to URL
-      if (originalSrc.includes('?')) {
-        img.src = `${originalSrc}&_t=${timestamp}`;
-      } else {
-        img.src = `${originalSrc}?_t=${timestamp}`;
-      }
-      
-      // Add crossOrigin for external images
-      if (originalSrc.includes('http') && !originalSrc.includes(window.location.hostname)) {
-        img.crossOrigin = "anonymous";
-      }
-    }
 
-    // Wait for all images to load
-    await Promise.all(Array.from(images).map((img) => {
-      return new Promise((resolve) => {
-        if (img.complete && img.naturalHeight !== 0) {
-          resolve(null);
-          return;
-        }
-        
-        img.onload = () => resolve(null);
-        img.onerror = () => resolve(null);
-      });
-    }));
-    
-    // Wait a bit more to ensure rendering is complete
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Use html2canvas as a more reliable alternative
-    try {
-      const canvas = await html2canvas(elementToCapture, {
-        width: 1200,
-        height: 1500,
-        scale: 1.5,
-        useCORS: true,
-        allowTaint: true,
-        logging: true,
-        backgroundColor: null
-      });
-    
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
-    // const dataUrl = await domtoimage.toPng(elementToCapture, {
-    //   width: 1200,      
-    //   height: 1500,     
-    //   quality: 0.95,    
-    //   style: {
-    //     transform: 'scale(1.5)',
-    //     transformOrigin: 'top left',
-    //     '-webkit-font-smoothing': 'antialiased',
-    //     'text-rendering': 'optimizeLegibility'
-    //   },
-    //   cacheBust: true
-    // });
-
+    // Use dom-to-image with minimal options to avoid TypeScript errors
+    const dataUrl = await domtoimage.toJpeg(elementToCapture, {
+      width: 1200,
+      height: 1500,
+      quality: 0.95,
+      cacheBust: true
+    });
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+  
     if (isMobile) {
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
@@ -182,56 +100,47 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
        try {
           // Better way to convert data URL to Blob
           const byteString = atob(dataUrl.split(',')[1]);
-            const mimeType = 'image/jpeg';
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            
-            for (let i = 0; i < byteString.length; i++) {
-              ia[i] = byteString.charCodeAt(i);
-            }
-            
-            const blob = new Blob([ab], { type: mimeType });
-            const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
-            
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-              await navigator.share({
-                files: [file],
-                title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-                text: 'Check out my pet\'s personality type!'
-              });
-            } else {
-              const tempUrl = URL.createObjectURL(blob);
-              await navigator.share({
-                url: tempUrl,
-                title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-                text: 'Check out my pet\'s personality type!'
-              });
-              setTimeout(() => URL.revokeObjectURL(tempUrl), 5000);
-            }
-            return;
-        } catch (error) {
-          if (error instanceof Error && error.name === 'AbortError') {
-            console.log('User cancelled sharing');
-            return;
+          const mimeType = 'image/jpeg';
+          const ab = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(ab);
+          
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
           }
+          
+          const blob = new Blob([ab], { type: mimeType });
+          const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+          
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+              text: 'Check out my pet\'s personality type!'
+            });
+          } else {
+            const tempUrl = URL.createObjectURL(blob);
+            await navigator.share({
+              url: tempUrl,
+              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+              text: 'Check out my pet\'s personality type!'
+            });
+            setTimeout(() => URL.revokeObjectURL(tempUrl), 5000);
+          }
+          return;
+        } catch (error) {
           console.log('Sharing failed', error);
         }
       }
-      
-     
     }
-
+     
     const link = document.createElement('a');
     link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
     link.href = dataUrl;
     link.click();
-      
-  } catch (html2canvasError) {
-    console.error('html2canvas error:', html2canvasError);
+  } catch (error) {
+    console.error('dom-to-image error:', error);
   }
-  };
-
-
+};
 
 export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile }: { aiResult: string, surveyData: SurveyData, isFromUserProfile: boolean }) {
   const { userInfo, setUserInfo } = useLoggin();

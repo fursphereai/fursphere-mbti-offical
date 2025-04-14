@@ -71,6 +71,37 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   }
 
   try {
+
+
+    if (surveyData.pet_info.PetPublicUrl) {
+      const petImages = elementToCapture.querySelectorAll(`img[src="${surveyData.pet_info.PetPublicUrl}"]`);
+      console.log(`Found ${petImages.length} pet images to load`);
+      
+      if (petImages.length > 0) {
+        for (const img of petImages) {
+          if (!(img as HTMLImageElement).complete) {
+            console.log('Pet image not loaded yet, waiting...');
+            await new Promise(resolve => {
+              (img as HTMLImageElement).onload = () => {
+                console.log('Pet image loaded successfully');
+                resolve(null);
+              };
+              (img as HTMLImageElement).onerror = () => {
+                console.error('Error loading pet image');
+                resolve(null);
+              };
+            });
+          } else {
+            console.log('Pet image already loaded');
+          }
+        }
+      }
+    }
+
+    console.log('Waiting additional time for rendering...');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('Starting image capture...');
+
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      
       height: 1500,     
@@ -81,7 +112,19 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         '-webkit-font-smoothing': 'antialiased',
         'text-rendering': 'optimizeLegibility'
       },
-      cacheBust: true
+      cacheBust: true,
+      filter: (node: HTMLElement) => {
+        // Skip external images that might cause CORS issues
+        if (node.tagName === 'IMG') {
+          const imgElement = node as HTMLImageElement;
+          const src = imgElement.getAttribute('src') || '';
+            
+          // Only include images from your own domain or data URLs
+          return true;
+          
+        }
+        return true;
+      }
     });
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

@@ -73,67 +73,22 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   try {
 
 
-    // First, find the pet image element
-    const petImages = elementToCapture.querySelectorAll('img');
-    let petImageFound = false;
-    
-    // Set crossOrigin attribute on all images to help with CORS issues
-    for (const img of petImages) {
-      // Set crossOrigin attribute
+    const images = elementToCapture.querySelectorAll('img');
+    images.forEach(img => {
       img.setAttribute('crossOrigin', 'anonymous');
-      
-      // Check if this is the pet image
-      if (img.src === surveyData.pet_info.PetPublicUrl) {
-        petImageFound = true;
-        console.log('Found pet image:', img.src);
-        
-        // Create a new image element to preload the pet image
-        const preloadImg = new Image();
-        preloadImg.crossOrigin = 'anonymous';
-        
-        // Wait for the preload to complete
-        await new Promise((resolve) => {
-          preloadImg.onload = () => {
-            console.log('Pet image preloaded successfully');
-            resolve(null);
-          };
-          preloadImg.onerror = () => {
-            console.error('Error preloading pet image');
-            resolve(null);
-          };
-          preloadImg.src = surveyData.pet_info.PetPublicUrl;
-        });
-        
-        // Force the image to reload with crossOrigin set
-        const currentSrc = img.src;
-        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-        await new Promise(r => setTimeout(r, 10));
-        img.src = currentSrc;
-        
-        // Wait for the image to load
-        if (!img.complete) {
-          await new Promise(resolve => {
-            img.onload = () => {
-              console.log('Pet image reloaded successfully');
-              resolve(null);
-            };
-            img.onerror = () => {
-              console.error('Error reloading pet image');
-              resolve(null);
-            };
-          });
-        }
-      }
-    }
+    });
     
-    if (!petImageFound) {
-      console.warn('Pet image not found in the DOM');
-    }
+    // Wait for all images to load
+    await Promise.all(Array.from(images).map(img => {
+      if (img.complete) return Promise.resolve();
+      return new Promise(resolve => {
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    }));
     
     // Wait a bit more to ensure rendering is complete
-    console.log('Waiting additional time for rendering...');
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Starting image capture...');
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      

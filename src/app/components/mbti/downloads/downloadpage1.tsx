@@ -26,8 +26,8 @@ export const getDownloadImageUrl1 = async (surveyData: SurveyData, mbti: string,
    
     
     const dataUrl = await domtoimage.toPng(elementToCapture, {
-      width: 12,      
-      height: 15,     
+      width: 1200,      
+      height: 1500,     
       quality: 0.95,    
       style: {
         transform: 'scale(1.5)',
@@ -120,7 +120,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
 
         
         // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
         try {
           await navigator.share({
@@ -187,11 +187,11 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
 
 
           <img src={
-            mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.svg'
-            : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.svg'
-            : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.svg'
-            : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.svg'
-            : '/bg-NT.svg'
+            mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.png'
+            : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.png'
+            : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.png'
+            : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.png'
+            : '/bg-NT.png'
           }
           alt="NT" className="absolute top-[0] left-[0] w-[800px] h-[1000px] -z-10"/>
           <div className="flex flex-row absolute top-[20px] left-[528px] w-[232px] h-[48px]">

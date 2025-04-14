@@ -77,7 +77,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      
       height: 1500,     
-      quality: 0.95,    
+      quality: 0.3,    
       style: {
         transform: 'scale(1.5)',
         transformOrigin: 'top left',

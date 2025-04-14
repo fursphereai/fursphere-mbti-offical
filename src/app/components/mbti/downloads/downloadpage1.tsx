@@ -143,11 +143,16 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
       if (navigator.share) {
         // Convert data URL to Blob
 
-        console.log("dataUrl testing life time",dataUrl);
-        const response = await fetch(dataUrl);
-        console.log("response testing life time",response);
-        const blob = await response.blob();
-        console.log("blob testing life time",blob);
+        const byteString = atob(dataUrl.split(',')[1]);
+        const mimeType = 'image/jpeg';  // Force JPEG for better compatibility
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        
+        const blob = new Blob([ab], { type: mimeType });
 
         
         // Create a File from the Blob

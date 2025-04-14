@@ -99,26 +99,25 @@ export default function Loggin({ handleNext, setStep, setShowSignup, setShowLogi
 
       const checkEmailAvailability = async (email: string) => {
         try {
+            console.log("airai email" + email);
 
             const response = await checkingSignup(email);
             console.log("airai" + JSON.stringify(response));
           
             if (JSON.stringify(response).includes('false')) {
                 setShowEmailAvailable(true);
-                setLogginChecking(true);
+        
                 setLogginEmailAvailable(true);
             } else {
-                setLogginChecking(true);
-                console.log("isChecking" + logginChecking);
-                console.log("email" + email);
+               
+                setShowEmailAvailable(false);
                 setLogginEmailAvailable(false);
-                console.log("isEmailAvailable" + logginEmailAvailable);
+             
             }
         } catch (error) {
             console.error('Error checking email:', error);
         } finally {
-            setLogginChecking(false);
-            console.log("isChecking" + logginChecking);
+            
         }
       };
 

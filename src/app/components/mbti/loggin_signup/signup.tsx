@@ -122,7 +122,7 @@ export default function Signup({ handleNext, setStep, setShowSignup, setShowLogi
             } catch (error) {
             console.error('Error checking email:', error);
             } finally {
-              
+
             }
         };
 
@@ -423,6 +423,7 @@ const validateAndSubmit = async () => {
             : 
                 'Send Code'}
             </button>
+          </div>
 
 
 
@@ -441,7 +442,7 @@ const validateAndSubmit = async () => {
 
 
 
-          {/* { showEmailAssociated && (
+          { showEmailAssociated && (
             <div className="hidden md:flex flex-col mt-[8px] items-center justify-center max-w-[467px] w-full text-[#5777D0] text-[14px] font-[Inter] leading-[14px]">
                     <div className=" w-full flex flex-row justify-start items-center">
                     Oops, this email is already associated with an account. You can keep 
@@ -460,7 +461,7 @@ const validateAndSubmit = async () => {
                         here or try a different one.
                     </div>
             </div>  )  
-        } */}
+        }
 
           {showEmailAssociated && (
             <div className="flex md:hidden flex-col mt-[8px] items-center justify-center max-w-[320px] w-full text-[#5777D0] text-[14px] font-[Inter] leading-[14px]">

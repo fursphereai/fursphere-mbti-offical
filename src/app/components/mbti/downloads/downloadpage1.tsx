@@ -71,49 +71,17 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   }
 
   try {
-    // First, manually ensure the pet photo is loaded if it exists
-    if (surveyData.pet_info.PetPublicUrl) {
-      const petImages = elementToCapture.querySelectorAll(`img[src="${surveyData.pet_info.PetPublicUrl}"]`);
-      if (petImages.length > 0) {
-        for (const img of petImages) {
-          // Set crossOrigin attribute
-          img.setAttribute('crossOrigin', 'anonymous');
-          
-          // Force reload the image
-          const originalSrc = (img as HTMLImageElement).src;
-          (img as HTMLImageElement).src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-          await new Promise(r => setTimeout(r, 10));
-          (img as HTMLImageElement).src = originalSrc;
-          
-          // Wait for it to load
-          if (!(img as HTMLImageElement).complete) {
-            await new Promise(resolve => {
-              (img as HTMLImageElement).onload = resolve;
-              (img as HTMLImageElement).onerror = resolve;
-            });
-          }
-        }
-      }
-    }
+    // Add a delay to ensure everything is rendered
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Wait for all images to load
-    const allImages = elementToCapture.querySelectorAll('img');
-    await Promise.all(Array.from(allImages).map(img => {
-      if (img.complete) return Promise.resolve();
-      return new Promise(resolve => {
-        img.onload = resolve;
-        img.onerror = resolve;
-      });
-    }));
-    
-    // Wait a bit more to ensure rendering is complete
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Use dom-to-image with the original options
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      
       height: 1500,     
       quality: 0.95,    
+      style: {
+        transform: 'scale(1.5)',
+        transformOrigin: 'top left'
+      },
       cacheBust: true
     });
 
@@ -122,38 +90,23 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     if (isMobile) {
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
+        // Convert data URL to Blob
+        const response = await fetch(dataUrl);
+        const blob = await response.blob();
+        
+        // Create a File from the Blob
+        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
+        
         try {
-          // Convert data URL to Blob
-          const byteString = atob(dataUrl.split(',')[1]);
-          const mimeType = 'image/png';
-          const ab = new ArrayBuffer(byteString.length);
-          const ia = new Uint8Array(ab);
-          
-          for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-          }
-          
-          const blob = new Blob([ab], { type: mimeType });
-          const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
-          
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-              text: 'Check out my pet\'s personality type!'
-            });
-          } else {
-            const tempUrl = URL.createObjectURL(blob);
-            await navigator.share({
-              url: tempUrl,
-              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-              text: 'Check out my pet\'s personality type!'
-            });
-            setTimeout(() => URL.revokeObjectURL(tempUrl), 5000);
-          }
-          return;
+          await navigator.share({
+            files: [file],
+            title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+            text: 'Check out my pet\'s personality type!'
+          });
+          return; // Exit after sharing
         } catch (error) {
           console.log('Sharing failed', error);
+          // Fall back to regular download if sharing fails
         }
       }
     }
@@ -162,6 +115,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     link.download = `${surveyData.pet_info.PetName}-page1.png`;
     link.href = dataUrl;
     link.click();
+      
   } catch (error) {
     console.error('dom-to-image error:', error);
   }

@@ -76,24 +76,35 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   try {
 
     const images = elementToCapture.querySelectorAll('img');
-    await Promise.all(Array.from(images).map(img => {
-      if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+    console.log(`Found ${images.length} images to load`);
+    
+    // Log all image sources to debug
+    images.forEach((img, index) => {
+      console.log(`Image ${index} src: ${img.src}, complete: ${img.complete}`);
+    });
+    
+    await Promise.all(Array.from(images).map((img, index) => {
+      if (img.complete && img.naturalHeight !== 0) {
+        console.log(`Image ${index} already loaded: ${img.src}`);
+        return Promise.resolve();
+      }
+      
       return new Promise((resolve) => {
-        img.onload = resolve;
-        img.onerror = resolve; // Continue even if image fails to load
-        
-        // Force reload the image if it's the pet photo
-        if (img.src === surveyData.pet_info.PetPublicUrl) {
-          const currentSrc = img.src;
-          img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"; // Tiny transparent gif
-          setTimeout(() => { img.src = currentSrc; }, 10); // Reload after 10ms
-        }
+        console.log(`Waiting for image ${index} to load: ${img.src}`);
+        img.onload = () => {
+          console.log(`Image ${index} loaded: ${img.src}`);
+          resolve(null);
+        };
+        img.onerror = () => {
+          console.error(`Error loading image ${index}: ${img.src}`);
+          resolve(null);
+        };
       });
     }));
 
     // Wait a bit more to ensure rendering is complete
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      
       height: 1500,     
@@ -207,11 +218,11 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
 
 
           <img src={
-            mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.png'
-            : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.png'
-            : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.png'
-            : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.png'
-            : '/bg-NT.png'
+            mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '/bg-NT.jpg'
+            : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '/bg-NF.jpg'
+            : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '/bg-ST.jpg'
+            : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '/bg-SF.jpg'
+            : '/bg-NT.jpg'
           }
           alt="NT" className="absolute top-[0] left-[0] w-[800px] h-[1000px] -z-10"/>
           <div className="flex flex-row absolute top-[20px] left-[528px] w-[232px] h-[48px]">

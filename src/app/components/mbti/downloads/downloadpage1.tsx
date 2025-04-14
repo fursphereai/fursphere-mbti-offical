@@ -75,66 +75,93 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
 
   try {
 
-    const images = elementToCapture.querySelectorAll('img');
-    console.log(`Found ${images.length} images to load`);
-    
-    // Log all image sources to debug
-    images.forEach((img, index) => {
-      console.log(`Image ${index} src: ${img.src}, complete: ${img.complete}`);
-    });
-    
-    await Promise.all(Array.from(images).map((img, index) => {
-      if (img.complete && img.naturalHeight !== 0) {
-        console.log(`Image ${index} already loaded: ${img.src}`);
-        return Promise.resolve();
-      }
-      
-      return new Promise((resolve) => {
-        console.log(`Waiting for image ${index} to load: ${img.src}`);
-        img.onload = () => {
-          console.log(`Image ${index} loaded: ${img.src}`);
-          resolve(null);
-        };
-        img.onerror = () => {
-          console.error(`Error loading image ${index}: ${img.src}`);
-          resolve(null);
-        };
-      });
-    }));
-
-    // Wait a bit more to ensure rendering is complete
+     // Clear any previous captures by adding a unique timestamp to force a fresh capture
+     const timestamp = new Date().getTime();
+     elementToCapture.setAttribute('data-capture-timestamp', timestamp.toString());
+     
+     // First, ensure all images are loaded
+     const images = elementToCapture.querySelectorAll('img');
+     console.log(`Found ${images.length} images to load`);
+     
+     // Force reload images to ensure they're fresh
+     images.forEach((img, index) => {
+       const originalSrc = img.src;
+       if (originalSrc.includes('?')) {
+         img.src = `${originalSrc}&_t=${timestamp}`;
+       } else {
+         img.src = `${originalSrc}?_t=${timestamp}`;
+       }
+     });
+     
+     // Wait for all images to load
+     await Promise.all(Array.from(images).map((img, index) => {
+       if (img.complete && img.naturalHeight !== 0) {
+         console.log(`Image ${index} already loaded: ${img.src}`);
+         return Promise.resolve();
+       }
+       
+       return new Promise((resolve) => {
+         console.log(`Waiting for image ${index} to load: ${img.src}`);
+         img.onload = () => {
+           console.log(`Image ${index} loaded: ${img.src}`);
+           resolve(null);
+         };
+         img.onerror = () => {
+           console.error(`Error loading image ${index}: ${img.src}`);
+           resolve(null);
+         };
+       });
+     }));
+ 
+     // Wait a bit more to ensure rendering is complete
     await new Promise(resolve => setTimeout(resolve, 1000));
-
-    const dataUrl = await domtoimage.toPng(elementToCapture, {
-      width: 1200,      
-      height: 1500,     
-      quality: 0.95,    
-      style: {
-        transform: 'scale(1.5)',
-        transformOrigin: 'top left',
-        '-webkit-font-smoothing': 'antialiased',
-        'text-rendering': 'optimizeLegibility'
-      },
-      cacheBust: true,
-      filter: (node: HTMLElement) => {
-        // Skip external images that might cause CORS issues
-        if (node.tagName === 'IMG') {
-          const imgElement = node as HTMLImageElement;
-          const src = imgElement.getAttribute('src') || '';
-          console.log("src testing life time",src);
-            
-          // Only include images from your own domain or data URLs
-          if (src.startsWith('blob:')) {
-            return true;
-          } 
-          if (src.startsWith('http') && !src.includes(window.location.hostname)) {
-            return true;
+    let dataUrl;
+      try {
+        dataUrl = await htmlToImage.toJpeg(elementToCapture, {
+          width: 1200,      
+          height: 1500,     
+          quality: 0.9,    
+          style: {
+            transform: 'scale(1.5)',
+            transformOrigin: 'top left',
+            // Fix the TypeScript error by using proper CSS properties
+            textRendering: 'optimizeLegibility',
+            // Use type assertion for non-standard properties
+            ...({"WebkitFontSmoothing": "antialiased"} as any)
+          },
+          cacheBust: true,
+          pixelRatio: 2, // Higher pixel ratio for better quality
+          skipAutoScale: true,
+          filter: (node) => {
+            return true; // Include all nodes for html-to-image
           }
-        }
-        return true;
+        });
+      } catch (htmlToImageError) {
+        console.log('html-to-image failed, falling back to dom-to-image', htmlToImageError);
+        
+        // Fall back to dom-to-image
+        dataUrl = await domtoimage.toJpeg(elementToCapture, {
+          width: 1200,      
+          height: 1500,     
+          quality: 0.9,    
+          style: {
+            transform: 'scale(1.5)',
+            transformOrigin: 'top left',
+            // Fix the TypeScript error by using proper CSS properties
+            textRendering: 'optimizeLegibility',
+            // Use type assertion for non-standard properties
+            ...({"WebkitFontSmoothing": "antialiased"} as any)
+          },
+          cacheBust: true,
+          filter: (node: HTMLElement) => true // Include all nodes
+        });
       }
 
-    });
+    // Validate the data URL
+    if (!dataUrl || dataUrl.length < 1000) {
+      throw new Error('Generated image is too small or invalid');
+    }
+
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 

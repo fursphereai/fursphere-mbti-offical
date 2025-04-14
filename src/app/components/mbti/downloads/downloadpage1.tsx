@@ -73,22 +73,68 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   try {
 
 
+    const isImageLoaded = (img: HTMLImageElement) => {
+      // An image is considered loaded if:
+      // 1. The complete property is true
+      // 2. It has a natural width and height greater than 0
+      return img.complete && img.naturalWidth > 0 && img.naturalHeight > 0;
+    };
+
+    // Function to wait for an image to load
+    const waitForImageToLoad = (img: HTMLImageElement) => {
+      return new Promise<void>((resolve) => {
+        if (isImageLoaded(img)) {
+          console.log('Image already loaded:', img.src);
+          resolve();
+          return;
+        }
+
+        console.log('Waiting for image to load:', img.src);
+        
+        // Set both load and error handlers
+        const handleLoad = () => {
+          console.log('Image loaded successfully:', img.src);
+          img.removeEventListener('load', handleLoad);
+          img.removeEventListener('error', handleError);
+          resolve();
+        };
+        
+        const handleError = () => {
+          console.error('Error loading image:', img.src);
+          img.removeEventListener('load', handleLoad);
+          img.removeEventListener('error', handleError);
+          resolve(); // Resolve anyway to continue the process
+        };
+        
+        img.addEventListener('load', handleLoad);
+        img.addEventListener('error', handleError);
+        
+        // If the image is already loading, we need to set the src again to trigger the load event
+        const currentSrc = img.src;
+        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        setTimeout(() => {
+          img.src = currentSrc;
+        }, 10);
+      });
+    };
+
+    // Find all images in the element
     const images = elementToCapture.querySelectorAll('img');
-    images.forEach(img => {
+    console.log(`Found ${images.length} images`);
+    
+    // Set crossOrigin on all images
+    for (const img of images) {
       img.setAttribute('crossOrigin', 'anonymous');
-    });
+    }
     
     // Wait for all images to load
-    await Promise.all(Array.from(images).map(img => {
-      if (img.complete) return Promise.resolve();
-      return new Promise(resolve => {
-        img.onload = resolve;
-        img.onerror = resolve;
-      });
-    }));
+    const loadPromises = Array.from(images).map(img => waitForImageToLoad(img as HTMLImageElement));
+    await Promise.all(loadPromises);
     
-    // Wait a bit more to ensure rendering is complete
+    // Add a delay to ensure everything is rendered
+    console.log('All images loaded, waiting for final rendering...');
     await new Promise(resolve => setTimeout(resolve, 3000));
+    console.log('Starting capture...');
 
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      

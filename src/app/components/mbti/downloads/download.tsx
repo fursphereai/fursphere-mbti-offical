@@ -45,6 +45,92 @@ interface DownloadProps {
   setPart2: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const compressImage = async (file: File): Promise<File> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 设置最大尺寸为400x400
+        const MAX_SIZE = 400;
+        
+        let width = img.width;
+        let height = img.height;
+        
+        // 保持宽高比进行缩放
+        if (width > height) {
+          if (width > MAX_SIZE) {
+            height *= MAX_SIZE / width;
+            width = MAX_SIZE;
+          }
+        } else {
+          if (height > MAX_SIZE) {
+            width *= MAX_SIZE / height;
+            height = MAX_SIZE;
+          }
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        // 转换为文件，使用0.8的质量来平衡清晰度和文件大小
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const compressedFile = new File([blob], file.name, {
+              type: file.type,
+              lastModified: Date.now()
+            });
+            resolve(compressedFile);
+          } else {
+            reject(new Error('压缩失败'));
+          }
+        }, file.type, 0.8); // 使用0.8的质量
+      };
+      img.onerror = reject;
+    };
+    reader.onerror = reject;
+  });
+};
+
+const waitForImages = (element: HTMLElement): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const images = element.getElementsByTagName('img');
+    if (images.length === 0) {
+      resolve();
+      return;
+    }
+
+    let loadedCount = 0;
+    const totalImages = images.length;
+
+    const checkAllLoaded = () => {
+      loadedCount++;
+      if (loadedCount === totalImages) {
+        resolve();
+      }
+    };
+
+    Array.from(images).forEach(img => {
+      if (img.complete) {
+        checkAllLoaded();
+      } else {
+        img.onload = checkAllLoaded;
+        img.onerror = (error) => {
+          console.error('图片加载失败:', img.src, error);
+          reject(new Error(`图片加载失败: ${img.src}`));
+        };
+      }
+    });
+  });
+};
+
 export default function Download({ step, setStep, setPart1, result1, result2, result3, setResult1, setResult2, setResult3, showEmail, showSignup, showLogin, loading, download, setShowEmail, setShowSignup, setShowLogin, setLoading, setDownload, aiResult, surveyData, isFromUserProfile, setIsFromUserProfile, setAiResult, setPart2 }: DownloadProps) {
   console.log('download', download);
   console.log('result1', result1);

@@ -93,7 +93,9 @@ export default function Signup({ handleNext, setStep, setShowSignup, setShowLogi
 
         const checkEmailAvailability = async (email: string) => {
             try {
+              console.log("airai email" + email);
               const response = await checkingSignup(email);
+              
               console.log("airai" + JSON.stringify(response));
             if (JSON.stringify(response).includes('true')) {
                 setShowEmailAssociated(true);

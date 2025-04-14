@@ -75,15 +75,15 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
 
   try {
     const dataUrl = await domtoimage.toPng(elementToCapture, {
-      width: 1200,      
-      height: 1500,     
+      width: 12,      
+      height: 15,     
       quality: 0.95,    
-      style: {
-        transform: 'scale(1.5)',
-        transformOrigin: 'top left',
-        '-webkit-font-smoothing': 'antialiased',
-        'text-rendering': 'optimizeLegibility'
-      },
+      // style: {
+      //   transform: 'scale(2.5)',
+      //   transformOrigin: 'top left',
+      //   '-webkit-font-smoothing': 'antialiased',
+      //   'text-rendering': 'optimizeLegibility'
+      // },
       cacheBust: true,
       filter: (node: HTMLElement) => {
         // Skip external images that might cause CORS issues
@@ -110,7 +110,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     if (isMobile) {
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
-        // Convert data URL to Blob
+        
 
         console.log("dataUrl testing life time",dataUrl);
         const response = await fetch(dataUrl);

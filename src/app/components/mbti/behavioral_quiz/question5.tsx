@@ -157,7 +157,7 @@ const Question5: React.FC<Question5Props> = ({
     <div className=" quiz-container">
       {/* 问题文本 */}
       <div className="question-container h-[38px] md:h-[44px] leading-[19.36px] text-[#101828]">
-        <h2>What does your pet do when your friends visit you?</h2>
+        <h2>How does your pet do when your friends visit you?</h2>
       </div>
 
       {/* 桌面端: Bubble 选择 */}

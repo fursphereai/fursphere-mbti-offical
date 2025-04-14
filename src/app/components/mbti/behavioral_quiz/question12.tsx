@@ -154,7 +154,7 @@ const Question12: React.FC<Question12Props> = ({
     <div className="quiz-container">
       {/* 问题文本 */}
       <div className="question-container h-[38px] md:h-[44px] leading-[19.36px] text-[#101828]">
-        <h2>How does your pet‘s attitude to your commands?</h2>
+        <h2>How would you describe your pet’s attitude toward your commands?</h2>
       </div>
 
       {/* 桌面端: Bubble 选择 */}

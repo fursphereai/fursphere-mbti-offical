@@ -363,14 +363,20 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
             <div className="mt-[10px] flex flex-row items-center justify-center gap-[20px]">
              <button className="w-[44px] h-[44px] bg-[#F5F5F5] rounded-[22px] flex items-center justify-center border-[1px] border-[#C3C3C3]">
               <img src="/icon-discord.svg" alt="discord" className="w-[24px] h-[24px]"/>
+              <a href="https://discord.com/invite/fursphere" target="_blank" rel="noopener noreferrer">
+              </a>
             </button>
 
             <button className="w-[44px] h-[44px] bg-[#F5F5F5] rounded-[22px] flex items-center justify-center border-[1px] border-[#C3C3C3]">
-            <img src="/icon-ins.svg" alt="instagram" className="w-[24px] h-[24px]"/>
+             <img src="/icon-ins.svg" alt="instagram" className="w-[24px] h-[24px]"/>
+             <a href="https://www.instagram.com/fur.sphere?igsh=MWowbXNjdHcxcmU5Mw==" target="_blank" rel="noopener noreferrer">
+             </a>
             </button>
 
             <button className="w-[44px] h-[44px] bg-[#F5F5F5] rounded-[22px] flex items-center justify-center border-[1px] border-[#C3C3C3]">
             <img src="/icon-facebook.svg" alt="facebook" className="w-[24px] h-[24px]"/>
+            <a href="https://www.facebook.com/profile.php?id=61573039379213" target="_blank" rel="noopener noreferrer">
+            </a>
             </button>
             </div>
           </div>

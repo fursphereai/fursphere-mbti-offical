@@ -156,7 +156,7 @@ const Question6: React.FC<Question6Props> = ({
     <div className="quiz-container">
       {/* 问题文本 */}
       <div className="question-container h-[57px] md:h-[44px] leading-[19.36px] text-[#101828]">
-        <h2>If you don't take care of your pet for 7 days, how would his/her fur or living space look? </h2>
+        <h2>If leaving your pet alone for a week, how would his/her fur and living space look? </h2>
       </div>
 
       {/* 桌面端: Bubble 选择 */}

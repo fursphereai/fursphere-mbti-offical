@@ -153,7 +153,7 @@ const Question11: React.FC<Question11Props> = ({
     <div className="quiz-container">
       {/* 问题文本 */}
       <div className="question-container h-[38px] md:h-[44px] leading-[19.36px] text-[#101828]">
-        <h2>You scold your pet for misbehaving—how does he/she respond?</h2>
+        <h2>When you scold your pet for misbehaving—how does he/she respond?</h2>
       </div>
 
       {/* 桌面端: Bubble 选择 */}

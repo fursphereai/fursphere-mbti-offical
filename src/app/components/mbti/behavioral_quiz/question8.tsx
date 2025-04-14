@@ -158,7 +158,7 @@ const Question8: React.FC<Question8Props> = ({
     <div className="quiz-container">
       {/* 问题文本 */}
       <div className="question-container h-[57px] md:h-[44px] leading-[19.36px] text-[#101828]">
-        <h2>If you intentionally place your pet's desired toy or treat out of reach, how will he/she do?</h2>
+        <h2>If you intentionally place your pet's desired toy or treat out of reach, what would he/she do?</h2>
       </div>
 
       {/* 桌面端: Bubble 选择 */}

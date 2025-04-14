@@ -121,23 +121,22 @@ interface EmailProps {
 
 
           if (JSON.stringify(response2).includes('true')) {
-              setChecking(true);
               setShowEmailRegistered(true);
-          } else if (response.test_times !== 0  ) {
-      
-            setChecking(true);
+          } else {
+            setShowEmailRegistered(false);
+          }
+          
+          if (response.test_times !== 0  ) {
             setShowEmailUsed(true);
-            console.log("surveyData" + JSON.stringify(surveyData));
-          } else  {
-            setChecking(true);
             
-            setEmailAvailable(false);
+          } else  {
+            setShowEmailUsed(false);
           }
         } catch (error) {
             console.error('Error checking email:', error);
         } finally {
-            setChecking(false);
-            console.log("isChecking" + checking);
+          
+            
         }
       };
 

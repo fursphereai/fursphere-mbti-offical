@@ -64,9 +64,6 @@ export const getDownloadImageUrl1 = async (surveyData: SurveyData, mbti: string,
 };
 
 export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
-
-
-
   const elementToCapture = document.getElementById('download-1');
   if (!elementToCapture) {
     console.error('Element not found');
@@ -74,33 +71,61 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
   }
 
   try {
-    // Simple preload of images
-    await new Promise<void>(resolve => {
-      // Wait a bit to ensure all images are loaded
-      setTimeout(() => {
-        resolve();
-      }, 1000);
-    });
+    // First, manually ensure the pet photo is loaded if it exists
+    if (surveyData.pet_info.PetPublicUrl) {
+      const petImages = elementToCapture.querySelectorAll(`img[src="${surveyData.pet_info.PetPublicUrl}"]`);
+      if (petImages.length > 0) {
+        for (const img of petImages) {
+          // Set crossOrigin attribute
+          img.setAttribute('crossOrigin', 'anonymous');
+          
+          // Force reload the image
+          const originalSrc = (img as HTMLImageElement).src;
+          (img as HTMLImageElement).src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+          await new Promise(r => setTimeout(r, 10));
+          (img as HTMLImageElement).src = originalSrc;
+          
+          // Wait for it to load
+          if (!(img as HTMLImageElement).complete) {
+            await new Promise(resolve => {
+              (img as HTMLImageElement).onload = resolve;
+              (img as HTMLImageElement).onerror = resolve;
+            });
+          }
+        }
+      }
+    }
+    
+    // Wait for all images to load
+    const allImages = elementToCapture.querySelectorAll('img');
+    await Promise.all(Array.from(allImages).map(img => {
+      if (img.complete) return Promise.resolve();
+      return new Promise(resolve => {
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    }));
+    
+    // Wait a bit more to ensure rendering is complete
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Use dom-to-image with minimal options to avoid TypeScript errors
-    const dataUrl = await domtoimage.toJpeg(elementToCapture, {
-      width: 1200,
-      height: 1500,
-      quality: 0.95,
+    // Use dom-to-image with the original options
+    const dataUrl = await domtoimage.toPng(elementToCapture, {
+      width: 1200,      
+      height: 1500,     
+      quality: 0.95,    
       cacheBust: true
     });
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  
     if (isMobile) {
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
-        // Convert data URL to Blob
-       try {
-          // Better way to convert data URL to Blob
+        try {
+          // Convert data URL to Blob
           const byteString = atob(dataUrl.split(',')[1]);
-          const mimeType = 'image/jpeg';
+          const mimeType = 'image/png';
           const ab = new ArrayBuffer(byteString.length);
           const ia = new Uint8Array(ab);
           
@@ -109,7 +134,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
           }
           
           const blob = new Blob([ab], { type: mimeType });
-          const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+          const file = new File([blob], `${surveyData.pet_info.PetName}-page1.png`, { type: 'image/png' });
           
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
@@ -132,9 +157,9 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
         }
       }
     }
-     
+
     const link = document.createElement('a');
-    link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
+    link.download = `${surveyData.pet_info.PetName}-page1.png`;
     link.href = dataUrl;
     link.click();
   } catch (error) {

@@ -118,20 +118,22 @@ interface EmailProps {
             console.log("checkingTestTimes" + JSON.stringify(response));
             console.log("checkingTestTimes" + response.test_times);
 
-
-
-          if (JSON.stringify(response2).includes('true')) {
+            if (response.test_times !== 0 && JSON.stringify(response2).includes('true')  ) {
+              setShowEmailUsed(true);
+              setShowEmailRegistered(false);
+            } else if (response.test_times !== 0 && JSON.stringify(response2).includes('false')  ) {
+              setShowEmailUsed(true);
+              setShowEmailRegistered(false);
+            } else if (response.test_times === 0 && JSON.stringify(response2).includes('true')  ) {
+              setShowEmailUsed(false);
               setShowEmailRegistered(true);
-          } else {
-            setShowEmailRegistered(false);
-          }
+            } else if (response.test_times === 0 && JSON.stringify(response2).includes('false')  ) {
+              setShowEmailUsed(false);
+              setShowEmailRegistered(false);
+            }
+
           
-          if (response.test_times !== 0  ) {
-            setShowEmailUsed(true);
-            
-          } else  {
-            setShowEmailUsed(false);
-          }
+         
         } catch (error) {
             console.error('Error checking email:', error);
         } finally {

@@ -100,7 +100,7 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
     
     // Wait a bit more to ensure rendering is complete
     await new Promise(resolve => setTimeout(resolve, 500));
-    
+
     const dataUrl = await domtoimage.toPng(elementToCapture, {
       width: 1200,      
       height: 1500,     
@@ -121,19 +121,40 @@ export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFr
       // For iOS devices, we can use the share API if available
       if (navigator.share) {
         // Convert data URL to Blob
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
-        
-        // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
-        
-        try {
-          await navigator.share({
-            files: [file],
-            title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-            text: 'Check out my pet\'s personality type!'
-          });
-          return; // Exit after sharing
+       try {
+          // Better way to convert data URL to Blob
+          const byteString = atob(dataUrl.split(',')[1]);
+          const mimeType = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+          const ab = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(ab);
+          
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+          
+          const blob = new Blob([ab], { type: mimeType });
+          
+          // Create a File from the Blob
+          const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+          
+          // Check if file sharing is supported
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+              text: 'Check out my pet\'s personality type!'
+            });
+          } else {
+            // Fall back to URL sharing
+            const tempUrl = URL.createObjectURL(blob);
+            await navigator.share({
+              url: tempUrl,
+              title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+              text: 'Check out my pet\'s personality type!'
+            });
+            setTimeout(() => URL.revokeObjectURL(tempUrl), 5000);
+          }
+          return; 
         } catch (error) {
           console.log('Sharing failed', error);
           // Fall back to regular download if sharing fails

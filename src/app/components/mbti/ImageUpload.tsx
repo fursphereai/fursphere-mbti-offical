@@ -82,9 +82,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ updateAnswer, surveyData }) =
         font-[Inter] text-[#27355D] hover:border-[#FFC542] hover:bg-[#F9F9F9]
         transition-all duration-200 ease-in-out"
       >
-        {imageUrl ? (
+        {surveyData.pet_info.PetPublicUrl ? (
           <img
-            src={imageUrl}
+            src={surveyData.pet_info.PetPublicUrl}
             alt="Uploaded preview"
             className="w-full h-full object-cover rounded-[19px]"
           />

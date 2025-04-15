@@ -287,9 +287,9 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
 
         {/* 宠物照片 & 结论 */}
         <div className=" flex flex-row items-center gap-[20px] mt-[40px] md:mt-[20px] w-full">
-        {surveyData.pet_info.PetPhoto ? (
+        {surveyData.pet_info.PetPublicUrl ? (
           <div className="hidden md:flex w-[232px] h-[232px] border-[4px] border-[#4B367B] rounded-[40px] flex items-center justify-center">
-            <img src={surveyData.pet_info.PetPhoto} alt="Mingming" className="w-full h-full rounded-[40px] object-cover" />
+            <img src={surveyData.pet_info.PetPublicUrl} alt="Mingming" className="w-full h-full rounded-[40px] object-cover" />
           </div>
           ) : (
             <div className="hidden md:flex w-[232px] h-[232px] flex items-center justify-center">

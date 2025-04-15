@@ -27,9 +27,7 @@ const Result3: React.FC<Result3Props> = ({ setResult1, setResult2, setResult3,  
   };
 
   const handleExploreMoreClick = () => {
-    setResult1(false);
-    setResult2(false);
-    setResult3(false);
+    window.location.href = 'https://www.instagram.com/fur.sphere/';
   };
  
   const generateDownload = () => {

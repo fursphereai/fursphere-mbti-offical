@@ -236,7 +236,7 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
     
           <div className=" absolute top-[500px] left-[40px] flex flex-row">
             
-          {surveyData.pet_info.PetPhoto ? (
+          {surveyData.pet_info.PetPublicUrl ? (
             <div className="w-[346px] h-[346px] bg-white border-[4px]  rounded-[40px]"
             style={{ 
               borderColor: 

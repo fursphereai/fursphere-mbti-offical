@@ -247,7 +247,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
           {/* 预留 MBTI 右侧插图（顶部溢出紫色框） */}
           <div className="absolute bottom-[0px] right-[0px] w-[150px] md:w-[260px] h-[150px] md:h-[260px]">
 
-          {surveyData.pet_info.PetPhoto ? (
+          {surveyData.pet_info.PetPublicUrl ? (
             surveyData.pet_info.PetSpecies === "Dog" ? (
               <img src={`/mbti-dog/${mbti}.svg`} alt="mbti-result" loading="eager" className="w-full h-full object-contain"/> 
             ) : (
@@ -267,9 +267,9 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
         font-Inter font-[400] text-[20px] leading-[1.2] 
         w-full">
           
-          {surveyData.pet_info.PetPhoto ? (
+          {surveyData.pet_info.PetPublicUrl ? (
           <div className="md:hidden  w-[100px] h-[100px] border-[2px] border-[#4B367B] rounded-[20px] flex items-center justify-center mr-[10px]">
-            <img src={surveyData.pet_info.PetPhoto} alt="Mingming" className="w-full h-full rounded-[18px] object-cover" />
+            <img src={surveyData.pet_info.PetPublicUrl} alt="Mingming" className="w-full h-full rounded-[18px] object-cover" />
           </div>
           ) : (
             <div className="md:hidden  w-[100px] h-[100px]  flex items-center justify-center mr-[10px]">
@@ -339,9 +339,6 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
          <img src="/fursphere-bottom-logo.svg" alt="FurSphere Logo" className="w-[199px]" />
        </p>
       </div>
-      {/* <div className="">
-        <DownloadPage1 />
-      </div> */}
     </div>
     </>
   );

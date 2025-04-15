@@ -110,7 +110,7 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
             focus:outline-none focus:border-[#FFC542]
             placeholder:[#C3C3C3] placeholder:text-[16px] md:placeholder:text-[18px]
           "
-          value={surveyData.pet_info.PetName}
+          value={surveyData.pet_info.PetPublicUrl}
           onChange={(e) => {
             updateAnswer('pet_info', null, 'PetName', e.target.value);
           }}

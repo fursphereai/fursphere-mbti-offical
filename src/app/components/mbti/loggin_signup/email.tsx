@@ -112,6 +112,10 @@ interface EmailProps {
 
       const checkEmailAvailability = async (email: string) => {
         try {
+            if (email === 'test@fursphere.com') {
+              setShowEmailUsed(false);
+              setShowEmailRegistered(false);
+            } else {
             const response = await checkingTestTimes(email);
             const response2 = await checkingSignup(email);
             console.log("airai" + JSON.stringify(response));
@@ -131,7 +135,7 @@ interface EmailProps {
               setShowEmailUsed(false);
               setShowEmailRegistered(false);
             }
-
+          }
           
          
         } catch (error) {
@@ -173,6 +177,7 @@ const GetAiResult = async (surveyData: SurveyData) => {
 
     const validateAndSubmit = async () => {
         // ... existing validation code ...
+      
         if (email && !emailValid) {
           setShowInvalidEmail(true);
           return;

@@ -2,8 +2,8 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { SurveyData } from '@/app/types/survey';
-import { handleDownload2 } from '../downloads/breakdown-m';
-import Breakdown from '../downloads/breakdown-m';
+// import { handleDownload2 } from '../downloads/breakdown-m';
+// import Breakdown from '../downloads/breakdown-m';
 import { useLoggin } from '@/app/context/LogginContext';
 
 interface Result3Props {
@@ -136,7 +136,7 @@ const Result3: React.FC<Result3Props> = ({ setResult1, setResult2, setResult3,  
 
         <button className=" w-[205px] h-[44px] bg-white rounded-[22px] border-[1px] border-[#C3C3C3] text-[16px] font-[600] text-black"
         onClick={generateDownload}>
-          Download & Share
+          Screenshot & Share
         </button>
         <button className="flex flex-row items-center justify-center w-[44px] md:w-[166px] h-[44px] bg-[#D1D7EF] rounded-[22px] text-[16px] font-[600] text-white" onClick={handleExploreMoreClick}>
               <svg className="md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">

@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { SurveyData } from '@/app/types/survey';
 import { useLoggin } from '@/app/context/LogginContext';
-import DownloadPage1, { getDownloadImageUrl1, handleDownload1 } from '../downloads/downloadpage1';
+import DownloadPage1, { getDownloadImageUrl1 } from '../downloads/downloadpage1';
 import { jsPDF } from 'jspdf';
 import domtoimage from 'dom-to-image';
 import BreakdownM, { getDownloadImageUrl2 } from '../downloads/breakdown-m';
@@ -224,24 +224,24 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
             {mbti}
             </h3>
             <p className=" ml-[17.78px] md:ml-[30px] text-[12px] md:text-[20px] font-[710] font-Inter">
-              {mbti === 'INTJ' ? 'The Architect' 
-              : mbti === 'INTP' ? 'The Logician' 
-              : mbti === 'ENTJ' ? 'The Commander' 
-              : mbti === 'ENTP' ? 'The Debater' 
-              : mbti === 'INFJ' ? 'The Advocate' 
-              : mbti === 'INFP' ? 'The Mediator' 
-              : mbti === 'ENFJ' ? 'The Protagonist' 
-              : mbti === 'ENFP' ? 'The Campaigner' 
-              : mbti === 'ISTJ' ? 'The Logistician' 
-              : mbti === 'ISFJ' ? 'The Defender' 
-              : mbti === 'ESTJ' ? 'The Executive' 
+              {mbti === 'INTJ' ? 'The Mastermind' 
+              : mbti === 'INTP' ? 'The Thinker' 
+              : mbti === 'ENTJ' ? 'The Boss' 
+              : mbti === 'ENTP' ? 'The Trickster' 
+              : mbti === 'INFJ' ? 'The Angel' 
+              : mbti === 'INFP' ? 'The Daydreamer' 
+              : mbti === 'ENFJ' ? 'The Caregiver' 
+              : mbti === 'ENFP' ? 'The Sunshine' 
+              : mbti === 'ISTJ' ? 'The Rule Keeper' 
+              : mbti === 'ISFJ' ? 'The Giver' 
+              : mbti === 'ESTJ' ? 'The Monitor' 
 
-              : mbti === 'ESTP' ? 'The Entrepreneur' 
-              : mbti === 'ISFP' ? 'The Adventurer' 
-              : mbti === 'ESFP' ? 'The Entertainer' 
-              : mbti === 'ISTP' ? 'The Virtuoso' 
+              : mbti === 'ESTP' ? 'The Daredevil😈' 
+              : mbti === 'ISFP' ? 'The Wanderer' 
+              : mbti === 'ESFP' ? 'The Star' 
+              : mbti === 'ISTP' ? 'The Fixer' 
 
-              :  'The Consul' }
+              :  'The Sweetheart' }
             </p>
           </div>
           {/* 预留 MBTI 右侧插图（顶部溢出紫色框） */}
@@ -321,7 +321,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
 
         <button className=" w-[205px] h-[44px] bg-white rounded-[22px] border-[1px] border-[#C3C3C3] text-[16px] font-[600] text-black"
          onClick={generateDownload}>
-          Download & Share
+          Screenshot & Share
         </button>
         <button className="flex flex-row items-center justify-center w-[44px] md:w-[101px] h-[44px] bg-[#5777D0] rounded-[22px] text-[16px] font-[600] text-white" onClick={handleNextClick}>
               <svg className="md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">

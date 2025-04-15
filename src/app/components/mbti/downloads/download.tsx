@@ -9,12 +9,12 @@ import BreakdownM from './breakdown-m';
 import BreakdownB from './breakdown-b';
 import BreakdownI from './breakdown-i';
 import BreakdownT from './breakdown-t';
-import { handleDownload1 } from './downloadpage1';
-import { handleDownload2 } from './breakdown-m';
-import { handleDownload3 } from './breakdown-b';
-import { handleDownload4 } from './breakdown-t';
-import { handleDownload5 } from './breakdown-i';
-import { handleDownload6 } from './do_not_do';
+// import { handleDownload1 } from './downloadpage1';
+// import { handleDownload2 } from './breakdown-m';
+// import { handleDownload3 } from './breakdown-b';
+// import { handleDownload4 } from './breakdown-t';
+// import { handleDownload5 } from './breakdown-i';
+// import { handleDownload6 } from './do_not_do';
 import { useLoggin } from '@/app/context/LogginContext';
 
 interface DownloadProps {
@@ -81,21 +81,21 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
 
 
 
-  const handleDownload = () => {
-     if (currentPage === 0) {
-      handleDownload1(surveyData, mbti, isFromUserProfile);
-     } else if (currentPage === 1) {
-      handleDownload2(surveyData, mbti, isFromUserProfile);
-     } else if (currentPage === 2) {
-      handleDownload3(surveyData, mbti, isFromUserProfile);
-     } else if (currentPage === 3) {
-      handleDownload4(surveyData, mbti, isFromUserProfile);
-     } else if (currentPage === 4) {
-      handleDownload5(surveyData, mbti, isFromUserProfile);
-     } else if (currentPage === 5) {
-      handleDownload6(surveyData, mbti, isFromUserProfile);
-     }
-  };
+  // const handleDownload = () => {
+  //    if (currentPage === 0) {
+  //     handleDownload1(surveyData, mbti, isFromUserProfile);
+  //    } else if (currentPage === 1) {
+  //     handleDownload2(surveyData, mbti, isFromUserProfile);
+  //    } else if (currentPage === 2) {
+  //     handleDownload3(surveyData, mbti, isFromUserProfile);
+  //    } else if (currentPage === 3) {
+  //     handleDownload4(surveyData, mbti, isFromUserProfile);
+  //    } else if (currentPage === 4) {
+  //     handleDownload5(surveyData, mbti, isFromUserProfile);
+  //    } else if (currentPage === 5) {
+  //     handleDownload6(surveyData, mbti, isFromUserProfile);
+  //    }
+  // };
 
   return (
     
@@ -193,10 +193,10 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
 
 
           <div className="absolute bottom-[39px] left-1/2 transform -translate-x-1/2 flex h-[44px]  flex-row items-center justify-center">
-            <button className="w-[147px] h-[44px] bg-[#5777D0] rounded-[22px] flex items-center justify-center"
-            onClick={handleDownload}
+          <button className=" w-[205px] h-[44px]  bg-[#F5F5F5] rounded-[22px] border-[1px] border-[#C3C3C3] text-[16px] font-[600] text-black"
+            // onClick={handleDownload}
             >
-              <p className="text-[17px] font-[Inter] font-[600] text-[#FFFFFF]">Download</p>
+              Screenshot & Share
             </button>
              <div className = "w-[82px] h-[17px]  flex items-center justify-center mx-[10px]">
              <p className="text-[14px] font-[Inter] font-[400] text-[#C3C3C3] tracking-[-0.2px]">Follow us on</p>
@@ -351,10 +351,10 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
 
 
           <div className="mt-[30px] flex flex-col  flex-row items-center justify-center z-[2]">
-            <button className="w-[147px] h-[44px] bg-[#5777D0] rounded-[22px] flex items-center justify-center"
-            onClick={handleDownload}
+             <button className=" w-[205px] h-[44px]  bg-[#F5F5F5] rounded-[22px] border-[1px] border-[#C3C3C3] text-[16px] font-[600] text-black"
+            // onClick={handleDownload}
             >
-              <p className="text-[17px] font-[Inter] font-[600] text-[#FFFFFF]">Download</p>
+              Screenshot & Share
             </button>
              <div className = "mt-[10px] w-[82px] h-[17px] flex items-center justify-center mx-[10px]">
              <p className="text-[14px] font-[Inter] font-[400] text-[#C3C3C3] tracking-[-0.2px]">Follow us on</p>
@@ -379,7 +379,7 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
             <img src="/icon-facebook.svg" alt="facebook" className="w-[24px] h-[24px]"/>
             </button>
             </a>
-            
+
             </div>
           </div>
 

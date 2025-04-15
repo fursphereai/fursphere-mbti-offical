@@ -63,92 +63,92 @@ export const getDownloadImageUrl1 = async (surveyData: SurveyData, mbti: string,
   }
 };
 
-export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
-  const elementToCapture = document.getElementById('download-1');
-  if (!elementToCapture) {
-    console.error('Element not found');
-    return;
-  }
+// export const handleDownload1 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
+//   const elementToCapture = document.getElementById('download-1');
+//   if (!elementToCapture) {
+//     console.error('Element not found');
+//     return;
+//   }
 
-  try {
+//   try {
 
 
-    if (surveyData.pet_info.PetPublicUrl) {
-      await new Promise<void>((resolve) => {
-        const img = new (window.Image as any)();
-        img.onload = () => resolve();
-        img.onerror = () => resolve();
-        img.crossOrigin = 'anonymous';
-        img.src = surveyData.pet_info.PetPublicUrl;
-      });
-    }
+//     if (surveyData.pet_info.PetPublicUrl) {
+//       await new Promise<void>((resolve) => {
+//         const img = new (window.Image as any)();
+//         img.onload = () => resolve();
+//         img.onerror = () => resolve();
+//         img.crossOrigin = 'anonymous';
+//         img.src = surveyData.pet_info.PetPublicUrl;
+//       });
+//     }
 
     
-    // Add a delay to ensure everything is rendered
-    console.log('All images loaded, waiting for final rendering...');
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    console.log('Starting capture...');
+//     // Add a delay to ensure everything is rendered
+//     console.log('All images loaded, waiting for final rendering...');
+//     await new Promise(resolve => setTimeout(resolve, 3000));
+//     console.log('Starting capture...');
 
-    const dataUrl = await domtoimage.toPng(elementToCapture, {
-      width: 1200,      
-      height: 1500,     
-      quality: 0.95,    
-      style: {
-        transform: 'scale(1.5)',
-        transformOrigin: 'top left',
-        '-webkit-font-smoothing': 'antialiased',
-        'text-rendering': 'optimizeLegibility'
-      },
-      cacheBust: true,
-      filter: (node: HTMLElement) => {
-        // Skip external images that might cause CORS issues
-        if (node.tagName === 'IMG') {
-          const imgElement = node as HTMLImageElement;
-          const src = imgElement.getAttribute('src') || '';
+//     const dataUrl = await domtoimage.toPng(elementToCapture, {
+//       width: 1200,      
+//       height: 1500,     
+//       quality: 0.95,    
+//       style: {
+//         transform: 'scale(1.5)',
+//         transformOrigin: 'top left',
+//         '-webkit-font-smoothing': 'antialiased',
+//         'text-rendering': 'optimizeLegibility'
+//       },
+//       cacheBust: true,
+//       filter: (node: HTMLElement) => {
+//         // Skip external images that might cause CORS issues
+//         if (node.tagName === 'IMG') {
+//           const imgElement = node as HTMLImageElement;
+//           const src = imgElement.getAttribute('src') || '';
             
-          // Only include images from your own domain or data URLs
-          return true;
+//           // Only include images from your own domain or data URLs
+//           return true;
           
-        }
-        return true;
-      }
-    });
+//         }
+//         return true;
+//       }
+//     });
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+//     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    if (isMobile) {
-      // For iOS devices, we can use the share API if available
-      if (navigator.share) {
-        // Convert data URL to Blob
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
+//     if (isMobile) {
+//       // For iOS devices, we can use the share API if available
+//       if (navigator.share) {
+//         // Convert data URL to Blob
+//         const response = await fetch(dataUrl);
+//         const blob = await response.blob();
         
-        // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
+//         // Create a File from the Blob
+//         const file = new File([blob], `${surveyData.pet_info.PetName}-page1.jpeg`, { type: 'image/jpeg' });
         
-        try {
-          await navigator.share({
-            files: [file],
-            title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-            text: 'Check out my pet\'s personality type!'
-          });
-          return; // Exit after sharing
-        } catch (error) {
-          console.log('Sharing failed', error);
-          // Fall back to regular download if sharing fails
-        }
-      }
+//         try {
+//           await navigator.share({
+//             files: [file],
+//             title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+//             text: 'Check out my pet\'s personality type!'
+//           });
+//           return; // Exit after sharing
+//         } catch (error) {
+//           console.log('Sharing failed', error);
+//           // Fall back to regular download if sharing fails
+//         }
+//       }
       
-    }
+//     }
 
-    const link = document.createElement('a');
-    link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
-    link.href = dataUrl;
-    link.click();
-  } catch (error) {
-    console.error('dom-to-image error:', error);
-  }
-  };
+//     const link = document.createElement('a');
+//     link.download = `${surveyData.pet_info.PetName}-page1.jpeg`;
+//     link.href = dataUrl;
+//     link.click();
+//   } catch (error) {
+//     console.error('dom-to-image error:', error);
+//   }
+//   };
 
 
 export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile }: { aiResult: string, surveyData: SurveyData, isFromUserProfile: boolean }) {
@@ -271,23 +271,24 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
                  [ {surveyData.pet_info.PetName} ] 
               </h2>
               <h2 className="text-right mt-[12px] text-[16px] font-[Inter] font-[710] text-[#4B367B] leading-[1.2] tracking-[0.12px]">
-              {mbti === 'INTJ' ? 'The Architect' 
-              : mbti === 'INTP' ? 'The Logician' 
-              : mbti === 'ENTJ' ? 'The Commander' 
-              : mbti === 'ENTP' ? 'The Debater' 
-              : mbti === 'INFJ' ? 'The Advocate' 
-              : mbti === 'INFP' ? 'The Mediator' 
-              : mbti === 'ENFJ' ? 'The Protagonist' 
-              : mbti === 'ENFP' ? 'The Campaigner' 
-              : mbti === 'ISTJ' ? 'The Logistician' 
-              : mbti === 'ISFJ' ? 'The Defender' 
-              : mbti === 'ESTJ' ? 'The Executive' 
-              : mbti === 'ESTP' ? 'The Entrepreneur' 
-              : mbti === 'ISFP' ? 'The Adventurer' 
-              : mbti === 'ESFP' ? 'The Entertainer' 
-              : mbti === 'ISTP' ? 'The Virtuoso' 
+              {mbti === 'INTJ' ? 'The Mastermind' 
+              : mbti === 'INTP' ? 'The Thinker' 
+              : mbti === 'ENTJ' ? 'The Boss' 
+              : mbti === 'ENTP' ? 'The Trickster' 
+              : mbti === 'INFJ' ? 'The Angel' 
+              : mbti === 'INFP' ? 'The Daydreamer' 
+              : mbti === 'ENFJ' ? 'The Caregiver' 
+              : mbti === 'ENFP' ? 'The Sunshine' 
+              : mbti === 'ISTJ' ? 'The Rule Keeper' 
+              : mbti === 'ISFJ' ? 'The Giver' 
+              : mbti === 'ESTJ' ? 'The Monitor' 
 
-              :  'The Consul' }
+              : mbti === 'ESTP' ? 'The Daredevil😈' 
+              : mbti === 'ISFP' ? 'The Wanderer' 
+              : mbti === 'ESFP' ? 'The Star' 
+              : mbti === 'ISTP' ? 'The Fixer' 
+
+              :  'The Sweetheart' }
               </h2>
               <h2 className="text-left w-[380px] mt-[32px] text-[24px] font-[Inter] font-[400] text-[#1C1C1C] leading-[1.2] tracking-[0.12px]">
               {result.ai_output.text.third_person_diagnosis}

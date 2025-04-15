@@ -61,64 +61,64 @@ export const getDownloadImageUrl6 = async (surveyData: SurveyData, mbti: string,
   }
 };
 
-export const handleDownload6 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
-  const elementToCapture = document.getElementById('download-6');
-  if (!elementToCapture) {
-    console.error('Element not found');
-    return;
-  }
+// export const handleDownload6 = async (surveyData: SurveyData, mbti: string, isFromUserProfile: boolean) => {
+//   const elementToCapture = document.getElementById('download-6');
+//   if (!elementToCapture) {
+//     console.error('Element not found');
+//     return;
+//   }
 
-  try {
-    const dataUrl = await domtoimage.toPng(elementToCapture, {
-      width: 1200,      
-      height: 1500,     
-      quality: 0.95,    
-      style: {
-        transform: 'scale(1.5)',
-        transformOrigin: 'top left',
-        '-webkit-font-smoothing': 'antialiased',
-        'text-rendering': 'optimizeLegibility'
-      },
-      cacheBust: true
-    });
+//   try {
+//     const dataUrl = await domtoimage.toPng(elementToCapture, {
+//       width: 1200,      
+//       height: 1500,     
+//       quality: 0.95,    
+//       style: {
+//         transform: 'scale(1.5)',
+//         transformOrigin: 'top left',
+//         '-webkit-font-smoothing': 'antialiased',
+//         'text-rendering': 'optimizeLegibility'
+//       },
+//       cacheBust: true
+//     });
 
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+//     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    if (isMobile) {
-      // For iOS devices, we can use the share API if available
-      if (navigator.share) {
-        // Convert data URL to Blob
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
+//     if (isMobile) {
+//       // For iOS devices, we can use the share API if available
+//       if (navigator.share) {
+//         // Convert data URL to Blob
+//         const response = await fetch(dataUrl);
+//         const blob = await response.blob();
         
-        // Create a File from the Blob
-        const file = new File([blob], `${surveyData.pet_info.PetName}-page6.jpeg`, { type: 'image/jpeg' });
+//         // Create a File from the Blob
+//         const file = new File([blob], `${surveyData.pet_info.PetName}-page6.jpeg`, { type: 'image/jpeg' });
         
-        try {
-          await navigator.share({
-            files: [file],
-            title: `${surveyData.pet_info.PetName}'s MBTI Result`,
-            text: 'Check out my pet\'s personality type!'
-          });
-          return; // Exit after sharing
-        } catch (error) {
-          console.log('Sharing failed', error);
-          // Fall back to regular download if sharing fails
-        }
-      }
+//         try {
+//           await navigator.share({
+//             files: [file],
+//             title: `${surveyData.pet_info.PetName}'s MBTI Result`,
+//             text: 'Check out my pet\'s personality type!'
+//           });
+//           return; // Exit after sharing
+//         } catch (error) {
+//           console.log('Sharing failed', error);
+//           // Fall back to regular download if sharing fails
+//         }
+//       }
       
      
-    }
+//     }
 
-    const link = document.createElement('a');
-    link.download = `${surveyData.pet_info.PetName}-page6.jpeg`;
-    link.href = dataUrl;
-    link.click();
-  } catch (error) {
-    console.error('dom-to-image error:', error);
-  }
-  };
+//     const link = document.createElement('a');
+//     link.download = `${surveyData.pet_info.PetName}-page6.jpeg`;
+//     link.href = dataUrl;
+//     link.click();
+//   } catch (error) {
+//     console.error('dom-to-image error:', error);
+//   }
+//   };
 
 
 

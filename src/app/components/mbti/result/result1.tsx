@@ -179,7 +179,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
       <BreakdownI aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
       <DoNotDo aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
     </div>
-    <div className="relative w-full mx-auto  h-[724px] md:h-[993px] bg-[#FFFFFF] flex flex-col items-center bg-white">
+    <div className="relative w-full mx-auto  h-auto md:h-[993px] bg-[#FFFFFF] flex flex-col items-center bg-white">
       {/* 🔹 进度条部分（顶部 80px 间距） */}
 
       <div className="mt-0 h-[40px] md:h-[70px] bg-[#EEF1FA] w-full">
@@ -202,7 +202,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
       </div>
 
       {/* 🔹 主要内容容器（80px 间距，540px 宽） */}
-      <div className="relative  w-[320px] md:w-[540px] h-[528px] md:h-[600px] mt-[30px] md:mt-[80px] flex flex-col items-center">
+      <div className="relative   w-[320px] md:w-[540px] h-auto md:h-[600px] mt-[30px] md:mt-[80px] flex flex-col items-center">
         {/* Name 标题 */}
         
        <h1 className=" text-[14px] md:text-[20px] text-[#27355D] font-[400] md:font-[610] font-Inter w-full text-left leading-[1.2] ">Name</h1>
@@ -301,7 +301,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
           )}
 
           {/* 右侧结论部分 */}
-          <div className="flex flex-col w-[320px]  md:w-[288px] mt-[0] md:mt-[30px]">
+          <div className="flex flex-col w-[320px] md:w-[288px] mt-[0] md:mt-[30px]">
             <h3 className="font-[600] text-[20px] text-[#27355D] font-Inter leading-[1.2] tracking-[0%]">Conclusion</h3>
             <p className=" w-[320px] md:w-[288px] text-[16px] text-[#1C1C1C] font-[400] font-Inter leading-[1.2] mt-[20px] md:mt-[10px] tracking-[0%]">
             {result.ai_output.text.third_person_diagnosis}
@@ -311,7 +311,7 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
       </div>
 
       {/* 🔹 按钮区域 */}
-      <div className="flex flex-row justify-between w-full max-w-[320px] md:max-w-[540px] mt-[34px] md:mt-[40px]">
+      <div className="flex flex-row  justify-between w-full max-w-[320px] md:max-w-[540px] mt-[34px] md:mt-[40px]">
         <button className="flex flex-row items-center justify-center w-[44px] md:w-[132px] h-[44px] bg-[#D1D7EF] rounded-[22px] text-[16px] font-[600] text-white">
                <svg className="inline md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">
                <path fillRule="evenodd" clipRule="evenodd" d="M2.45677 16.948L9.99943 24.4907L11.8848 22.6054L5.28477 16.0054L11.8848 9.40535L9.99943 7.52002L2.45677 15.0627C2.20681 15.3127 2.06638 15.6518 2.06638 16.0054C2.06638 16.3589 2.20681 16.698 2.45677 16.948Z" fill="white"/>

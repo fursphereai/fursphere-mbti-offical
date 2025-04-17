@@ -163,6 +163,7 @@ const [downloadPage4, setDownloadPage4] = useState(false);
 const [downloadPage5, setDownloadPage5] = useState(false);
 
 // const [isLoading, setIsLoading] = useState(false);
+
 const [aiResult, setAiResult] = useState('');
 const [showBanner2, setShowBanner2] = useState(true);
 
@@ -412,7 +413,7 @@ return (
     </motion.div>
     }
     {/* progress bar */}
-    {(part1 === false && part2 === false && step !== 0 && result1 === false && result2 === false && result3 === false && showUserProfile === false && showEmail === false) && <ProgressBar step={step}/>}
+    {(part1 === false && part2 === false && step !== 0 && result1 === false && result2 === false && result3 === false && showUserProfile === false && showEmail === false && download === false) && <ProgressBar step={step}/>}
 
       {basicInfoPages.map(({ step: pageStep, key, Component }) => (
         (part1 === false && part2 === false && step === pageStep && result1 === false && result2 === false && result3 === false && (
@@ -463,7 +464,7 @@ return (
       } 
 
       {[5,6,7,8,9,10,11,12,13,14,15,16,17].map((pageStep) => 
-        (part1 === false && part2 === false && result1 === false && result2 === false && result3 === false && showUserProfile === false && step === pageStep && (
+        (part1 === false && part2 === false && result1 === false && result2 === false && result3 === false && showUserProfile === false && step === pageStep && download === false && (
           <motion.div
             key={`page${pageStep}`}
             initial={{ opacity: 0, y: 10 }}
@@ -541,62 +542,18 @@ return (
         </motion.div>
   
       )}
-     
-       {result2 && (
-     
-        <motion.div
-          key="result2"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ 
-            duration: 0.5,
-            ease: "easeOut"
-          }}
-        >
-          <Result2 
-            setResult1={setResult1} 
-            setResult2={setResult2} 
-            setResult3={setResult3}
-            aiResult={aiResult}
-            surveyData={surveyData}
-            setDownload={setDownload}
-            isFromUserProfile={isFromUserProfile}
-            setIsFromUserProfile={setIsFromUserProfile}
-          />
-        </motion.div>
 
-      )}
-     
-      {result3 && (
-       
-        <motion.div
-          key="result3"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ 
-            duration: 0.5,
-            ease: "easeOut"
-          }}
-        >
-          <Result3 
-            setResult1={setResult1} 
-            setResult2={setResult2} 
-            setResult3={setResult3}
-            aiResult={aiResult}
-            surveyData={surveyData}
-            setDownload={setDownload}
-            isFromUserProfile={isFromUserProfile}
-            setIsFromUserProfile={setIsFromUserProfile}
-          />
-        </motion.div>
-        
-      )}
-      </AnimatePresence>
-
-      <AnimatePresence mode="wait">
-      {download && (
+     {download && (
+      <motion.div
+      key="download"
+      initial={{ x: 100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -100, opacity: 0 }}
+      transition={{ 
+        duration: 0.5,
+        ease: "easeOut"
+      }}
+      >
         <Download
           step={step}
           setStep={setStep}
@@ -624,14 +581,63 @@ return (
           setIsFromUserProfile={setIsFromUserProfile}
           setPart2={setPart2}
         />
+      </motion.div>
       )}
+    
+     
+       {/* {result2 && (
+     
+        <motion.div
+          key="result2"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -100, opacity: 0 }}
+          transition={{ 
+            duration: 0.5,
+            ease: "easeOut"
+          }}
+        >
+          <Result2 
+            setResult1={setResult1} 
+            setResult2={setResult2} 
+            setResult3={setResult3}
+            aiResult={aiResult}
+            surveyData={surveyData}
+            setDownload={setDownload}
+            isFromUserProfile={isFromUserProfile}
+            setIsFromUserProfile={setIsFromUserProfile}
+          />
+        </motion.div>
+
+      )} */}
+     
+      {/* {result3 && (
+       
+        <motion.div
+          key="result3"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -100, opacity: 0 }}
+          transition={{ 
+            duration: 0.5,
+            ease: "easeOut"
+          }}
+        >
+          <Result3 
+            setResult1={setResult1} 
+            setResult2={setResult2} 
+            setResult3={setResult3}
+            aiResult={aiResult}
+            surveyData={surveyData}
+            setDownload={setDownload}
+            isFromUserProfile={isFromUserProfile}
+            setIsFromUserProfile={setIsFromUserProfile}
+          />
+        </motion.div>
+        
+      )} */}
       </AnimatePresence>
-
-      
-      
-
-
-      
+ 
     </div> 
     )}
 

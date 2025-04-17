@@ -49,13 +49,17 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
 
   const generateDownload = () => {
     
-    setDownload(true);
+    // setDownload(true);
     // setDownloadPage1(true);
 
   }
   const handleNextClick = () => {
+    // setResult1(false);
+    // setResult2(true);
+
+
+    setDownload(true);
     setResult1(false);
-    setResult2(true);
    
   };
 
@@ -81,14 +85,14 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
 
   const emailSentRef = useRef(false);
 
-  useEffect(() => {
-    // Only run if it hasn't been executed before
-    if (!emailSentRef.current) {
-      mbtiEmail();
-      // Mark as executed
-      emailSentRef.current = true;
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Only run if it hasn't been executed before
+  //   if (!emailSentRef.current) {
+  //     mbtiEmail();
+  //     // Mark as executed
+  //     emailSentRef.current = true;
+  //   }
+  // }, []);
   
 
 
@@ -179,24 +183,23 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
       <BreakdownI aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
       <DoNotDo aiResult={aiResult} surveyData={surveyData} isFromUserProfile={isFromUserProfile} />
     </div>
-    <div className="relative w-full mx-auto  h-auto md:h-[993px] bg-[#FFFFFF] flex flex-col items-center bg-white">
+    <div className="relative w-full mx-auto  mt-0 md:mt-[100px] h-auto md:h-[993px] bg-[#FFFFFF] flex flex-col items-center bg-white">
       {/* 🔹 进度条部分（顶部 80px 间距） */}
 
-      <div className="mt-0 h-[40px] md:h-[70px] bg-[#EEF1FA] w-full">
+      <div className=" mt-0 h-[40px] md:h-[70px] bg-[#EEF1FA] w-full">
 
         <div className="relative flex flex-row items-center justify-center max-w-[1440px] h-full mx-auto px-[10px]">
           <button className="inline max-[1056px]:hidden absolute left-1/2 -translate-x-[606.5px] max-[1254px]:-translate-x-[506.5px] text-[#C3C3C3] text-[14px]">
             Exit
           </button>
-          <p className=" hidden md:flex text-[#27355D] text-[14px]">Result</p>
+          {/* <p className=" hidden md:flex text-[#27355D] text-[14px]">Result</p> */}
 
-          <div className=" flex flex-row justify-between bg-[#EEF1FA] mx-[20px] md:mx-[24px] w-full max-w-[276px] md:max-w-[740px] h-[10px] rounded-[8px]"> 
-            <div className="w-[84px] md:w-[230px] ml-[0px] h-full bg-[#5777D0] bg-[#5777D0] rounded-full transition-all duration-200 ease-in-out"></div>
-            <div className="w-[84px] md:w-[230px] ml-[0px] h-full bg-[#D1D7EF] bg-[#5777D0] rounded-full transition-all duration-200 ease-in-out"></div>
-            <div className="w-[84px] md:w-[230px] ml-[0px] h-full bg-[#D1D7EF] bg-[#5777D0] rounded-full transition-all duration-200 ease-in-out"></div>
+          <div className=" flex flex-row justify-between bg-[#EEF1FA] mx-[20px] md:mx-[24px] w-full max-w-[290px] md:max-w-[740px] h-[10px] rounded-[8px]"> 
+            <div className="w-[140px] md:w-[365px] ml-[0px] h-full bg-[#5777D0] bg-[#5777D0] rounded-full transition-all duration-200 ease-in-out"></div>
+            <div className="w-[140px] md:w-[365px] ml-[0px] h-full bg-[#D1D7EF] bg-[#5777D0] rounded-full transition-all duration-200 ease-in-out"></div>
           </div>
 
-          <p className="text-[#27355D] text-[14px] font-[600]">1/3</p>
+          {/* <p className="text-[#27355D] text-[14px] font-[600]">1/3</p> */}
         </div>
 
       </div>

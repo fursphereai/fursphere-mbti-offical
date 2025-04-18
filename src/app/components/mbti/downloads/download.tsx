@@ -101,7 +101,7 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
   //     handleDownload6(surveyData, mbti, isFromUserProfile);
   //    }
   // };
-
+  
   return (
     
 <>     

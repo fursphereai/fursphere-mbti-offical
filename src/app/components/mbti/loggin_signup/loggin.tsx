@@ -58,6 +58,7 @@ export default function Loggin({ handleNext, setStep, setShowSignup, setShowLogi
     const [showBlankEmail, setShowBlankEmail] = useState(false);
     const [showEmailAvailable, setShowEmailAvailable] = useState(false);
     const [showIncorrectCode, setShowIncorrectCode] = useState(false);
+    const [showTermDisagree, setShowTermDisagree] = useState(false);
     
     
     const [logginSendingCode, setLogginSendingCode] = useState(false);
@@ -174,7 +175,7 @@ const validateAndSubmit = async () => {
     
     try {
     
-        if (logginInputCode === logginVerificationCode && logginInputCode.length == 6) {
+        if (logginInputCode === logginVerificationCode && logginInputCode.length == 6 && isChecked) {
 
             const updatedSurveyData = {
                 ...surveyData,
@@ -205,10 +206,12 @@ const validateAndSubmit = async () => {
            
             console.log('Validation successful');
 
+        } else if (logginInputCode === logginVerificationCode && logginInputCode.length == 6 && !isChecked) {
+            setShowTermDisagree(true);
         } else {
-        setShowIncorrectCode(true);
-        setLogginIsValidated(false);
-        setLogginError('Incorrect verification code.');
+            setShowIncorrectCode(true);
+            setLogginIsValidated(false);
+            setLogginError('Incorrect verification code.');
         }
     } catch (error) {
         console.error('Error submitting survey:', error);
@@ -321,8 +324,18 @@ const sendVerificationCode = async () => {
 };
 
 
+const [isChecked, setIsChecked] = useState(false);
+const [touched, setTouched] = useState(false);
+const [error, setError] = useState('');
 
 
+
+
+useEffect(() => {
+    if (isChecked) {
+        setShowTermDisagree(false);
+    }
+}, [isChecked]);
 
 
 return (
@@ -333,8 +346,8 @@ return (
         ((showInvalidEmail || showBlankEmail || showEmailAvailable) && showIncorrectCode)
         ? 'md:h-[567px]' 
         : (showInvalidEmail || showBlankEmail || showEmailAvailable || showIncorrectCode)
-          ? 'md:h-[552px]' 
-          : 'md:h-[527px]'
+          ? 'md:h-[572px]' 
+          : 'md:h-[552px]'
      } rounded-[0px] md:rounded-[22px]`}
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -390,10 +403,10 @@ return (
         <h2>🐾</h2>
         </div>
         <div className="text-[32px] md:text-[48px] font-[Ubuntu] font-[600] text-[#505D90] leading-[38.4px] md:leading-[57.6px] line-height-[38.4px] md:line-height-[57.6px] tracking-[-1.28px] md:tracking-[-1.92px]">
-        <h2>Log in & get result!</h2>
+        <h2>Get Result Now!</h2>
         </div>
         <div className="mt-[20px] text-[16px] font-[Inter] font-[400] text-[#101828] leading-[16px]">
-            <h2>Welcome back! 🥰</h2>
+            <h2>A copy of test result will be sent to your email! 🥰</h2>
         </div>
         <div className=" w-full flex flex-row items-center justify-center gap-[12px]">
         <input
@@ -450,7 +463,7 @@ return (
         </div>
         )}
 
-        {showEmailAvailable && (
+        {/* {showEmailAvailable && (
             <div className="hidden md:flex mt-[8px] flex flex-col items-center justify-center max-w-[467px] w-full text-[#5777D0] text-[14px] font-[Inter] leading-[14px]">
                     <div className=" w-full flex flex-row justify-start items-center gap-1">
                         Oops, this email doesn't have an account. You can keep
@@ -460,9 +473,9 @@ return (
                     this email using a verification code or try a different one.
                     </div>
             </div>
-            )}
+            )} */}
 
-           {showEmailAvailable && (
+           {/* {showEmailAvailable && (
             <div className="md:hidden w-[320px] mt-[8px] flex flex-col items-left justify-center  text-[#5777D0] text-[14px] font-[Inter] leading-[14px]">
                 Oops, this email doesn't have an account. You
                     <div className=" w-full flex flex-row justify-start items-center gap-1">   
@@ -472,7 +485,7 @@ return (
                     verification code or try a different one.
                     </div>
             </div>
-            )}
+            )} */}
 
         <div className = "flex flex-row w-[320px] md:w-[467px] md:flex-col items-center justify-between md:justify-center">
             <button className= {` md:hidden mt-[20px] w-[116px] h-[44px] rounded-[22px] 
@@ -526,7 +539,33 @@ return (
         )}
         
 
+
+      <div className="flex flex-row  items-center justify-center mt-[20px]">
+      <input
+        id="id"
+        type="checkbox"
+        checked={isChecked}
+        onChange={(e) => setIsChecked(e.target.checked)}
+        className="w-[15px] h-[15px] rounded-full bg-red-300 border border-[#717680] "
+        style={{ borderRadius: '17px' }}
+      />
+      <a className="ml-[8px] text-[13px] font-[Inter] font-[400] text-[#101828] ">I agree to sign up and receive promotional emails</a>
+      {/* <label
+        htmlFor="id"
+        className="ml-[8px] text-[13px] font-[Inter] font-[400] text-[#101828] "
+        dangerouslySetInnerHTML={{ __html: 'I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>' }}
+      /> */}
+    </div>
+
+    
+        {showTermDisagree && (
+                <div className="w-[320px] md:w-[467px] text-left mt-[8px] text-[#E35C5C] text-[14px] font-[Inter] leading-[14px]">
+                    *Please agree to the terms and conditions.
+                </div>
+            )}
         
+
+    
         
         <button className="absolute md:static bottom-[48px] md:bottom-auto mt-[80px] w-[145px] h-[44px] rounded-[22px] bg-[#5777D0] flex items-center justify-center"
         onClick={validateAndSubmit}

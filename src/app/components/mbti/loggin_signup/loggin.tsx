@@ -559,7 +559,7 @@ return (
 
     
         {showTermDisagree && (
-                <div className="w-[320px] md:w-[467px] text-left mt-[8px] text-[#E35C5C] text-[14px] font-[Inter] leading-[14px]">
+                <div className="w-[320px] md:w-[467px] text-center mt-[8px] text-[#E35C5C] text-[14px] font-[Inter] leading-[14px]">
                     *Please check the box to accept the agreement
                 </div>
             )}

@@ -270,7 +270,15 @@ export default function DownloadPage1({ aiResult, surveyData, isFromUserProfile 
               <h2 className="text-right text-[24px] font-[Inter] font-[710] text-[#000000] leading-[1.2]">
                  [ {surveyData.pet_info.PetName} ] 
               </h2>
-              <h2 className="text-right mt-[12px] text-[16px] font-[Inter] font-[710] text-[#4B367B] leading-[1.2] tracking-[0.12px]">
+              <h2 className="text-right mt-[12px] text-[16px] font-[Inter] font-[710] leading-[1.2] tracking-[0.12px]"
+              style={{ 
+                color: 
+                mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '#4B367B'
+                : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '#43BD48'
+                : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '#5777D0'
+                : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '#FFC542'
+                : '#4B367B'
+              }}>
               {mbti === 'INTJ' ? 'The Mastermind' 
               : mbti === 'INTP' ? 'The Thinker' 
               : mbti === 'ENTJ' ? 'The Boss' 

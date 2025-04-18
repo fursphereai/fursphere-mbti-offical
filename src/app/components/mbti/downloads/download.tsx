@@ -248,7 +248,7 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
 
 
 <motion.div 
-    className="md:hidden mt-0  relative w-full mx-auto h-auto    bg-[#FFFFFF] flex flex-col items-center"
+    className="md:hidden mt-0  relative w-full mx-auto h-auto  bg-[#FFFFFF] flex flex-col items-center"
 >
   
 
@@ -259,13 +259,13 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
          
           <div className="relative  w-full h-full flex flex-col items-center ">
    
-            <div className=" mt-[25px] text-[24px] font-[Ubuntu] font-[600] text-[#505D90]">
+            <div className=" mt-[25px] text-[24px] text-center font-[Ubuntu] font-[600] text-[#505D90]">
               <h2>Screenshot & Share it with friends!</h2>
             </div>
 
          
               <motion.div
-                className="w-[800px] h-[1000px] absolute top-[-220px] z-[1] "
+                className="w-[800px] h-[1000px] mt-[-270px] z-[1] "
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.3}
@@ -300,7 +300,7 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
 
          
 
-          <div className="absolute top-[500px] flex gap-[20px]">
+          <div className="mt-[-280px] flex gap-[20px]">
             {[...Array(totalPages)].map((_, index) => (
               <div
                 key={index}
@@ -315,7 +315,7 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
      
 
 
-          <div className="absolute top-[550px] flex flex-row items-center justify-center z-[2]">
+          <div className="mt-[40px] flex flex-row items-center justify-center z-[2]">
             {/* <div className="flex flex-row bg-red-300 items-center justify-center gap-[20px]"> */}
                 <button className="flex flex-row items-center justify-center w-[44px] md:w-[132px] h-[44px] bg-[#5777D0] rounded-[22px] text-[16px] font-[600] text-white " onClick={handlePreviousClick}>
                   <svg className="inline md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">

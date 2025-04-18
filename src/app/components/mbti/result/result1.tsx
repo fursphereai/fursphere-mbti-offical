@@ -85,14 +85,14 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
 
   const emailSentRef = useRef(false);
 
-  // useEffect(() => {
-  //   // Only run if it hasn't been executed before
-  //   if (!emailSentRef.current) {
-  //     mbtiEmail();
-  //     // Mark as executed
-  //     emailSentRef.current = true;
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Only run if it hasn't been executed before
+    if (!emailSentRef.current) {
+      mbtiEmail();
+      // Mark as executed
+      emailSentRef.current = true;
+    }
+  }, []);
   
 
 
@@ -322,10 +322,10 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
           <span className="hidden md:flex">Previous</span>
         </button>
 
-        <button className=" w-[205px] h-[44px] bg-white rounded-[22px] border-[1px] border-[#C3C3C3] text-[16px] font-[600] text-black"
+        {/* <button className=" w-[205px] h-[44px] bg-white rounded-[22px] border-[1px] border-[#C3C3C3] text-[16px] font-[600] text-black"
          onClick={generateDownload}>
           Screenshot & Share
-        </button>
+        </button> */}
         <button className="flex flex-row items-center justify-center w-[44px] md:w-[101px] h-[44px] bg-[#5777D0] rounded-[22px] text-[16px] font-[600] text-white" onClick={handleNextClick}>
               <svg className="md:hidden" xmlns="http://www.w3.org/2000/svg" width="16" height="32" viewBox="0 0 16 32" fill="none">
                 <path fillRule="evenodd" clipRule="evenodd" d="M13.5432 16.948L6.00057 24.4907L4.11523 22.6054L10.7152 16.0054L4.11523 9.40535L6.00057 7.52002L13.5432 15.0627C13.7932 15.3127 13.9336 15.6518 13.9336 16.0054C13.9336 16.3589 13.7932 16.698 13.5432 16.948Z" fill="white"/>

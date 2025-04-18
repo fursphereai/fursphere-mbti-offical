@@ -540,7 +540,7 @@ return (
         
 
 
-      <div className="flex flex-row  items-center justify-center mt-[20px]">
+      <div className="flex  flex-row  items-center justify-center mt-[20px]">
       <input
         id="id"
         type="checkbox"
@@ -549,7 +549,7 @@ return (
         className="w-[15px] h-[15px] rounded-full bg-red-300 border border-[#717680] "
         style={{ borderRadius: '17px' }}
       />
-      <a className="ml-[8px] text-[13px] font-[Inter] font-[400] text-[#101828] ">I agree to sign up and receive promotional emails</a>
+      <a className="ml-[8px] text-[13px] font-[Inter] font-[400] text-[#101828] ">I consent to registration and email delivery of results</a>
       {/* <label
         htmlFor="id"
         className="ml-[8px] text-[13px] font-[Inter] font-[400] text-[#101828] "
@@ -560,7 +560,7 @@ return (
     
         {showTermDisagree && (
                 <div className="w-[320px] md:w-[467px] text-left mt-[8px] text-[#E35C5C] text-[14px] font-[Inter] leading-[14px]">
-                    *Please agree to the terms and conditions.
+                    *Please check the box to accept the agreement
                 </div>
             )}
         

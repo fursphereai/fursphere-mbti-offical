@@ -7,6 +7,7 @@ import "./globals.css";
 import { LogginProvider } from "./context/LogginContext";
 import { ProgressProvider } from "./context/ProgressContext";
 import { Inter, Ubuntu, Poppins, Baloo_2 } from 'next/font/google'
+import { Analytics } from "@vercel/analytics/react"
 import Header from "./components/header";
 
 const ubuntu = Ubuntu({

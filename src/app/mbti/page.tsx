@@ -31,7 +31,7 @@ const PetMBTIFlow = () => {
 
 
   const { loggin, setLoggin } = useLoggin();
-  const initialStep = 0; 
+  const initialStep = 17; 
   const [step, setStep] = useState(initialStep);
 
   useEffect(() => {

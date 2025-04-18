@@ -346,7 +346,7 @@ return (
 
 
    {!showEmail && !showSignup && !showLogin && !isLoading && (
-    <div className="w-full h-[100svh] flex bg-white flex-col">
+    <div className={`w-full h-[100svh] flex ${part1 || part2 ? 'bg-[#F5F5F5]' : 'bg-white'} flex-col`}>
       {/* <EmailTest /> */}
     {/* mobile header */}
     <div className={`${(step === 0 && part1 === false) ? 'hidden' : 'block md:hidden'}`}>

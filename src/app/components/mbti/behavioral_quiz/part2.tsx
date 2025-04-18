@@ -31,7 +31,7 @@ const Part2: React.FC<BasicInfoScreenProps>  = ({ handleNext, handleBack, step, 
   }, []);
   
   return (
-    <div className=" h-[calc(100svh-56px)] mt-0 md:mt-[100px] bg-[#F5F5F5]">
+    <div className=" h-auto mt-0 md:mt-[100px] bg-[#F5F5F5]">
       
       <div className="flex flex-col  mx-auto max-w-[1440px] max-h-[531px] md:max-h-[461px] items-center h-full ">
         <label className="
@@ -86,7 +86,7 @@ const Part2: React.FC<BasicInfoScreenProps>  = ({ handleNext, handleBack, step, 
           <button 
             className="
             mx-auto flex flex-row items-center justify-center
-            absolute bottom-[48px]
+            mt-[71px]
             w-[150px] h-[44px]
             rounded-[22px]
             bg-[#5777D0] 

@@ -41,7 +41,7 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
 
   return (
 
-    <div className=" relative  w-full mx-auto h-[calc(100svh-96px)] md:h-[calc(100vh-140px)] max-h-[1440px]">
+    <div className=" relative w-full mx-auto h-auto md:h-[calc(100vh-140px)] max-h-[1440px]">
         {showBanner && (
 
         <div className=" h-[100px] md:h-[80px] w-full bg-[#FEF0C7] flex items-center justify-center">
@@ -134,7 +134,7 @@ const NamePhoto: React.FC<NamePhotoProps>  = ({ handleNext, handleBack, step, se
       </div>
 
       <div className= 
-      {` absolute ${showBanner ? 'max-md:bottom-[48px] md:top-[586px]' : 'max-md:bottom-[48px] md:top-[546px]'}   
+      {` mt-[112px]   
        left-0 right-0 mx-auto w-[320px] md:w-[540px] h-[44px] flex justify-between `}>
         <button 
                 className="w-[44px] h-[44px] rounded-[22px] bg-[#D1D7EF] flex items-center justify-center md:w-[132px] md:p-0"

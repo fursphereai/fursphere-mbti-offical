@@ -54,6 +54,7 @@ export default function RootLayout({
       <LogginProvider>
         <ProgressProvider>
           {children}
+          <Analytics />
           <Toaster />
         </ProgressProvider>
       </LogginProvider>

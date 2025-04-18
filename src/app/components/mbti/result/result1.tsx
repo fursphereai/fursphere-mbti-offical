@@ -113,17 +113,17 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
     const imageDataUrl5 = await getDownloadImageUrl5(surveyData, mbti, isFromUserProfile);
     const imageDataUrl6 = await getDownloadImageUrl6(surveyData, mbti, isFromUserProfile);
   
-    if (!imageDataUrl1 || !imageDataUrl2 || !imageDataUrl3 || !imageDataUrl4 || !imageDataUrl5 || !imageDataUrl6) {
-      throw new Error('Failed to generate image');
-    }
+    // if (!imageDataUrl1 || !imageDataUrl2 || !imageDataUrl3 || !imageDataUrl4 || !imageDataUrl5 || !imageDataUrl6) {
+    //   throw new Error('Failed to generate image');
+    // }
 
    
-    const blob1 = imageDataUrl1.split(',')[1];
-    const blob2 = imageDataUrl2.split(',')[1];
-    const blob3 = imageDataUrl3.split(',')[1];
-    const blob4 = imageDataUrl4.split(',')[1];
-    const blob5 = imageDataUrl5.split(',')[1];
-    const blob6 = imageDataUrl6.split(',')[1];
+    const blob1 = imageDataUrl1 ? imageDataUrl1.split(',')[1] : null;
+    const blob2 = imageDataUrl2 ? imageDataUrl2.split(',')[1] : null;
+    const blob3 = imageDataUrl3 ? imageDataUrl3.split(',')[1] : null;
+    const blob4 = imageDataUrl4 ? imageDataUrl4.split(',')[1] : null;
+    const blob5 = imageDataUrl5 ? imageDataUrl5.split(',')[1] : null;
+    const blob6 = imageDataUrl6 ? imageDataUrl6.split(',')[1] : null;
 
 
     const response = await fetch('/api/proxy', {
@@ -271,7 +271,14 @@ const Result1: React.FC<Result1Props> = ({ handleNext, handleBack, step, setStep
         w-full">
           
           {surveyData.pet_info.PetPublicUrl ? (
-          <div className="md:hidden  w-[100px] h-[100px] border-[2px] border-[#4B367B] rounded-[20px] flex items-center justify-center mr-[10px]">
+          <div className="md:hidden  w-[100px] h-[100px] border-[2px]  rounded-[20px] flex items-center justify-center mr-[10px]"
+          style={{ borderColor: 
+            (mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '#4B367B' 
+            : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '#438D46' 
+            : mbti === 'ISTJ' || mbti === 'ISFJ' || mbti === 'ESTJ' || mbti === 'ESFJ' ? '#5777D0' 
+            : mbti === 'ISTP' || mbti === 'ISFP' || mbti === 'ESTP' || mbti === 'ESFP' ? '#FFBA20' 
+            : mbti === 'ISTP' ? '#4B367B' : '#4B367B' )
+          }}>
             <img src={surveyData.pet_info.PetPublicUrl} alt="Mingming" className="w-full h-full rounded-[18px] object-cover" />
           </div>
           ) : (

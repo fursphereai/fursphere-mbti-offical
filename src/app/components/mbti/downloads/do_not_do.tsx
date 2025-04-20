@@ -199,7 +199,7 @@ export default function DoNotDo({ aiResult, surveyData, isFromUserProfile }: { a
 
         <div className="absolute top-[386px] w-[800px] px-[40px]">
             <h2 className="text-left text-[24px] font-[Inter] font-[600] text-[#27355D] leading-[1.2]">
-            <span className="mr-[12px]">✅</span>Do
+            <span className="mr-[12px]">❌</span>Do Not:
             </h2>
         </div> 
 

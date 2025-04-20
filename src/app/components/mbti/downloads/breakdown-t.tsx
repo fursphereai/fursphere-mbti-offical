@@ -178,7 +178,7 @@ export default function BreakdownT({ aiResult, surveyData, isFromUserProfile }: 
          
         <div className="absolute top-[624px]  w-full px-[40px]">
             <h2 className="text-left text-[24px] font-[Inter] font-[710] text-white leading-[1.2] tracking-[0.12px]">
-            [ {result.ai_output.text.t_label}: {Math.abs(result.ai_output.text.t_score)}% ]
+            [ {result.ai_output.text.t_label}: {Math.round(Math.abs(result.ai_output.text.t_score) / 2 + 50)}% ]
             </h2>
         </div> 
         
@@ -188,7 +188,7 @@ export default function BreakdownT({ aiResult, surveyData, isFromUserProfile }: 
 
         <div className="absolute  w-[300px] top-[674px] left-[40px] h-[20px] rounded-[32px] "
           style={{ 
-          width: `${Math.abs(result.ai_output.text.t_score ) * 3}px`,
+          width: `${Math.round(Math.abs(result.ai_output.text.t_score) / 2 + 50) * 3}px`,
           backgroundColor: 
           (mbti === 'INTJ' || mbti === 'INTP' || mbti === 'ENTJ' || mbti === 'ENTP' ? '#7F61C4' 
             : mbti === 'INFJ' || mbti === 'INFP' || mbti === 'ENFJ' || mbti === 'ENFP' ? '#75E67A' 

@@ -93,7 +93,7 @@ export default function Loggin({ handleNext, setStep, setShowSignup, setShowLogi
           console.log("newEmail" + newEmail);
           checkEmailAvailability(newEmail);
           // setIsEmailAvailable(true);
-    
+          checkEmailAvailability
       } 
       };
 

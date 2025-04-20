@@ -195,7 +195,7 @@ const validateAndSubmit = async () => {
             setLoading(true);
             setShowLogin(false);
 
-            await UserInfo(logginEmail);
+            // await UserInfo(logginEmail);
             setUserEmail(logginEmail);
             await GetAiResult(updatedSurveyData);
             updateAnswer('user_info', null, 'test_times', '1');

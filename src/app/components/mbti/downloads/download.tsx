@@ -335,9 +335,9 @@ export default function Download({ step, setStep, setPart1, result1, result2, re
              </div>
             
             <div className=" flex flex-row items-center justify-center gap-[20px]">
-            <a href="https://discord.com/invite/fursphere" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.xiaohongshu.com/user/profile/67ac0cff000000000e01d218?xsec_token=YBBbNvG2CbvWOTJDcB5vszECVnHDnKCNaqm0du547Sea8=&xsec_source=app_share&xhsshare=CopyLink&appuid=5993e60a50c4b42f35a4fe2d&apptime=1745204858&share_id=0f28b7896ac04e8cb63c52508f401da4" target="_blank" rel="noopener noreferrer">
              <button className="w-[44px] h-[44px] bg-[#F5F5F5] rounded-[22px] flex items-center justify-center border-[1px] border-[#C3C3C3]">
-              <img src="/icon-discord.svg" alt="discord" className="w-[24px] h-[24px]"/>
+              <img src="/xiaohongshu.svg" alt="xiaohongshu" className="w-[24px] h-[24px]"/>
             </button>
             </a>
 

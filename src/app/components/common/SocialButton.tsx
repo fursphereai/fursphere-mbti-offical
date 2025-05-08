@@ -33,7 +33,7 @@ const SocialButton = ({
   };
 
   const getImageStyles = () => {
-    if (alt === 'Discord') {
+    if (alt === 'Discord' || alt === 'Xiaohongshu') {
       if (isFooter) {
         return 'w-6 h-6';
       }

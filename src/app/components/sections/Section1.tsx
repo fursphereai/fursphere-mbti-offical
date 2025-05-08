@@ -198,16 +198,16 @@ const SocialSection = ({ onSubscribe }: { onSubscribe: () => void }) => (
       alt="Discord"
     />
     <SocialButton 
-      href="https://www.instagram.com/fursphere"
+      href="https://www.instagram.com/fur.sphere?igsh=MWowbXNjdHcxcmU5Mw=="
       icon="/instagram.svg"
       alt="Instagram"
       isWhiteBg={true}
       variant="light"
     />
     <SocialButton 
-      href="https://www.facebook.com/fursphere"
-      icon="/facebook.svg"
-      alt="Facebook"
+      href="https://www.xiaohongshu.com/user/profile/67ac0cff000000000e01d218?xsec_token=YBBbNvG2CbvWOTJDcB5vszEP2xJfaNN0keZWJ4cxR2wVE=&xsec_source=app_share&xhsshare=CopyLink&appuid=5993e60a50c4b42f35a4fe2d&apptime=1746737231&share_id=872dc5561a1441b78e71367230a05253"
+      icon="/xiaohongshu.svg"
+      alt="Xiaohongshu"
       isWhiteBg={true}
       variant="light"
     />
